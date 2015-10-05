@@ -1,11 +1,11 @@
 public class Symbol {
-	private final String defaultString = "";
+	private final String DEFAULT_STRING = "";
 	private String name;
 	private int code;
 	
 	Symbol() {
 		this.code = 0;
-		this.name = defaultString;
+		this.name = DEFAULT_STRING;
 	}
 	
 	Symbol(String name) {
@@ -22,18 +22,11 @@ public class Symbol {
 	}
 	
 	public String getName() {
-		try {
-			return this.name;
-		}
-		catch(NullPointerException e) {
-			e.printStackTrace();
-		}
-		
-		return "";
+		return this.name;
 	}
 	
 	public boolean isNull() {
-		return this.name == defaultString;
+		return this.name == DEFAULT_STRING;
 	}
 	
 	@Override

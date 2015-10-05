@@ -4,15 +4,18 @@ import java.io.FileReader;
 import java.io.IOException;
 
 public class Scanner {
-	private final static String wordFilePath = "file.txt";
+	private final static String CODE_FILE_PATH = "file.txt";
+	private static boolean isString = false;
+	private static boolean isChar = false;
 	
 	public static void read(){
 		FileReader read = null;
 		
 		try {
-			read = new FileReader(wordFilePath);
+			read = new FileReader(CODE_FILE_PATH);
 		} 
 		catch (FileNotFoundException e) {
+				System.out.println("File not found!");
 				e.printStackTrace();
 		}
 		
@@ -22,9 +25,11 @@ public class Scanner {
 		String word = "";
 		
 		char ch;
-		
+		int line = 0;
 		try {
-			while((textRead = buffer.readLine()) != null) {		
+			while((textRead = buffer.readLine()) != null) {	
+				line = line++;
+				
 				if(!(textRead = textRead.trim()).isEmpty()) {
 			//		System.out.println(textRead);
 					
@@ -32,7 +37,6 @@ public class Scanner {
 						ch = textRead.charAt(i);
 						
 						if(ch == Consts.FORBIDDEN.SOH
-							|| ch == Consts.FORBIDDEN.SOH
 							|| ch == Consts.FORBIDDEN.STX
 							|| ch == Consts.FORBIDDEN.ETX
 							|| ch == Consts.FORBIDDEN.ENQ
@@ -41,41 +45,75 @@ public class Scanner {
 							|| ch == Consts.FORBIDDEN.BS
 							|| ch == Consts.FORBIDDEN.LF
 							|| ch == Consts.FORBIDDEN.CR) {
+								System.out.println("Used forbidden symbol at line: " + line);
+								return;
+							}
+						
+						if(ch == '"'){
+							if(isString == true){
+								System.out.println(word + " " + Consts.CONSTANTS.STRING);
+								isString = false;
+								word = "";
 								continue;
 							}
+							if(isString == false){
+								isString = true;
+								word = "";
+								continue;
+							}
+						}
+						
+						if(ch == '\''){
+							if(isChar == true){
+								System.out.println(word + " " + Consts.CONSTANTS.CHAR);
+								isChar = false;
+								word = "";
+								continue;
+							}
+							if(isChar == false){
+								isChar = true;
+								word = "";
+								continue;
+							}
+						}
 						
 						switch(ch) {
 							case ';' : {
-								if(!word.isEmpty())
+								if(!word.isEmpty()){
 									System.out.println(word + " " + analyzeWord(word));
+								}
 								System.out.println(ch + " " +  Consts.EOS.SEMICOLON);
 								word = ""; 
 								break; 
 							}
 							case '+' : { 
-								if(!word.isEmpty())
-									System.out.println(word + " " + analyzeWord(word)); 
+								if(!word.isEmpty()){
+									System.out.println(word + " " + analyzeWord(word));
+								} 
 								System.out.println(ch + " " +  Consts.OPERATORS.ADD);
 								word = ""; 
 								break; 
 							}
 							case '-' : {
-								if(!word.isEmpty())
+								if(!word.isEmpty()){
 									System.out.println(word + " " + analyzeWord(word)); 
+								}
 								System.out.println(ch + " " +  Consts.OPERATORS.SUB);
 								word = ""; 
 								break; 
 							}
 							case '*' : {
-								if(!word.isEmpty())
+								if(!word.isEmpty()){
 									System.out.println(word + " " + analyzeWord(word)); 
+								}
 								System.out.println(ch + " " +  Consts.OPERATORS.MUL);
 								word = ""; 
 								break; 
 							}
 							case '/' : {
-								if(!word.isEmpty())
+								if(!word.isEmpty()){
 									System.out.println(word + " " + analyzeWord(word)); 
+								}
 								System.out.println(ch + " " +  Consts.OPERATORS.DIV);
 								word = ""; 
 								break; 
@@ -84,36 +122,41 @@ public class Scanner {
 								
 							}
 							case '%' : {
-								if(!word.isEmpty())
+								if(!word.isEmpty()){
 									System.out.println(word + " " + analyzeWord(word)); 
+								}
 								System.out.println(ch + " " +  Consts.OPERATORS.MOD);
 								word = ""; 
 								break; 
 							}
 							case '=' : { 
-								if(!word.isEmpty())
+								if(!word.isEmpty()){
 									System.out.println(word + " " + analyzeWord(word));
+								}
 								System.out.println(ch + " " +  Consts.OPERATORS.EQU);
 								word = "";
 								break;
 							}
 							case ' ' : {
-								if(!word.isEmpty())
+								if(!word.isEmpty()){
 									System.out.println(word + " " + analyzeWord(word));
+								}
 								System.out.println(ch + " " +  Consts.SEPARATORS.SPACE);
 								word = "";
 								break;
 							}
 							case '	' : { 
-								if(!word.isEmpty())
+								if(!word.isEmpty()){
 									System.out.println(word + " " + analyzeWord(word));
+								}
 								System.out.println(ch + " " + Consts.SEPARATORS.TAB);
 								word = "";
 								break;
 							}
 							case ',' : {
-								if(!word.isEmpty())
+								if(!word.isEmpty()){
 									System.out.println(word + " " + analyzeWord(word));
+								}
 								System.out.println(ch + " " + Consts.CHARACTERS.COMMA);
 								word = "";
 								break;
