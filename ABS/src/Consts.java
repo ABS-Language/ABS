@@ -1,0 +1,77 @@
+
+public final class Consts {
+	public final static int UNKNOWN 		= 666;
+	
+	public final static int VARIABLE		= 1;
+	class FORBIDDEN {
+		public final static int SOH 		= 1;
+		public final static int STX 		= 2;
+		public final static int ETX 		= 3;
+		public final static int EOT 		= 4;
+		public final static int ENQ 		= 5;
+		public final static int ACK 		= 6;
+		public final static int BEL 		= 7;
+		public final static int BS 			= 8;
+		public final static int LF 			= 10;
+		public final static int CR 			= 13;
+	}
+	
+	class CONSTANTS {
+		public final static int INTEGER		= 2;
+		public final static int FLOAT		= 3;
+		public final static int DOUBLE		= 4;
+		public final static int CHAR		= 5;
+		public final static int STRING		= 6;
+	}
+	
+	class DATA_TYPES {
+		public final static int INTEGER		= 12;
+		public final static int FLOAT		= 13;
+		public final static int DOUBLE		= 14;
+		public final static int CHAR		= 15;
+		public final static int STRING		= 16;
+	}
+	
+	class SEPARATORS {
+		public final static int SPACE		= 32;
+		public final static int TAB 		= 9;
+	}
+	
+	class OPERATORS {
+		public final static int ADD			= 100;
+		public final static int SUB			= 101;
+		public final static int MUL			= 102;
+		public final static int DIV			= 103;
+		public final static int POW			= 104;
+		public final static int MOD			= 105;
+		public final static int EQU			= 106;
+	}
+	
+	class CONDITIONAL_OPERATORS {
+		public final static int IF			= 200;
+		public final static int ELSE		= 201;
+		public final static int SWITCH		= 202;
+	}
+	
+	class EOS {
+		public final static int SEMICOLON 	= 300;
+	}
+	
+	class LOOPS {
+		public final static int WHILE 		= 400;
+		public final static int FOR			= 401;
+	}
+	
+	class CHARACTERS {
+		public final static int LEFT_BRACKET 			= 500;
+		public final static int RIGHT_BRACKET			= 501;
+		public final static int LEFT_CURLY_BRACKET		= 502;
+		public final static int RIGHT_CURLY_BRACKET		= 503;
+		public final static int LEFT_SQUARE_BRACKET 	= 504;
+		public final static int RIGHT_SQUARE_BRACKET 	= 505;
+		
+		public final static int QUOTE					= 506;
+		public final static int APOSTROPHE				= 507;
+		public final static int COMMA					= 508;
+	}
+}
