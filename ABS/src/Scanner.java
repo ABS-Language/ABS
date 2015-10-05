@@ -7,6 +7,7 @@ public class Scanner {
 	private final static String CODE_FILE_PATH = "file.txt";
 	private static boolean isString = false;
 	private static boolean isChar = false;
+	//private static Map<String, Integer> result = new HashMap<String, Integer>();
 	
 	public static void read(){
 		FileReader read = null;
@@ -23,7 +24,7 @@ public class Scanner {
 		
 		String textRead;
 		String word = "";
-		
+
 		char ch;
 		int line = 0;
 		try {
@@ -56,11 +57,15 @@ public class Scanner {
 								word = "";
 								continue;
 							}
-							if(isString == false){
-								isString = true;
-								word = "";
-								continue;
-							}
+							isString = true;
+							word = "";
+							continue;
+							
+						}
+						
+						if(isString == true){
+							word += ch;
+							continue;
 						}
 						
 						if(ch == '\''){
@@ -70,11 +75,14 @@ public class Scanner {
 								word = "";
 								continue;
 							}
-							if(isChar == false){
-								isChar = true;
-								word = "";
-								continue;
-							}
+							isChar = true;
+							word = "";
+							continue;
+						}
+						
+						if(isChar == true){
+							word += ch;
+							continue;
 						}
 						
 						switch(ch) {
@@ -230,7 +238,7 @@ public class Scanner {
 	     }
 	}
 	
-	private static boolean isDouble(String str) {
+	/*private static boolean isDouble(String str) {
 		try
 	     {
 			Double.parseDouble(str);
@@ -240,6 +248,6 @@ public class Scanner {
 	     {
 	         return false;
 	     }
-	}
+	}*/
 	
 }
