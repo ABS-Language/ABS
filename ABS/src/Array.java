@@ -4,6 +4,7 @@ public class Array{
 	private int SIZE = 100;
 	private int size;
 	
+	
 	private Symbol[] array;
 	private int index;
 	
