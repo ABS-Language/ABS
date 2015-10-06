@@ -7,7 +7,7 @@ public class Scanner {
 	private final static String CODE_FILE_PATH = "file.txt";
 	private static boolean isString = false;
 	private static boolean isChar = false;
-	//private static Map<String, Integer> result = new HashMap<String, Integer>();
+	private static sHash symbols = new 
 	
 	public static void read(){
 		FileReader read = null;

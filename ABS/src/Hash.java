@@ -1,41 +1,50 @@
-import java.util.LinkedList;
-import java.util.List;
-import java.util.ListIterator;
-
 
 public class Hash {
-	private final int SIZE = 10;
+	private final int TABLE_SIZE = 10;
+	private final int CHAIN_SIZE = 5;
 	
 	private int tableSize;
+	private int tableMask;
 	
-	private List<LinkedList<String>> global__List = new LinkedList<LinkedList<String>>();
-	
-	Hash(int size) {
-		this.tableSize = size;
-		
-		LinkedList<String> list;
-		
-		for(int i = 0; i < tableSize; ++i) {
-			list = new LinkedList<String>();
-			list.add("<init>");
-			
-			global__List.add(list);
-		}
-	}
+	private Array[] global__array;
 	
 	Hash() {
-		this.tableSize = SIZE;
+		this.tableSize = TABLE_SIZE;
+		this.tableMask = this.tableSize - 1;
 		
-		LinkedList<String> list;
+		this.global__array = new Array[tableSize];
+		
 		for(int i = 0; i < tableSize; ++i) {
-			list = new LinkedList<String>();
-			list.add("<init>");
-			
-			global__List.add(list);
+			this.global__array[i] = new Array(CHAIN_SIZE);
 		}
 	}
 	
+	Hash(int table_size) {
+		this.tableSize = table_size;
+		this.tableMask = tableSize - 1;
+		
+		global__array = new Array[tableSize];
+		
+		for(int i = 0; i < tableSize; ++i) {
+			this.global__array[i] = new Array(CHAIN_SIZE);
+		}
+	}
+	
+	Hash(int table_size, int chain_size) {
+		this.tableSize = table_size;
+		this.tableMask = this.tableSize - 1;
+		
+		this.global__array = new Array[this.tableSize];
+		
+		for(int i = 0; i < this.tableSize; ++i) {
+			this.global__array[i] = new Array(chain_size);
+		}
+	}
+	
+	
+	/*
 	private int hash(String key) {
+
 		int sum = 1;
 		
 		for(int i = 0; i < key.length(); ++i) {
@@ -44,56 +53,75 @@ public class Hash {
 
 		return (sum % tableSize);
 	}
+	*/
+	/*
+	public int hash(String key) {
+		long hash = 5381;
+		
+		for(char c : key.toCharArray()) {
+			hash = ((hash << 5) + hash) + c;
+			hash = ((hash << 5) + hash) + c;
+			hash = ((hash << 5) + hash) + c;
+			hash = ((hash << 5) + hash) + c;
+			hash = ((hash << 5) + hash) + c;
+			hash = ((hash << 5) + hash) + c;
+			hash = ((hash << 5) + hash) + c;
+			hash = ((hash << 5) + hash) + c;
+		}	
+		
+		return (int) (hash & tableMask);
+	}
+	*/
+	public int hash(Symbol key) {
+		int hash = 0;
+		
+		for(char c : key.getName().toCharArray()) {
+			hash = (hash << 4) + c;
+		}
+		
+		return hash & tableMask;
+	}
 	
-	private int insert(String key) {
+	private int insert(Symbol key) {
 		int index = this.hash(key);
 		
-		global__List.get(index).add(key);
+		global__array[index].add(key);
 		
 		return index;		
 	}
 	
-	public int lookup(String key) {
+	public int lookup(Symbol key) {
 		int index = this.hash(key);
 		
-		LinkedList<String> list = global__List.get(index);
-		
-		if(list.isEmpty()) {
-			//key not found
-			return -1;
-		}
-		
-		ListIterator<String> it = list.listIterator();
-		
-		while(it.hasNext()) {
-			if(it.next().compareTo(key) == 0) {
-				return index;
+		Array chain = global__array[index];
+
+		for(int i = 0; i < chain.size(); i++) {
+				if(chain.get(i).isNull()) {
+					return -1;
+				}
+				else if(chain.get(i).compareTo(key)) {
+					return index;
 			}
 		}
 		//key not found
 		return -1;
 	}
 	
-	public int lookupInsert(String key) {
+	public int lookupInsert(Symbol key) {
 		return this.lookup(key) == -1 ? this.insert(key) : this.hash(key);
 	}
 	
 	public void printTable() {
-		ListIterator<String> it;
-		
 		int i = 0;
 		
-		for(LinkedList<String> list : global__List) {
-			
-			it = list.listIterator();
-			
+		for(Array chain : global__array) {
 			System.out.print(i++);
 			
-			while(it.hasNext()) {
-					System.out.print(" -> '" + it.next() + "'");
+			for(int j = 0; j < chain.size(); ++j) {
+				System.out.print(" -> '" + chain.get(j) + "'");
 			}
 			
-			System.out.println("\n=========");
+			System.out.println("\n=========");			
 		}
 	}
 }
