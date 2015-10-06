@@ -1,6 +1,6 @@
 
 public class Hash {
-	private final int TABLE_SIZE = 10;
+	private final int TABLE_SIZE = 50;
 	private final int CHAIN_SIZE = 5;
 	
 	private int tableSize;
@@ -82,7 +82,7 @@ public class Hash {
 		return hash & tableMask;
 	}
 	
-	private int insert(Symbol key) {
+	public int insert(Symbol key) {
 		int index = this.hash(key);
 		
 		global__array[index].add(key);

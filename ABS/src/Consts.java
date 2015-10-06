@@ -2,7 +2,6 @@
 public final class Consts {
 	public final static int UNKNOWN 		= 666;
 	
-	public final static int VARIABLE		= 1;
 	class FORBIDDEN {
 		public final static int SOH 		= 1;
 		public final static int STX 		= 2;
@@ -51,6 +50,7 @@ public final class Consts {
 		public final static int IF			= 200;
 		public final static int ELSE		= 201;
 		public final static int SWITCH		= 202;
+		public final static int CASE		= 203;
 	}
 	
 	class EOS {
@@ -73,5 +73,12 @@ public final class Consts {
 		public final static int QUOTE					= 506;
 		public final static int APOSTROPHE				= 507;
 		public final static int COMMA					= 508;
+	}
+	
+	class LEXICALS{
+		public final static int IDENTIFIER 				= 1;
+		public final static int CONSTANT				= 2;
+		public final static int SEPARATOR				= 3;
+		public final static int OPERATOR				= 4;
 	}
 }

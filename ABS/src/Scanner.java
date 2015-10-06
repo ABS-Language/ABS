@@ -7,9 +7,12 @@ public class Scanner {
 	private final static String CODE_FILE_PATH = "file.txt";
 	private static boolean isString = false;
 	private static boolean isChar = false;
-	private static sHash symbols = new 
+	private static Hash symbols = new Hash(10); 
+	private static Array codeOrder = new Array(1000);
+	private static Symbol symbol;
 	
 	public static void read(){
+		loadSpecialSymbols();
 		FileReader read = null;
 		
 		try {
@@ -52,7 +55,10 @@ public class Scanner {
 						
 						if(ch == '"'){
 							if(isString == true){
-								System.out.println(word + " " + Consts.CONSTANTS.STRING);
+								symbol = new Symbol(word, Consts.LEXICALS.CONSTANT);
+								codeOrder.add(symbol);
+								symbols.lookupInsert(symbol);
+								//System.out.println(word + " " + Consts.CONSTANTS.STRING);
 								isString = false;
 								word = "";
 								continue;
@@ -70,7 +76,10 @@ public class Scanner {
 						
 						if(ch == '\''){
 							if(isChar == true){
-								System.out.println(word + " " + Consts.CONSTANTS.CHAR);
+								symbol = new Symbol(word, Consts.LEXICALS.CONSTANT);
+								codeOrder.add(symbol);
+								symbols.lookupInsert(symbol);
+								//System.out.println(word + " " + Consts.CONSTANTS.CHAR);
 								isChar = false;
 								word = "";
 								continue;
@@ -88,84 +97,119 @@ public class Scanner {
 						switch(ch) {
 							case ';' : {
 								if(!word.isEmpty()){
-									System.out.println(word + " " + analyzeWord(word));
+									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
+									//tuka ei tei
+									symbols.lookupInsert(symbol);
+									codeOrder.add(symbol);
+									
+									
+									codeOrder.add(new Symbol(";", Consts.LEXICALS.SEPARATOR));
+									
+									//System.out.println(word + " " + analyzeWord(word));
 								}
-								System.out.println(ch + " " +  Consts.EOS.SEMICOLON);
+								//System.out.println(ch + " " +  Consts.EOS.SEMICOLON);
 								word = ""; 
 								break; 
 							}
 							case '+' : { 
 								if(!word.isEmpty()){
-									System.out.println(word + " " + analyzeWord(word));
+									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
+									codeOrder.add(symbol);
+									symbols.lookupInsert(symbol);
+									//System.out.println(word + " " + analyzeWord(word));
 								} 
-								System.out.println(ch + " " +  Consts.OPERATORS.ADD);
+								//System.out.println(ch + " " +  Consts.OPERATORS.ADD);
 								word = ""; 
 								break; 
 							}
 							case '-' : {
 								if(!word.isEmpty()){
-									System.out.println(word + " " + analyzeWord(word)); 
+									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
+									codeOrder.add(symbol);
+									symbols.lookupInsert(symbol);
+									//System.out.println(word + " " + analyzeWord(word)); 
 								}
-								System.out.println(ch + " " +  Consts.OPERATORS.SUB);
+								//System.out.println(ch + " " +  Consts.OPERATORS.SUB);
 								word = ""; 
 								break; 
 							}
 							case '*' : {
 								if(!word.isEmpty()){
-									System.out.println(word + " " + analyzeWord(word)); 
+									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
+									codeOrder.add(symbol);
+									symbols.lookupInsert(symbol);
+									//System.out.println(word + " " + analyzeWord(word)); 
 								}
-								System.out.println(ch + " " +  Consts.OPERATORS.MUL);
+								//System.out.println(ch + " " +  Consts.OPERATORS.MUL);
 								word = ""; 
 								break; 
 							}
 							case '/' : {
 								if(!word.isEmpty()){
-									System.out.println(word + " " + analyzeWord(word)); 
+									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
+									codeOrder.add(symbol);
+									symbols.lookupInsert(symbol);
+									//System.out.println(word + " " + analyzeWord(word)); 
 								}
-								System.out.println(ch + " " +  Consts.OPERATORS.DIV);
+								//System.out.println(ch + " " +  Consts.OPERATORS.DIV);
 								word = ""; 
 								break; 
 							}
 							case '^' : {
-								
+								break;
 							}
 							case '%' : {
 								if(!word.isEmpty()){
-									System.out.println(word + " " + analyzeWord(word)); 
+									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
+									codeOrder.add(symbol);
+									symbols.lookupInsert(symbol);
+									//System.out.println(word + " " + analyzeWord(word)); 
 								}
-								System.out.println(ch + " " +  Consts.OPERATORS.MOD);
+								//System.out.println(ch + " " +  Consts.OPERATORS.MOD);
 								word = ""; 
 								break; 
 							}
 							case '=' : { 
 								if(!word.isEmpty()){
-									System.out.println(word + " " + analyzeWord(word));
+									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
+									codeOrder.add(symbol);
+									symbols.lookupInsert(symbol);
+									//System.out.println(word + " " + analyzeWord(word));
 								}
-								System.out.println(ch + " " +  Consts.OPERATORS.EQU);
+								//System.out.println(ch + " " +  Consts.OPERATORS.EQU);
 								word = "";
 								break;
 							}
 							case ' ' : {
 								if(!word.isEmpty()){
-									System.out.println(word + " " + analyzeWord(word));
+									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
+									codeOrder.add(symbol);
+									symbols.lookupInsert(symbol);
+									//System.out.println(word + " " + analyzeWord(word));
 								}
-								System.out.println(ch + " " +  Consts.SEPARATORS.SPACE);
+								//System.out.println(ch + " " +  Consts.SEPARATORS.SPACE);
 								word = "";
 								break;
 							}
-							case '	' : { 
+							case Consts.SEPARATORS.TAB : { 
 								if(!word.isEmpty()){
-									System.out.println(word + " " + analyzeWord(word));
+									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
+									codeOrder.add(symbol);
+									symbols.lookupInsert(symbol);
+									//System.out.println(word + " " + analyzeWord(word));
 								}
-								System.out.println(ch + " " + Consts.SEPARATORS.TAB);
+								//System.out.println(ch + " " + Consts.SEPARATORS.TAB);
 								word = "";
 								break;
 							}
 							case ',' : {
 								if(!word.isEmpty()){
-									System.out.println(word + " " + analyzeWord(word));
+									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
+									codeOrder.add(symbol);
+									symbols.lookupInsert(symbol);
+									//System.out.println(word + " " + analyzeWord(word));
 								}
-								System.out.println(ch + " " + Consts.CHARACTERS.COMMA);
+								//System.out.println(ch + " " + Consts.CHARACTERS.COMMA);
 								word = "";
 								break;
 							}
@@ -177,14 +221,23 @@ public class Scanner {
 					}
 				}
 			}
+			symbols.printTable();
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
 	
+	private static void loadSpecialSymbols(){
+		for (int i = 0; i < GramaticConfigs.SPECIAL_SYMBOLS.length; i++) {
+			symbols.insert(GramaticConfigs.SPECIAL_SYMBOLS[i]);
+		}
+
+		//symbols.printTable();
+	}
+	
 	private static int analyzeWord(String word) {
-		int ret = Consts.VARIABLE;
+		int ret = Consts.UNKNOWN;
 		
 		if(word.isEmpty()) {
 			return ret;

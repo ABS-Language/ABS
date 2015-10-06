@@ -13,6 +13,11 @@ public class Symbol {
 		this.name = name;
 	}
 	
+	Symbol(String name, int code) {
+		this.code = code;
+		this.name = name;
+	}
+	
 	public void setCode(int code) {
 		this.code = code;
 	}
@@ -35,6 +40,6 @@ public class Symbol {
 	}
 	
 	public boolean compareTo(Symbol item) {
-		return (this.name == item.getName() && this.code == item.getCode()) ? true : false;
+		return (this.name == item.getName()) ? true : false;
 	}
 }
