@@ -100,6 +100,7 @@ public class Scanner {
 								if(!word.isEmpty()){
 									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
 									//tuka ei tei
+									
 									symbols.lookupInsert(symbol);
 									codeOrder.add(symbol);
 									

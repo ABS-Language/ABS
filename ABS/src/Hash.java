@@ -125,3 +125,31 @@ public class Hash {
 		}
 	}
 }
+
+class Position {
+	private int cell;
+	private int chain;
+	
+	Position() {
+		this.setCell(-1);
+		this.setChain(-1);
+	}
+
+	public int getCell() {
+		return cell;
+	}
+
+	public void setCell(int cell) {
+		this.cell = cell;
+	}
+
+	public int getChain() {
+		return chain;
+	}
+
+	public void setChain(int chain) {
+		this.chain = chain;
+	}
+	
+	
+}
