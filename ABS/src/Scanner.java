@@ -7,9 +7,12 @@ public class Scanner {
 	private final static String CODE_FILE_PATH = "file.txt";
 	private static boolean isString = false;
 	private static boolean isChar = false;
+	
 	private static Hash symbols = new Hash(10); 
 	private static Array codeOrder = new Array(1000);
+	
 	private static Symbol symbol;
+	private static Position pos;
 	
 	public static void read(){
 		loadSpecialSymbols(); //tuka zarejda specialni simvoli
@@ -100,9 +103,8 @@ public class Scanner {
 								if(!word.isEmpty()){
 									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
 									//tuka ei tei
-									
-									symbols.lookupInsert(symbol);
-									codeOrder.add(symbol);
+									pos = symbols.lookupInsert(symbol);
+									codeOrder.add(pos); //KONFLIKT
 									
 									
 									codeOrder.add(new Symbol(";", Consts.LEXICALS.SEPARATOR));

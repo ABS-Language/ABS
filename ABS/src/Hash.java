@@ -75,40 +75,49 @@ public class Hash {
 	public int hash(Symbol key) {
 		int hash = 0;
 		
-		for(char c : key.getName().toCharArray()) {
-			hash = (hash << 4) + c;
+		for(int i = 0; i < key.getName().length(); i++) {
+			hash = (hash << 4) + key.getName().charAt(i);
 		}
 		
 		return hash & tableMask;
 	}
 	
-	public int insert(Symbol key) {
-		int index = this.hash(key);
+	public Position insert(Symbol key) {
+		int cell = this.hash(key);
 		
-		global__array[index].add(key);
+		Position pos = new Position();
+		pos.setCell(cell); //cell position in hash table
 		
-		return index;		
+		pos.setChain(global__array[cell].add(key));
+		
+		return pos;		
 	}
 	
-	public int lookup(Symbol key) {
-		int index = this.hash(key);
+	public Position lookup(Symbol key) {
+		int cell = this.hash(key);
 		
-		Array chain = global__array[index];
+		Position pos = new Position();
+		pos.setCell(cell); //cell position in hash table
+		
+		Array chain = global__array[cell];
 
 		for(int i = 0; i < chain.size(); i++) {
 				if(chain.get(i).isNull()) {
-					return -1;
+					return null;
 				}
 				else if(chain.get(i).compareTo(key)) {
-					return index;
+					pos.setChain(i);
+					return pos;
 			}
 		}
 		//key not found
-		return -1;
+		return null;
 	}
 	
-	public int lookupInsert(Symbol key) {
-		return this.lookup(key) == -1 ? this.insert(key) : this.hash(key);
+	public Position lookupInsert(Symbol key) {
+		Position pos = this.lookup(key);
+		
+		return pos == null ? this.insert(key) : pos;
 	}
 	
 	public void printTable() {
