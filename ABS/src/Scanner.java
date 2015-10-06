@@ -12,7 +12,7 @@ public class Scanner {
 	private static Symbol symbol;
 	
 	public static void read(){
-		loadSpecialSymbols();
+		loadSpecialSymbols(); //tuka zarejda specialni simvoli
 		FileReader read = null;
 		
 		try {
@@ -32,7 +32,8 @@ public class Scanner {
 		int line = 0;
 		try {
 			while((textRead = buffer.readLine()) != null) {	
-				line = line++;
+					line++; //pravilno
+				
 				
 				if(!(textRead = textRead.trim()).isEmpty()) {
 			//		System.out.println(textRead);
