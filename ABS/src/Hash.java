@@ -143,7 +143,12 @@ class Position {
 		this.setCell(-1);
 		this.setChain(-1);
 	}
-
+	
+	Position(int cell, int chain){
+		this.setCell(cell);
+		this.setChain(chain);
+	}
+	
 	public int getCell() {
 		return cell;
 	}
