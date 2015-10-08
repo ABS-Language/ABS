@@ -4,3 +4,9 @@ niz stringName = "pesho e slab";
 cqlo c = a + b - 5;
 simvol h = 'a123123';
 ako inache za dokato sluchai drobno ( ) { }
+
+cqlo ivan[10];
+
+za(cqlo i = 0; i < 10; i++) {
+	ivan[i] stava i + 5;
+}

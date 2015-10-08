@@ -83,7 +83,5 @@ public final class Consts {
 	class LEXICALS{
 		public final static int IDENTIFIER 				= 1;
 		public final static int CONSTANT				= 2;
-		public final static int SEPARATOR				= 3;
-		public final static int OPERATOR				= 4;
 	}
 }

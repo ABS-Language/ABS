@@ -103,10 +103,10 @@ public class Scanner {
 						for(int k = 0; k < GramaticConfigs.SEPARATORS.length; k++) {
 							if(GramaticConfigs.SEPARATORS[k].getName().equals(ch + "")) {
 								if(!word.isEmpty()) {
-										codeOrder.add(symbols.lookupInsert(new Symbol(word, Consts.LEXICALS.IDENTIFIER)));
+										codeOrder.add(symbols.lookupInsert(new Symbol(word, analyzeWord(word))));
 										word = "";
 									}
-									codeOrder.add(symbols.lookupInsert(new Symbol(ch + "", Consts.LEXICALS.IDENTIFIER)));
+									codeOrder.add(symbols.lookupInsert(new Symbol(ch + "", analyzeWord(word))));
 									
 									isSeparator = true;
 									
@@ -164,7 +164,7 @@ public class Scanner {
 			symbols.printTable();
 			
 			for (int i = 0; i < Scanner.getCodeOrder().size(); i++) {
-				System.out.println(Scanner.getCodeOrder().get(i) + " -> " + symbols.get(getCodeOrder().get(i).getCell(), getCodeOrder().get(i).getChain()));
+				System.out.println(Scanner.getCodeOrder().get(i) + " -> " + symbols.get(getCodeOrder().get(i).getCell(), getCodeOrder().get(i).getChain()) + " :: " + symbols.get(getCodeOrder().get(i).getCell(), getCodeOrder().get(i).getChain()).getCode());
 			}
 		} 
 		catch (IOException e) {
@@ -187,34 +187,7 @@ public class Scanner {
 	}
 	
 	private static int analyzeWord(String word) {
-		int ret = Consts.UNKNOWN;
-		
-		if(word.isEmpty()) {
-			return ret;
-		}
-		
-		switch(word) {
-			case "ako" 		: ret = Consts.CONDITIONAL_OPERATORS.IF; break;
-			case "inache" 	: ret = Consts.CONDITIONAL_OPERATORS.ELSE; break;
-			
-			case "cqlo"		: ret = Consts.DATA_TYPES.INTEGER; break;
-			case "drobno"	: ret = Consts.DATA_TYPES.FLOAT; break;
-			case "dvoino"	: ret = Consts.DATA_TYPES.DOUBLE; break;
-			case "simvol"	: ret = Consts.DATA_TYPES.CHAR; break;
-			case "niz"		: ret = Consts.DATA_TYPES.STRING; break;
-			
-			case "za"		: ret = Consts.LOOPS.FOR; break;
-			case "dokato"	: ret = Consts.LOOPS.WHILE; break;
-		}
-		
-		if(isInt(word)) {
-			ret = Consts.CONSTANTS.INTEGER;
-		}
-		else if(isFloat(word)) {
-			ret = Consts.CONSTANTS.FLOAT;
-		}
-		
-		return ret;
+		return (isInt(word) || isFloat(word)) ? Consts.LEXICALS.CONSTANT : Consts.LEXICALS.IDENTIFIER;
 	}
 		
 	private static boolean isInt(String str) {
