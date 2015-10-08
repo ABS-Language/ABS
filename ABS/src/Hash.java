@@ -166,5 +166,8 @@ class Position {
 		this.chain = chain;
 	}
 	
+	public String toString(){
+		return "[" + this.getCell() + "]" + "[" + this.getChain() + "]";
+	}
 	
 }

@@ -29,6 +29,9 @@ public class Main {
 		h1.printTable();
 	*/	
 		
-		Scanner.read();		
+		Scanner.read();	
+		for (int i = 0; i < Scanner.getCodeOrder().size(); i++) {
+			System.out.println(Scanner.getCodeOrder().get(i).toString());
+		}
 	}
 }

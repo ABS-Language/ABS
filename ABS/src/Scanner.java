@@ -240,6 +240,10 @@ public class Scanner {
 		//symbols.printTable();
 	}
 	
+	public static ArrayList<Position> getCodeOrder(){
+		return codeOrder;
+	}
+	
 	private static int analyzeWord(String word) {
 		int ret = Consts.UNKNOWN;
 		
