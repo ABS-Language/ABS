@@ -9,7 +9,7 @@ public class Scanner {
 	private static boolean isString = false;
 	private static boolean isChar = false;
 	
-	private static Hash symbols = new Hash(10); 
+	private static Hash symbols = new Hash(50); 
 	private static ArrayList<Position> codeOrder = new ArrayList<>();
 	
 	private static Symbol symbol;

@@ -1,3 +1,4 @@
+import java.util.Random;
 
 public class Hash {
 	private final int TABLE_SIZE = 50;
@@ -72,23 +73,22 @@ public class Hash {
 		return (int) (hash & tableMask);
 	}
 	*/
-	public int hash(Symbol key) {
+	public int hash(Symbol symbol) {
 		int hash = 0;
-		
-		for(int i = 0; i < key.getName().length(); i++) {
-			hash = (hash << 4) + key.getName().charAt(i);
+		for(int i = 0; i < symbol.getName().length(); i++) {
+			hash = (hash << 4) + symbol.getName().charAt(i);
 		}
 		
 		return hash & tableMask;
 	}
 	
-	public Position insert(Symbol key) {
-		int cell = this.hash(key);
+	public Position insert(Symbol symbol) {
+		int cell = this.hash(symbol);
 		
 		Position pos = new Position();
 		pos.setCell(cell); //cell position in hash table
 		
-		pos.setChain(global__array[cell].add(key));
+		pos.setChain(global__array[cell].add(symbol));
 		
 		return pos;		
 	}
