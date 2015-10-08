@@ -12,4 +12,23 @@ public class GramaticConfigs {
 			new Symbol("izvedi", Consts.IO.OUTPUT),
 			new Symbol("vuvedi", Consts.IO.INPUT)
 	};
+	
+	public final static Symbol[] SEPARATORS = {
+		new Symbol("(", Consts.CHARACTERS.LEFT_BRACKET),
+		new Symbol(")", Consts.CHARACTERS.RIGHT_BRACKET),
+		new Symbol("[", Consts.CHARACTERS.LEFT_SQUARE_BRACKET),
+		new Symbol("]", Consts.CHARACTERS.RIGHT_SQUARE_BRACKET),
+		new Symbol("{", Consts.CHARACTERS.LEFT_CURLY_BRACKET),
+		new Symbol("}", Consts.CHARACTERS.RIGHT_CURLY_BRACKET),
+		new Symbol(";", Consts.EOS.SEMICOLON),
+		new Symbol("+", Consts.OPERATORS.ADD),
+		new Symbol("-", Consts.OPERATORS.SUB),
+		new Symbol("*", Consts.OPERATORS.MUL),
+		new Symbol("/", Consts.OPERATORS.DIV),
+		new Symbol("%", Consts.OPERATORS.MOD),
+		new Symbol("=", Consts.OPERATORS.EQU),
+		new Symbol(" ", Consts.SEPARATORS.SPACE),
+		new Symbol("	", Consts.SEPARATORS.TAB),
+		new Symbol(",", Consts.CHARACTERS.COMMA)
+	};
 }	

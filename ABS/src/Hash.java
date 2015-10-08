@@ -92,6 +92,10 @@ public class Hash {
 		return pos;		
 	}
 	
+	public Symbol get(int cell, int chain) {
+		return global__array[cell].get(chain);
+	}
+	
 	public Position lookup(Symbol symbol) {
 		int cell = this.hash(symbol);
 		

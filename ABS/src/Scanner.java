@@ -8,8 +8,9 @@ public class Scanner {
 	private final static String CODE_FILE_PATH = "file.txt";
 	private static boolean isString = false;
 	private static boolean isChar = false;
+	private static boolean isSeparator = false;
 	
-	private static Hash symbols = new Hash(50); 
+	private static Hash symbols = new Hash(10); 
 	private static ArrayList<Position> codeOrder = new ArrayList<>();
 	
 	private static Symbol symbol;
@@ -97,6 +98,27 @@ public class Scanner {
 							continue;
 						}
 						
+						isSeparator = false;
+						
+						for(int k = 0; k < GramaticConfigs.SEPARATORS.length; k++) {
+							if(GramaticConfigs.SEPARATORS[k].getName().equals(ch + "")) {
+								if(!word.isEmpty()) {
+										codeOrder.add(symbols.lookupInsert(new Symbol(word, Consts.LEXICALS.IDENTIFIER)));
+										word = "";
+									}
+									codeOrder.add(symbols.lookupInsert(new Symbol(ch + "", Consts.LEXICALS.IDENTIFIER)));
+									
+									isSeparator = true;
+									
+									break;
+								}
+						}
+						
+						if(!isSeparator) {
+							word += ch;
+						}
+						
+							/*
 						switch(ch) {
 							case ';' : 
 							case '+' : 
@@ -121,7 +143,7 @@ public class Scanner {
 							case '[' :
 							case ']' : 
 							case '{' : 
-							case '}' :{
+							case '}' : {
 								if(!word.isEmpty()) {
 									symbol = new Symbol(word, Consts.LEXICALS.SEPARATOR);
 									pos = symbols.lookupInsert(symbol);
@@ -135,10 +157,15 @@ public class Scanner {
 								break;
 							}
 						}
+						*/
 					}
 				}
 			}
-	//		symbols.printTable();
+			symbols.printTable();
+			
+			for (int i = 0; i < Scanner.getCodeOrder().size(); i++) {
+				System.out.println(Scanner.getCodeOrder().get(i) + "->" + symbols.get(getCodeOrder().get(i).getCell(), getCodeOrder().get(i).getChain()));
+			}
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
@@ -149,8 +176,10 @@ public class Scanner {
 		for (int i = 0; i < GramaticConfigs.SPECIAL_SYMBOLS.length; i++) {
 			symbols.insert(GramaticConfigs.SPECIAL_SYMBOLS[i]);
 		}
-
-		//symbols.printTable();
+		
+		for (int i = 0; i < GramaticConfigs.SEPARATORS.length; i++) {
+			symbols.insert(GramaticConfigs.SEPARATORS[i]);
+		}
 	}
 	
 	public static ArrayList<Position> getCodeOrder(){
@@ -210,18 +239,5 @@ public class Scanner {
 	     {
 	         return false;
 	     }
-	}
-	
-	/*private static boolean isDouble(String str) {
-		try
-	     {
-			Double.parseDouble(str);
-	         return true;
-	     }
-	     catch(NumberFormatException e)
-	     {
-	         return false;
-	     }
-	}*/
-	
+	}	
 }
