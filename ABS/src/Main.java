@@ -31,7 +31,7 @@ public class Main {
 		
 		Scanner.read();	
 		for (int i = 0; i < Scanner.getCodeOrder().size(); i++) {
-			System.out.println(Scanner.getCodeOrder().get(i).toString());
+			System.out.println(Scanner.getCodeOrder().get(i));
 		}
 	}
 }
