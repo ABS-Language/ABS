@@ -10,6 +10,6 @@ public class GramaticConfigs {
 			new Symbol("drobno", Consts.DATA_TYPES.FLOAT),
 			new Symbol("niz", Consts.DATA_TYPES.STRING),
 			new Symbol("izvedi", Consts.IO.OUTPUT),
-			new Symbol("vuvedi", Consts.IO.INPUT)			
+			new Symbol("vuvedi", Consts.IO.INPUT)
 	};
 }	
