@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class Hash {
 	private final int TABLE_SIZE = 50;
 	private final int CHAIN_SIZE = 5;
@@ -43,23 +41,23 @@ public class Hash {
 	}
 	
 	
-	/*
-	private int hash(String key) {
+	
+	/*private int hash(Symbol symbol) {
 
 		int sum = 1;
-		
-		for(int i = 0; i < key.length(); ++i) {
-			sum *= key.charAt(i);
+		String name = symbol.getName();
+		for(int i = 0; i < name.length(); ++i) {
+			sum *= name.charAt(i);
 		}
 
 		return (sum % tableSize);
-	}
-	*/
-	/*
-	public int hash(String key) {
+	}*/
+	
+	
+	public int hash(Symbol symbol) {
 		long hash = 5381;
 		
-		for(char c : key.toCharArray()) {
+		for(char c : symbol.getName().toCharArray()) {
 			hash = ((hash << 5) + hash) + c;
 			hash = ((hash << 5) + hash) + c;
 			hash = ((hash << 5) + hash) + c;
@@ -69,10 +67,11 @@ public class Hash {
 			hash = ((hash << 5) + hash) + c;
 			hash = ((hash << 5) + hash) + c;
 		}	
-		
+		hash /= 5381;
 		return (int) (hash & tableMask);
 	}
-	*/
+	
+	/*
 	public int hash(Symbol symbol) {
 		int hash = 0;
 		for(int i = 0; i < symbol.getName().length(); i++) {
@@ -81,7 +80,7 @@ public class Hash {
 		
 		return hash & tableMask;
 	}
-	
+	*/
 	public Position insert(Symbol symbol) {
 		int cell = this.hash(symbol);
 		
