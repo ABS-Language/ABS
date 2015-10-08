@@ -164,7 +164,7 @@ public class Scanner {
 			symbols.printTable();
 			
 			for (int i = 0; i < Scanner.getCodeOrder().size(); i++) {
-				System.out.println(Scanner.getCodeOrder().get(i) + "->" + symbols.get(getCodeOrder().get(i).getCell(), getCodeOrder().get(i).getChain()));
+				System.out.println(Scanner.getCodeOrder().get(i) + " -> " + symbols.get(getCodeOrder().get(i).getCell(), getCodeOrder().get(i).getChain()));
 			}
 		} 
 		catch (IOException e) {
