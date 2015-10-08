@@ -1,4 +1,3 @@
-
 public class Hash {
 	private final int TABLE_SIZE = 50;
 	private final int CHAIN_SIZE = 5;
@@ -6,16 +5,16 @@ public class Hash {
 	private int tableSize;
 	private int tableMask;
 	
-	private Array[] global__array;
+	private Chain[] global__array;
 	
 	Hash() {
 		this.tableSize = TABLE_SIZE;
 		this.tableMask = this.tableSize - 1;
 		
-		this.global__array = new Array[tableSize];
+		this.global__array = new Chain[tableSize];
 		
 		for(int i = 0; i < tableSize; ++i) {
-			this.global__array[i] = new Array(CHAIN_SIZE);
+			this.global__array[i] = new Chain(CHAIN_SIZE);
 		}
 	}
 	
@@ -23,10 +22,10 @@ public class Hash {
 		this.tableSize = table_size;
 		this.tableMask = tableSize - 1;
 		
-		global__array = new Array[tableSize];
+		global__array = new Chain[tableSize];
 		
 		for(int i = 0; i < tableSize; ++i) {
-			this.global__array[i] = new Array(CHAIN_SIZE);
+			this.global__array[i] = new Chain(CHAIN_SIZE);
 		}
 	}
 	
@@ -34,31 +33,31 @@ public class Hash {
 		this.tableSize = table_size;
 		this.tableMask = this.tableSize - 1;
 		
-		this.global__array = new Array[this.tableSize];
+		this.global__array = new Chain[this.tableSize];
 		
 		for(int i = 0; i < this.tableSize; ++i) {
-			this.global__array[i] = new Array(chain_size);
+			this.global__array[i] = new Chain(chain_size);
 		}
 	}
 	
 	
-	/*
-	private int hash(String key) {
+	
+	/*private int hash(Symbol symbol) {
 
 		int sum = 1;
-		
-		for(int i = 0; i < key.length(); ++i) {
-			sum *= key.charAt(i);
+		String name = symbol.getName();
+		for(int i = 0; i < name.length(); ++i) {
+			sum *= name.charAt(i);
 		}
 
 		return (sum % tableSize);
-	}
-	*/
-	/*
-	public int hash(String key) {
+	}*/
+	
+	
+	public int hash(Symbol symbol) {
 		long hash = 5381;
 		
-		for(char c : key.toCharArray()) {
+		for(char c : symbol.getName().toCharArray()) {
 			hash = ((hash << 5) + hash) + c;
 			hash = ((hash << 5) + hash) + c;
 			hash = ((hash << 5) + hash) + c;
@@ -68,44 +67,45 @@ public class Hash {
 			hash = ((hash << 5) + hash) + c;
 			hash = ((hash << 5) + hash) + c;
 		}	
-		
+		hash /= 5381;
 		return (int) (hash & tableMask);
 	}
-	*/
-	public int hash(Symbol key) {
+	
+	/*
+	public int hash(Symbol symbol) {
 		int hash = 0;
-		
-		for(int i = 0; i < key.getName().length(); i++) {
-			hash = (hash << 4) + key.getName().charAt(i);
+		for(int i = 0; i < symbol.getName().length(); i++) {
+			hash = (hash << 4) + symbol.getName().charAt(i);
 		}
 		
 		return hash & tableMask;
 	}
-	
-	public Position insert(Symbol key) {
-		int cell = this.hash(key);
+	*/
+	public Position insert(Symbol symbol) {
+		int cell = this.hash(symbol);
 		
 		Position pos = new Position();
 		pos.setCell(cell); //cell position in hash table
 		
-		pos.setChain(global__array[cell].add(key));
+		pos.setChain(global__array[cell].add(symbol));
 		
 		return pos;		
 	}
 	
-	public Position lookup(Symbol key) {
-		int cell = this.hash(key);
+	public Position lookup(Symbol symbol) {
+		int cell = this.hash(symbol);
 		
 		Position pos = new Position();
 		pos.setCell(cell); //cell position in hash table
 		
-		Array chain = global__array[cell];
+		Chain chain = global__array[cell];
 
 		for(int i = 0; i < chain.size(); i++) {
 				if(chain.get(i).isNull()) {
 					return null;
 				}
-				else if(chain.get(i).compareTo(key)) {
+				
+				if(chain.get(i).compareTo(symbol)) {
 					pos.setChain(i);
 					return pos;
 			}
@@ -114,16 +114,16 @@ public class Hash {
 		return null;
 	}
 	
-	public Position lookupInsert(Symbol key) {
-		Position pos = this.lookup(key);
+	public Position lookupInsert(Symbol symbol) {
+		Position pos = this.lookup(symbol);
 		
-		return pos == null ? this.insert(key) : pos;
+		return pos == null ? this.insert(symbol) : pos;
 	}
 	
 	public void printTable() {
 		int i = 0;
 		
-		for(Array chain : global__array) {
+		for(Chain chain : global__array) {
 			System.out.print(i++);
 			
 			for(int j = 0; j < chain.size(); ++j) {
@@ -143,7 +143,12 @@ class Position {
 		this.setCell(-1);
 		this.setChain(-1);
 	}
-
+	
+	Position(int cell, int chain){
+		this.setCell(cell);
+		this.setChain(chain);
+	}
+	
 	public int getCell() {
 		return cell;
 	}
@@ -160,5 +165,8 @@ class Position {
 		this.chain = chain;
 	}
 	
+	public String toString(){
+		return "[" + this.getCell() + "]" + "[" + this.getChain() + "]";
+	}
 	
 }

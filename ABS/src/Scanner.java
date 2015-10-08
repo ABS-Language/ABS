@@ -2,14 +2,15 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class Scanner {
 	private final static String CODE_FILE_PATH = "file.txt";
 	private static boolean isString = false;
 	private static boolean isChar = false;
 	
-	private static Hash symbols = new Hash(10); 
-	private static Array codeOrder = new Array(1000);
+	private static Hash symbols = new Hash(50); 
+	private static ArrayList<Position> codeOrder = new ArrayList<>();
 	
 	private static Symbol symbol;
 	private static Position pos;
@@ -60,8 +61,8 @@ public class Scanner {
 						if(ch == '"'){
 							if(isString == true){
 								symbol = new Symbol(word, Consts.LEXICALS.CONSTANT);
-								codeOrder.add(symbol);
-								symbols.lookupInsert(symbol);
+								pos = symbols.lookupInsert(symbol);
+								codeOrder.add(pos);
 								//System.out.println(word + " " + Consts.CONSTANTS.STRING);
 								isString = false;
 								word = "";
@@ -81,8 +82,8 @@ public class Scanner {
 						if(ch == '\''){
 							if(isChar == true){
 								symbol = new Symbol(word, Consts.LEXICALS.CONSTANT);
-								codeOrder.add(symbol);
-								symbols.lookupInsert(symbol);
+								pos = symbols.lookupInsert(symbol);
+								codeOrder.add(pos);
 								//System.out.println(word + " " + Consts.CONSTANTS.CHAR);
 								isChar = false;
 								word = "";
@@ -102,12 +103,11 @@ public class Scanner {
 							case ';' : {
 								if(!word.isEmpty()){
 									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
-									//tuka ei tei
 									pos = symbols.lookupInsert(symbol);
-									codeOrder.add(pos); //KONFLIKT
+									codeOrder.add(pos);
 									
 									
-									codeOrder.add(new Symbol(";", Consts.LEXICALS.SEPARATOR));
+									//codeOrder.add(new Symbol(";", Consts.LEXICALS.SEPARATOR));
 									
 									//System.out.println(word + " " + analyzeWord(word));
 								}
@@ -118,8 +118,8 @@ public class Scanner {
 							case '+' : { 
 								if(!word.isEmpty()){
 									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
-									codeOrder.add(symbol);
-									symbols.lookupInsert(symbol);
+									pos = symbols.lookupInsert(symbol);
+									codeOrder.add(pos);
 									//System.out.println(word + " " + analyzeWord(word));
 								} 
 								//System.out.println(ch + " " +  Consts.OPERATORS.ADD);
@@ -129,8 +129,8 @@ public class Scanner {
 							case '-' : {
 								if(!word.isEmpty()){
 									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
-									codeOrder.add(symbol);
-									symbols.lookupInsert(symbol);
+									pos = symbols.lookupInsert(symbol);
+									codeOrder.add(pos);
 									//System.out.println(word + " " + analyzeWord(word)); 
 								}
 								//System.out.println(ch + " " +  Consts.OPERATORS.SUB);
@@ -140,8 +140,8 @@ public class Scanner {
 							case '*' : {
 								if(!word.isEmpty()){
 									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
-									codeOrder.add(symbol);
-									symbols.lookupInsert(symbol);
+									pos = symbols.lookupInsert(symbol);
+									codeOrder.add(pos);
 									//System.out.println(word + " " + analyzeWord(word)); 
 								}
 								//System.out.println(ch + " " +  Consts.OPERATORS.MUL);
@@ -151,8 +151,8 @@ public class Scanner {
 							case '/' : {
 								if(!word.isEmpty()){
 									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
-									codeOrder.add(symbol);
-									symbols.lookupInsert(symbol);
+									pos = symbols.lookupInsert(symbol);
+									codeOrder.add(pos);
 									//System.out.println(word + " " + analyzeWord(word)); 
 								}
 								//System.out.println(ch + " " +  Consts.OPERATORS.DIV);
@@ -165,8 +165,8 @@ public class Scanner {
 							case '%' : {
 								if(!word.isEmpty()){
 									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
-									codeOrder.add(symbol);
-									symbols.lookupInsert(symbol);
+									pos = symbols.lookupInsert(symbol);
+									codeOrder.add(pos);
 									//System.out.println(word + " " + analyzeWord(word)); 
 								}
 								//System.out.println(ch + " " +  Consts.OPERATORS.MOD);
@@ -176,8 +176,8 @@ public class Scanner {
 							case '=' : { 
 								if(!word.isEmpty()){
 									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
-									codeOrder.add(symbol);
-									symbols.lookupInsert(symbol);
+									pos = symbols.lookupInsert(symbol);
+									codeOrder.add(pos);
 									//System.out.println(word + " " + analyzeWord(word));
 								}
 								//System.out.println(ch + " " +  Consts.OPERATORS.EQU);
@@ -187,8 +187,8 @@ public class Scanner {
 							case ' ' : {
 								if(!word.isEmpty()){
 									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
-									codeOrder.add(symbol);
-									symbols.lookupInsert(symbol);
+									pos = symbols.lookupInsert(symbol);
+									codeOrder.add(pos);
 									//System.out.println(word + " " + analyzeWord(word));
 								}
 								//System.out.println(ch + " " +  Consts.SEPARATORS.SPACE);
@@ -198,8 +198,8 @@ public class Scanner {
 							case Consts.SEPARATORS.TAB : { 
 								if(!word.isEmpty()){
 									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
-									codeOrder.add(symbol);
-									symbols.lookupInsert(symbol);
+									pos = symbols.lookupInsert(symbol);
+									codeOrder.add(pos);
 									//System.out.println(word + " " + analyzeWord(word));
 								}
 								//System.out.println(ch + " " + Consts.SEPARATORS.TAB);
@@ -209,8 +209,8 @@ public class Scanner {
 							case ',' : {
 								if(!word.isEmpty()){
 									symbol = new Symbol(word, Consts.LEXICALS.IDENTIFIER);
-									codeOrder.add(symbol);
-									symbols.lookupInsert(symbol);
+									pos = symbols.lookupInsert(symbol);
+									codeOrder.add(pos);
 									//System.out.println(word + " " + analyzeWord(word));
 								}
 								//System.out.println(ch + " " + Consts.CHARACTERS.COMMA);
@@ -238,6 +238,10 @@ public class Scanner {
 		}
 
 		//symbols.printTable();
+	}
+	
+	public static ArrayList<Position> getCodeOrder(){
+		return codeOrder;
 	}
 	
 	private static int analyzeWord(String word) {
