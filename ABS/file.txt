@@ -3,3 +3,4 @@ cqlo b = 3.14 + 5;
 niz stringName = "pesho e slab";
 cqlo c = a + b - 5;
 simvol h = 'a123123';
+ako inache za dokato sluchai drobno ( ) { }
