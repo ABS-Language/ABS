@@ -6,16 +6,16 @@ public class Hash {
 	private int tableSize;
 	private int tableMask;
 	
-	private Array[] global__array;
+	private Chain[] global__array;
 	
 	Hash() {
 		this.tableSize = TABLE_SIZE;
 		this.tableMask = this.tableSize - 1;
 		
-		this.global__array = new Array[tableSize];
+		this.global__array = new Chain[tableSize];
 		
 		for(int i = 0; i < tableSize; ++i) {
-			this.global__array[i] = new Array(CHAIN_SIZE);
+			this.global__array[i] = new Chain(CHAIN_SIZE);
 		}
 	}
 	
@@ -23,10 +23,10 @@ public class Hash {
 		this.tableSize = table_size;
 		this.tableMask = tableSize - 1;
 		
-		global__array = new Array[tableSize];
+		global__array = new Chain[tableSize];
 		
 		for(int i = 0; i < tableSize; ++i) {
-			this.global__array[i] = new Array(CHAIN_SIZE);
+			this.global__array[i] = new Chain(CHAIN_SIZE);
 		}
 	}
 	
@@ -34,10 +34,10 @@ public class Hash {
 		this.tableSize = table_size;
 		this.tableMask = this.tableSize - 1;
 		
-		this.global__array = new Array[this.tableSize];
+		this.global__array = new Chain[this.tableSize];
 		
 		for(int i = 0; i < this.tableSize; ++i) {
-			this.global__array[i] = new Array(chain_size);
+			this.global__array[i] = new Chain(chain_size);
 		}
 	}
 	
@@ -93,19 +93,20 @@ public class Hash {
 		return pos;		
 	}
 	
-	public Position lookup(Symbol key) {
-		int cell = this.hash(key);
+	public Position lookup(Symbol symbol) {
+		int cell = this.hash(symbol);
 		
 		Position pos = new Position();
 		pos.setCell(cell); //cell position in hash table
 		
-		Array chain = global__array[cell];
+		Chain chain = global__array[cell];
 
 		for(int i = 0; i < chain.size(); i++) {
 				if(chain.get(i).isNull()) {
 					return null;
 				}
-				else if(chain.get(i).compareTo(key)) {
+				
+				if(chain.get(i).compareTo(symbol)) {
 					pos.setChain(i);
 					return pos;
 			}
@@ -114,16 +115,16 @@ public class Hash {
 		return null;
 	}
 	
-	public Position lookupInsert(Symbol key) {
-		Position pos = this.lookup(key);
+	public Position lookupInsert(Symbol symbol) {
+		Position pos = this.lookup(symbol);
 		
-		return pos == null ? this.insert(key) : pos;
+		return pos == null ? this.insert(symbol) : pos;
 	}
 	
 	public void printTable() {
 		int i = 0;
 		
-		for(Array chain : global__array) {
+		for(Chain chain : global__array) {
 			System.out.print(i++);
 			
 			for(int j = 0; j < chain.size(); ++j) {

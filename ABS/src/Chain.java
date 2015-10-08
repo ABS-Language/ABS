@@ -1,13 +1,13 @@
 import java.util.Arrays;
 
-public class Array{
+public class Chain{
 	private int SIZE = 100;
 	private int size;
 	
 	private Symbol[] array;
 	private int index;
 	
-	Array() {
+	Chain() {
 		this.array = new Symbol[SIZE];
 		
 		for(int i = 0; i < SIZE; ++i) {
@@ -18,7 +18,7 @@ public class Array{
 		this.size = this.SIZE;
 	}
 	
-	Array(int size) {
+	Chain(int size) {
 		this.array = new Symbol[size];
 		
 		for(int i = 0; i < size; ++i) {
