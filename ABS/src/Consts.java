@@ -75,6 +75,11 @@ public final class Consts {
 		public final static int COMMA					= 508;
 	}
 	
+	class IO {
+		public final static int INPUT					= 600;
+		public final static int OUTPUT					= 601;
+	}
+	
 	class LEXICALS{
 		public final static int IDENTIFIER 				= 1;
 		public final static int CONSTANT				= 2;

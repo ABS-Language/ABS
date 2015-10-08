@@ -225,7 +225,7 @@ public class Scanner {
 					}
 				}
 			}
-			symbols.printTable();
+	//		symbols.printTable();
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
