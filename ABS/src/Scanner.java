@@ -10,7 +10,11 @@ public class Scanner {
 	private static boolean isChar = false;
 	private static boolean isSeparator = false;
 	
+<<<<<<< HEAD
 	private static Hash symbols = new Hash(10); 
+=======
+	private static Hash symbols = new Hash(100); 
+>>>>>>> origin/master
 	private static ArrayList<Position> codeOrder = new ArrayList<>();
 	
 	private static Symbol symbol;
