@@ -40,6 +40,6 @@ public class Symbol {
 	}
 	
 	public boolean compareTo(Symbol item) {
-		return (this.name == item.getName()) ? true : false;
+		return (this.name.equals(item.getName())) ? true : false;
 	}
 }
