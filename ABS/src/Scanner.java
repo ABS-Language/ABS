@@ -6,9 +6,11 @@ import java.util.ArrayList;
 
 public class Scanner {
 	private final static String CODE_FILE_PATH = "file.txt";
+	
 	private static boolean isString = false;
 	private static boolean isChar = false;
 	private static boolean isSeparator = false;
+	private static boolean isComment = false;
 	
 	private static Hash symbols = new Hash(10);
 	private static ArrayList<Position> codeOrder = new ArrayList<>();
@@ -33,7 +35,7 @@ public class Scanner {
 		String textRead;
 		String word = "";
 
-		char ch;
+		char ch, next_ch = ' ';
 		int line = 0;
 		try {
 			while((textRead = buffer.readLine()) != null) {	
@@ -42,6 +44,19 @@ public class Scanner {
 				if(!(textRead = textRead.trim()).isEmpty()) {
 					for(int i = 0; i < textRead.length(); ++i) {
 						ch = textRead.charAt(i);
+						
+						try {
+							next_ch = textRead.charAt(i+1);
+						}
+						catch(StringIndexOutOfBoundsException e) {}
+						
+						if(isComment) {
+							if(ch == '*' && next_ch == '/') {
+								isComment = false;
+								i++;
+							}
+							continue;
+						}					
 						
 						if(ch == '"'){
 							if(isString == true){
@@ -83,8 +98,18 @@ public class Scanner {
 							continue;
 						}
 						
-						isSeparator = false;
-						
+						if(ch == '/') {
+							if(next_ch == '/') {
+								break; //stop reading line - its a comment
+							}
+							else if(next_ch == '*') {
+								i++;
+								isComment = true;
+								
+								continue;
+							}
+						}
+
 						if((ch < Consts.PERMITTED.ASCII_LOW || ch > Consts.PERMITTED.ASCII_CYRILLIC_HIGH)
 						|| 
 						(ch > Consts.PERMITTED.ASCII_HIGH && ch < Consts.PERMITTED.ASCII_CYRILLIC_LOW)
@@ -94,13 +119,17 @@ public class Scanner {
 								return;
 							}
 						}
+						//==
+						isSeparator = false;
 						
 						for(int k = 0; k < GramaticConfigs.SEPARATORS.length; k++) {
 							if(GramaticConfigs.SEPARATORS[k].getName().equals(ch + "")) {
 								if(!word.isEmpty()) {
-										codeOrder.add(symbols.lookupInsert(new Symbol(word, analyzeWord(word))));
+									codeOrder.add(symbols.lookupInsert(new Symbol(word, analyzeWord(word))));
 										word = "";
 									}
+								
+								if(ch == '*') { System.out.println("line " + line + " character ======== " + i); }
 									codeOrder.add(symbols.lookupInsert(new Symbol(ch + "", analyzeWord(word))));
 									
 									isSeparator = true;
@@ -156,7 +185,7 @@ public class Scanner {
 					}
 				}
 			}
-			symbols.printTable();
+		//	symbols.printTable();
 			
 			for (int i = 0; i < Scanner.getCodeOrder().size(); i++) {
 				System.out.println(Scanner.getCodeOrder().get(i) + " -> " + symbols.get(getCodeOrder().get(i).getCell(), getCodeOrder().get(i).getChain()) + " :: " + symbols.get(getCodeOrder().get(i).getCell(), getCodeOrder().get(i).getChain()).getCode());
