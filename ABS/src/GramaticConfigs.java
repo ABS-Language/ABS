@@ -9,7 +9,6 @@ public class GramaticConfigs {
 			new Symbol("cqlo", Consts.DATA_TYPES.INTEGER),
 			new Symbol("drobno", Consts.DATA_TYPES.FLOAT),
 			new Symbol("niz", Consts.DATA_TYPES.STRING),
-			new Symbol("simvol", Consts.DATA_TYPES.CHAR),
 			new Symbol("izvedi", Consts.IO.OUTPUT),
 			new Symbol("vuvedi", Consts.IO.INPUT)
 	};
