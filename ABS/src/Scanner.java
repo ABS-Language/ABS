@@ -40,22 +40,10 @@ public class Scanner {
 					line++; //pravilno
 				
 				
+					
 				if(!(textRead = textRead.trim()).isEmpty()) {
 					for(int i = 0; i < textRead.length(); ++i) {
 						ch = textRead.charAt(i);
-						
-						if(ch == Consts.FORBIDDEN.SOH
-							|| ch == Consts.FORBIDDEN.STX
-							|| ch == Consts.FORBIDDEN.ETX
-							|| ch == Consts.FORBIDDEN.ENQ
-							|| ch == Consts.FORBIDDEN.ACK
-							|| ch == Consts.FORBIDDEN.BEL
-							|| ch == Consts.FORBIDDEN.BS
-							|| ch == Consts.FORBIDDEN.LF
-							|| ch == Consts.FORBIDDEN.CR) {
-								System.out.println("Used forbidden symbol at line: " + line);
-								return;
-							}
 						
 						if(ch == '"'){
 							if(isString == true){
