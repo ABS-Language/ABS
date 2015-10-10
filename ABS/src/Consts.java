@@ -3,16 +3,7 @@ public final class Consts {
 	public final static int UNKNOWN 		= 666;
 	
 	class FORBIDDEN {
-		public final static int SOH 		= 1;
-		public final static int STX 		= 2;
-		public final static int ETX 		= 3;
-		public final static int EOT 		= 4;
-		public final static int ENQ 		= 5;
-		public final static int ACK 		= 6;
-		public final static int BEL 		= 7;
-		public final static int BS 			= 8;
-		public final static int LF 			= 10;
-		public final static int CR 			= 13;
+		public final static int ASCII_LOW	= 1;
 	}
 	
 	class CONSTANTS {
