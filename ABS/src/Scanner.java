@@ -38,8 +38,6 @@ public class Scanner {
 		try {
 			while((textRead = buffer.readLine()) != null) {	
 					line++; //pravilno
-				
-				
 					
 				if(!(textRead = textRead.trim()).isEmpty()) {
 					for(int i = 0; i < textRead.length(); ++i) {
@@ -58,14 +56,13 @@ public class Scanner {
 							isString = true;
 							word = "";
 							continue;
-							
 						}
 						
 						if(isString == true){
 							word += ch;
 							continue;
 						}
-						
+												
 						if(ch == '\''){
 							if(isChar == true){
 								symbol = new Symbol(word, Consts.LEXICALS.CONSTANT);
@@ -87,6 +84,16 @@ public class Scanner {
 						}
 						
 						isSeparator = false;
+						
+						if((ch < Consts.PERMITTED.ASCII_LOW || ch > Consts.PERMITTED.ASCII_CYRILLIC_HIGH)
+						|| 
+						(ch > Consts.PERMITTED.ASCII_HIGH && ch < Consts.PERMITTED.ASCII_CYRILLIC_LOW)
+						|| ch == Consts.FORBIDDEN.ASCII_AT) {
+							if(ch != Consts.SEPARATORS.ASCII_TAB) {
+								System.out.println("Invalid character on " + line + " : " + (i+1));
+								return;
+							}
+						}
 						
 						for(int k = 0; k < GramaticConfigs.SEPARATORS.length; k++) {
 							if(GramaticConfigs.SEPARATORS[k].getName().equals(ch + "")) {

@@ -1,5 +1,5 @@
 cqlo a = 81.21321312;
-cqlo b = 3.14 + 5;
+cqlo b = 3.14 + 	5;
 niz stringName = "pesho e slab";
 cqlo c = a + b - 5;
 simvol h = 'a123123';
@@ -10,3 +10,4 @@ cqlo ivan[10];
 za(cqlo i = 0; i < 10; i++) {
 	ivan[i] stava i + 5;
 }
+"здавей"

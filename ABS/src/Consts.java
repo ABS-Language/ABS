@@ -3,22 +3,23 @@ public final class Consts {
 	public final static int UNKNOWN 		= 666;
 	
 	class FORBIDDEN {
+		public final static int ASCII_AT	= 64;
+	}
+	
+	class PERMITTED {
 		public final static int ASCII_LOW	= 32;
-		public final static int ASCII_HIGH	= 126;
+		public final static int ASCII_HIGH	= 125;
 		
 		public final static int ASCII_CYRILLIC_LOW	= 192;
 		public final static int ASCII_CYRILLIC_HIGH	= 255;
 	}
 	
-	class CONSTANTS {
-		public final static int INTEGER		= 2;
-		public final static int FLOAT		= 3;
-		public final static int DOUBLE		= 4;
-		public final static int CHAR		= 5;
-		public final static int STRING		= 6;
+	class LEXICALS{
+		public final static int IDENTIFIER 				= 1;
+		public final static int CONSTANT				= 2;
 	}
 	
-	class DATA_TYPES {
+	class CONSTANTS {
 		public final static int INTEGER		= 12;
 		public final static int FLOAT		= 13;
 		public final static int DOUBLE		= 14;
@@ -26,9 +27,17 @@ public final class Consts {
 		public final static int STRING		= 16;
 	}
 	
+	class DATA_TYPES {
+		public final static int INTEGER		= 21;
+		public final static int FLOAT		= 22;
+		public final static int DOUBLE		= 23;
+		public final static int CHAR		= 24;
+		public final static int STRING		= 25;
+	}
+	
 	class SEPARATORS {
-		public final static int SPACE		= 32;
-		public final static int TAB 		= 9;
+		public final static int ASCII_SPACE		= 32;
+		public final static int ASCII_TAB 		= 9;
 	}
 	
 	class OPERATORS {
@@ -73,10 +82,5 @@ public final class Consts {
 	class IO {
 		public final static int INPUT					= 600;
 		public final static int OUTPUT					= 601;
-	}
-	
-	class LEXICALS{
-		public final static int IDENTIFIER 				= 1;
-		public final static int CONSTANT				= 2;
 	}
 }

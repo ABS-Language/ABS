@@ -27,8 +27,8 @@ public class GramaticConfigs {
 		new Symbol("/", Consts.OPERATORS.DIV),
 		new Symbol("%", Consts.OPERATORS.MOD),
 		new Symbol("=", Consts.OPERATORS.EQU),
-		new Symbol(" ", Consts.SEPARATORS.SPACE),
-		new Symbol("	", Consts.SEPARATORS.TAB),
+		new Symbol(" ", Consts.SEPARATORS.ASCII_SPACE),
+		new Symbol("	", Consts.SEPARATORS.ASCII_SPACE),
 		new Symbol(",", Consts.CHARACTERS.COMMA)
 	};
 }	
