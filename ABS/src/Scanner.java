@@ -124,15 +124,12 @@ public class Scanner {
 						
 						for(int k = 0; k < GramaticConfigs.SEPARATORS.length; k++) {
 							if(GramaticConfigs.SEPARATORS[k].getName().equals(ch + "")) {
-								if(!word.isEmpty()) {
+								if(!word.isEmpty() && word != " ") {
 									codeOrder.add(symbols.lookupInsert(new Symbol(word, analyzeWord(word))));
 										word = "";
-									}
+								}
 								
-								if(ch == '*') { System.out.println("line " + line + " character ======== " + i); }
-									codeOrder.add(symbols.lookupInsert(new Symbol(ch + "", analyzeWord(word))));
-									
-									isSeparator = true;
+								isSeparator = true;
 									
 									break;
 								}

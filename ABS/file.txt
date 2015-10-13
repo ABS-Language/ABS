@@ -1,7 +1,7 @@
 cqlo a = 81.21321312;
 cqlo b = 3.14 + 	5; //komentar
 niz stringName = "pesho e slab";
-cqlo c = a + b - 5;
+cqlo c = a+ b - 5;
 simvol h = 'a123123';
 ako inache za dokato sluchai drobno ( ) { }
 
