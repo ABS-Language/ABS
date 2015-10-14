@@ -1,0 +1,29 @@
+-- IF CONSRUCTION
+ako (?)
+{} 
+inache {}
+
+-- FOR CONSRUCTION
+za( broqch ; uslovie; sledstvie)
+{
+}
+
+-- WHILE CONSRUCTION
+dokato(uslovie) {}
+
+-- VARS
+string 	--> niz
+char 	--> simvol
+int 	--> cql
+float 	--> plav
+double 	--> dvoen
+long 	--> dulag
+
+-- OPERATORS
+= 		--> stava
+> 		--> pogolqm  
+>=    	--> pogolqm=
+< 		--> pomalak
+<=  	--> pomalak=
+== 		--> ravno
+!= 		--> razlichno     ako (a razlichno b){ a stava b;}
