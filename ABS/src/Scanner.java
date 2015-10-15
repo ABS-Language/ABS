@@ -5,20 +5,20 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Scanner {
-	private final static String CODE_FILE_PATH = "file.txt";
+	private final  String CODE_FILE_PATH = "file.txt";
 	
-	private static boolean isString = false;
-	private static boolean isChar = false;
-	private static boolean isSeparator = false;
-	private static boolean isComment = false;
+	private  boolean isString = false;
+	private  boolean isChar = false;
+	private  boolean isSeparator = false;
+	private  boolean isComment = false;
 	
-	private static Hash symbols = new Hash(10);
-	private static ArrayList<Position> codeOrder = new ArrayList<>();
+	private  Hash symbols = new Hash(10);
+	private  ArrayList<Position> codeOrder = new ArrayList<>();
 	
-	private static Symbol symbol;
-	private static Position pos;
+	private  Symbol symbol;
+	private  Position pos;
 	
-	public static void read(){
+	public  boolean read(){
 		loadSpecialSymbols(); //tuka zarejda specialni simvoli
 		FileReader read = null;
 		
@@ -58,15 +58,20 @@ public class Scanner {
 							continue;
 						}					
 						
-						if(ch == '"'){
+						if(ch == '"'){							
 							if(isString == true){
-								symbol = new Symbol(word, Consts.LEXICALS.CONSTANT);
-								pos = symbols.lookupInsert(symbol);
-								codeOrder.add(pos);
-
+								if(!word.isEmpty()) {
+									codeOrder.add(symbols.lookupInsert(new Symbol(word, Consts.LEXICALS.CONSTANT)));
+									word = "";
+								}
 								isString = false;
-								word = "";
+								
+								codeOrder.add(symbols.lookupInsert(new Symbol(ch + "", Consts.CHARACTERS.QUOTE)));
+								
 								continue;
+							}
+							else {
+								codeOrder.add(symbols.lookupInsert(new Symbol(ch + "", Consts.CHARACTERS.QUOTE)));
 							}
 							isString = true;
 							word = "";
@@ -80,14 +85,20 @@ public class Scanner {
 												
 						if(ch == '\''){
 							if(isChar == true){
-								symbol = new Symbol(word, Consts.LEXICALS.CONSTANT);
-								pos = symbols.lookupInsert(symbol);
-								codeOrder.add(pos);
-
+								if(!word.isEmpty()) {
+									codeOrder.add(symbols.lookupInsert(new Symbol(word, Consts.LEXICALS.CONSTANT)));
+									word = "";
+								}
 								isChar = false;
-								word = "";
+																
+								codeOrder.add(symbols.lookupInsert(new Symbol(ch + "", Consts.CHARACTERS.APOSTROPHE)));
+																
 								continue;
 							}
+							else {
+								codeOrder.add(symbols.lookupInsert(new Symbol(ch + "", Consts.CHARACTERS.APOSTROPHE)));
+							}
+							
 							isChar = true;
 							word = "";
 							continue;
@@ -116,7 +127,7 @@ public class Scanner {
 						|| ch == Consts.FORBIDDEN.ASCII_AT) {
 							if(ch != Consts.SEPARATORS.ASCII_TAB) {
 								System.out.println("Invalid character on " + line + " : " + (i+1));
-								return;
+								return false;
 							}
 						}
 						//==
@@ -143,18 +154,20 @@ public class Scanner {
 					}
 				}
 			}
-		//	symbols.printTable();
-			
-			for (int i = 0; i < Scanner.getCodeOrder().size(); i++) {
-				System.out.println(Scanner.getCodeOrder().get(i) + " -> " + symbols.get(getCodeOrder().get(i).getCell(), getCodeOrder().get(i).getChain()) + " :: " + symbols.get(getCodeOrder().get(i).getCell(), getCodeOrder().get(i).getChain()).getCode());
+			//add the last word if no separator is met
+			if(!word.isEmpty()) {
+				codeOrder.add(symbols.lookupInsert(new Symbol(word, analyzeWord(word))));	
+				word = "";
 			}
 		} 
 		catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		return true;
 	}
 	
-	private static void loadSpecialSymbols(){
+	private  void loadSpecialSymbols(){
 		for (int i = 0; i < GramaticConfigs.SPECIAL_SYMBOLS.length; i++) {
 			symbols.insert(GramaticConfigs.SPECIAL_SYMBOLS[i]);
 		}
@@ -164,15 +177,19 @@ public class Scanner {
 		}
 	}
 	
-	public static ArrayList<Position> getCodeOrder(){
+	public  ArrayList<Position> getCodeOrder(){
 		return codeOrder;
 	}
 	
-	private static int analyzeWord(String word) {
+	public  Hash getSymbolTable() {
+		return symbols;
+	}
+	
+	private  int analyzeWord(String word) {
 		return (isInt(word) || isFloat(word)) ? Consts.LEXICALS.CONSTANT : Consts.LEXICALS.IDENTIFIER;
 	}
 		
-	private static boolean isInt(String str) {
+	private  boolean isInt(String str) {
 		try
 	     {
 	         Integer.parseInt(str);
@@ -184,7 +201,7 @@ public class Scanner {
 	     }
 	}
 	
-	private static boolean isFloat(String str) {
+	private  boolean isFloat(String str) {
 		try
 	     {
 	         Float.parseFloat(str);
@@ -195,4 +212,10 @@ public class Scanner {
 	         return false;
 	     }
 	}	
+	
+	public  void printCodeOrder() {
+		for (int i = 0; i < this.getCodeOrder().size(); i++) {
+			System.out.println(getCodeOrder().get(i) + " -> " + symbols.get(getCodeOrder().get(i).getCell(), getCodeOrder().get(i).getChain()) + " :: " + symbols.get(getCodeOrder().get(i).getCell(), getCodeOrder().get(i).getChain()).getCode());
+		}
+	}
 }

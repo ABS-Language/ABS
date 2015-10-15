@@ -47,10 +47,11 @@ public class Hash {
 		int sum = 1;
 		String name = symbol.getName();
 		for(int i = 0; i < name.length(); ++i) {
-			sum *= name.charAt(i);
+			sum += name.charAt(i);
 		}
+		return ( (sum + (symbol.getCode() % this.tableSize) )% this.tableSize );
 
-		return (sum % tableSize);
+		//s[0]*31^(n-1) + s[1]*31^(n-2) + ... + s[n-1]
 	}*/
 	
 	

@@ -83,4 +83,16 @@ public final class Consts {
 		public final static int INPUT					= 600;
 		public final static int OUTPUT					= 601;
 	}
+	
+	class ERRORS { // TODO: '' EXPECTED BUT '' FOUND
+		public final static String NOT_FOUND_EQU 								= "'=' expected.";
+		public final static String NOT_FOUND_EOS 								= "';' expected.";
+		public final static String NOT_FOUND_IDENTIFIER							= "Identifier expected.";
+		
+		
+		public final static String INVALID_INTEGER 								= "Invalid int constant.";
+		public final static String INVALID_FLOAT								= "Invalid float constant.";
+		public final static String INVALID_CHAR									= "Invalid char constant.";
+		public final static String INVALID_STRING								= "Invalid string constant.";
+	}
 }

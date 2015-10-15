@@ -8,12 +8,15 @@ public class GramaticConfigs {
 			new Symbol("sluchai", Consts.CONDITIONAL_OPERATORS.CASE),
 			new Symbol("cqlo", Consts.DATA_TYPES.INTEGER),
 			new Symbol("drobno", Consts.DATA_TYPES.FLOAT),
+			new Symbol("simvol", Consts.DATA_TYPES.CHAR),
 			new Symbol("niz", Consts.DATA_TYPES.STRING),
 			new Symbol("izvedi", Consts.IO.OUTPUT),
 			new Symbol("vuvedi", Consts.IO.INPUT)
 	};
 	
 	public final static Symbol[] SEPARATORS = {
+		new Symbol("'", Consts.CHARACTERS.APOSTROPHE),
+		new Symbol("\"", Consts.CHARACTERS.QUOTE),
 		new Symbol("(", Consts.CHARACTERS.LEFT_BRACKET),
 		new Symbol(")", Consts.CHARACTERS.RIGHT_BRACKET),
 		new Symbol("[", Consts.CHARACTERS.LEFT_SQUARE_BRACKET),
