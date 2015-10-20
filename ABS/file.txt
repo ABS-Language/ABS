@@ -1,4 +1,2 @@
-niz p = "";
-cqlo a = 12;
-niz pesho = "pesho";
-niz a = "cqlo";
+niz pesho = "awd";
+cqlo a = 123;

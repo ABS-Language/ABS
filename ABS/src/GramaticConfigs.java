@@ -11,7 +11,10 @@ public class GramaticConfigs {
 			new Symbol("simvol", Consts.DATA_TYPES.CHAR),
 			new Symbol("niz", Consts.DATA_TYPES.STRING),
 			new Symbol("izvedi", Consts.IO.OUTPUT),
-			new Symbol("vuvedi", Consts.IO.INPUT)
+			new Symbol("vuvedi", Consts.IO.INPUT),
+			new Symbol("stava", Consts.OPERATORS.MOV),
+			new Symbol("pogolqmo", Consts.OPERATORS.GREATER),
+			new Symbol("pomalko", Consts.OPERATORS.LESS)
 	};
 	
 	public final static Symbol[] SEPARATORS = {
@@ -29,7 +32,7 @@ public class GramaticConfigs {
 		new Symbol("*", Consts.OPERATORS.MUL),
 		new Symbol("/", Consts.OPERATORS.DIV),
 		new Symbol("%", Consts.OPERATORS.MOD),
-		new Symbol("=", Consts.OPERATORS.EQU),
+		new Symbol("ravno", Consts.OPERATORS.EQU),
 		new Symbol(" ", Consts.SEPARATORS.ASCII_SPACE),
 		new Symbol("	", Consts.SEPARATORS.ASCII_SPACE),
 		new Symbol(",", Consts.CHARACTERS.COMMA)

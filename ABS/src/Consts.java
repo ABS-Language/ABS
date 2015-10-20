@@ -48,6 +48,9 @@ public final class Consts {
 		public final static int POW			= 104;
 		public final static int MOD			= 105;
 		public final static int EQU			= 106;
+		public final static int MOV			= 107;
+		public final static int GREATER		= 108;
+		public final static int	LESS		= 109;
 	}
 	
 	class CONDITIONAL_OPERATORS {

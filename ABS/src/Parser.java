@@ -1,3 +1,4 @@
+import java.lang.invoke.ConstantCallSite;
 import java.util.ArrayList;
 
 public class Parser {
@@ -24,6 +25,79 @@ public class Parser {
 	
 	private boolean operator() {
 		return false;
+	}
+	
+//	private boolean conditionIf(){
+//		if(this.getNextSymbol() == Consts.CONDITIONAL_OPERATORS.IF){
+//			if(this.getNextSymbol() == Consts.CHARACTERS.LEFT_BRACKET){
+//				if(this.getNextSymbol() == Consts.LEXICALS.IDENTIFIER
+//						|| currentSymbol.getCode() == Consts.LEXICALS.CONSTANT){
+//					
+//				}
+//			}
+//		}
+//	}
+	
+	private void Operator() throws SyntaxException{
+		switch(getNextSymbol()){
+			case Consts.LEXICALS.IDENTIFIER : {
+				if(getNextSymbol() != Consts.OPERATORS.MOV){
+					throw new SyntaxException("Expression expected!");
+				}
+				Expression();
+				break;
+			}
+			
+			case Consts.OPERATORS.MOV : {
+				break;
+			}
+			
+			case Consts.CONDITIONAL_OPERATORS.IF : {
+				break;
+			}
+			
+			case Consts.LOOPS.WHILE : {
+				break;
+			}
+			
+			case Consts.LOOPS.FOR : {
+				break;
+			}
+		}
+		
+		
+		
+	}
+	
+	private void Expression() throws SyntaxException{
+		Term();
+		while(getNextSymbol() == Consts.OPERATORS.ADD ||
+				currentSymbol.getCode() == Consts.OPERATORS.SUB){
+			Term();
+		}
+	}
+	
+	private void Term() throws SyntaxException{
+		Factor();
+		while(getNextSymbol() == Consts.OPERATORS.MUL ||
+				currentSymbol.getCode() == Consts.OPERATORS.DIV){
+			Factor();
+		}
+	}
+	
+	private void Factor() throws SyntaxException{
+		if(getNextSymbol() == Consts.CHARACTERS.LEFT_BRACKET){
+			Expression();
+		}
+		
+		if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET){
+			throw new SyntaxException("Right braket expected"); // TODO fix error constants
+		}
+		
+		if(getNextSymbol() != Consts.LEXICALS.IDENTIFIER 
+				&& currentSymbol.getCode() != Consts.LEXICALS.CONSTANT){
+			throw new SyntaxException("Expected Identifier or constant zemi fuste");
+		}
 	}
 	
 	private boolean dataDefinition() {
@@ -182,9 +256,8 @@ public class Parser {
 		try {
 			return (this.currentSymbol = symbols.get(codeOrder.get(currentIndex++))).getCode();			
 		}
-		catch(IndexOutOfBoundsException e) {}
-		
-		return Consts.UNKNOWN;
+		catch(IndexOutOfBoundsException e) {
+			return Consts.UNKNOWN;}
 	}
 	
 	private void Print(String str) {
