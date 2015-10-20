@@ -1,1 +1,4 @@
 niz p = "";
+cqlo a = 12;
+niz pesho = "pesho";
+niz a = "cqlo";

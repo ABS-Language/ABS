@@ -142,7 +142,7 @@ public class Scanner {
 								isSeparator = true;
 								
 								if(ch != Consts.SEPARATORS.ASCII_SPACE && ch != Consts.SEPARATORS.ASCII_TAB) {
-									codeOrder.add(symbols.lookupInsert(new Symbol(ch+"", analyzeWord(word))));	
+									codeOrder.add(symbols.lookupInsert(new Symbol(ch+"", GramaticConfigs.SEPARATORS[k].getCode())));	
 								}
 									break;
 								}
@@ -186,6 +186,11 @@ public class Scanner {
 	}
 	
 	private  int analyzeWord(String word) {
+		for(int k = 0; k < GramaticConfigs.SPECIAL_SYMBOLS.length; k++) {
+			if(GramaticConfigs.SPECIAL_SYMBOLS[k].getName().equals(word)) {
+				return GramaticConfigs.SPECIAL_SYMBOLS[k].getCode();
+			}
+		}
 		return (isInt(word) || isFloat(word)) ? Consts.LEXICALS.CONSTANT : Consts.LEXICALS.IDENTIFIER;
 	}
 		

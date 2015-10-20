@@ -117,7 +117,7 @@ public class Hash {
 				if(chain.get(i).compareTo(symbol)) {
 					pos.setChain(i);
 					return pos;
-			}
+				}
 		}
 		//key not found
 		return null;
