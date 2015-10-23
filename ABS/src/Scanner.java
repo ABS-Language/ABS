@@ -15,9 +15,6 @@ public class Scanner {
 	private  Hash symbols = new Hash(10);
 	private  ArrayList<Position> codeOrder = new ArrayList<>();
 	
-	private  Symbol symbol;
-	private  Position pos;
-	
 	public  boolean read(){
 		loadSpecialSymbols(); //tuka zarejda specialni simvoli
 		FileReader read = null;
@@ -164,6 +161,12 @@ public class Scanner {
 			e.printStackTrace();
 		}
 		
+		try {
+			buffer.close();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		return true;
 	}
 	

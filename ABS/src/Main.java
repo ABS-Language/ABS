@@ -1,6 +1,3 @@
-import java.util.ArrayList;
-
-
 public class Main {
 	public static void main(String[] args) {
 	
@@ -11,7 +8,17 @@ public class Main {
 			
 			Parser p = new Parser(scanner.getCodeOrder(), scanner.getSymbolTable());
 			
-			p.read(); //first line
+			try {
+				if(p.read()) {
+					System.out.println("Syntax Analyze Successful.");
+				}
+				else {
+					System.out.println("Syntax Analyze Failed");
+				}
+			} catch (SyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} //first line
 		}
 		
 	}

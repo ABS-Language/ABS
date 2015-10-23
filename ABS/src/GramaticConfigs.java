@@ -26,7 +26,7 @@ public class GramaticConfigs {
 		new Symbol("]", Consts.CHARACTERS.RIGHT_SQUARE_BRACKET),
 		new Symbol("{", Consts.CHARACTERS.LEFT_CURLY_BRACKET),
 		new Symbol("}", Consts.CHARACTERS.RIGHT_CURLY_BRACKET),
-		new Symbol(";", Consts.EOS.SEMICOLON),
+		new Symbol(";", Consts.EOS),
 		new Symbol("+", Consts.OPERATORS.ADD),
 		new Symbol("-", Consts.OPERATORS.SUB),
 		new Symbol("*", Consts.OPERATORS.MUL),

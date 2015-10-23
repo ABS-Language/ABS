@@ -1,4 +1,3 @@
-import java.lang.invoke.ConstantCallSite;
 import java.util.ArrayList;
 
 public class Parser {
@@ -13,65 +12,123 @@ public class Parser {
 		this.symbols = symbols;
 	}
 	
-	public boolean read() {
-		System.out.println(dataDefinition());
+	public boolean read() throws SyntaxException {
+		codeBlock();
+		
+		if(getNextSymbol() != Consts.UNKNOWN) {
+			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOF);
+		}
 		
 		return true;
 	}
 	
-	private boolean codeBlock() {
-		return false;
-	}
-	
-	private boolean operator() {
-		return false;
-	}
-	
-//	private boolean conditionIf(){
-//		if(this.getNextSymbol() == Consts.CONDITIONAL_OPERATORS.IF){
-//			if(this.getNextSymbol() == Consts.CHARACTERS.LEFT_BRACKET){
-//				if(this.getNextSymbol() == Consts.LEXICALS.IDENTIFIER
-//						|| currentSymbol.getCode() == Consts.LEXICALS.CONSTANT){
-//					
-//				}
-//			}
+	private void codeBlock() throws SyntaxException {
+		
+		if(getNextSymbol() != Consts.CHARACTERS.LEFT_CURLY_BRACKET) {
+			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_LEFT_CURLY_BRACKET);
+		}
+
+		Operator();
+
+//		while(getNextSymbol() == Consts.CHARACTERS.DOT) {
+//			Operator();
 //		}
-//	}
+		getNextSymbol();
+		if(this.getNextSymbol() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
+			
+			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_RIGHT_CURLY_BRACKET);
+		}	
+	}
 	
 	private void Operator() throws SyntaxException{
-		switch(getNextSymbol()){
+		switch(getNextSymbol()) {
 			case Consts.LEXICALS.IDENTIFIER : {
-				if(getNextSymbol() != Consts.OPERATORS.MOV){
-					throw new SyntaxException("Expression expected!");
+				if(getNextSymbol() != Consts.OPERATORS.MOV) { //'stava'
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
 				}
+				
 				Expression();
-				break;
-			}
-			
-			case Consts.OPERATORS.MOV : {
+				
+				if(getNextSymbol() != Consts.EOS) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
+				}
+
 				break;
 			}
 			
 			case Consts.CONDITIONAL_OPERATORS.IF : {
+				if(getNextSymbol() != Consts.CHARACTERS.LEFT_BRACKET) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_LEFT_BRACKET);
+				}
+				
+				Expression();
+				
+				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_RIGHT_BRACKET);
+				}
+				//====
+				codeBlock();
+				//====
+				if(getNextSymbol() == Consts.CONDITIONAL_OPERATORS.ELSE) {
+					codeBlock();
+				}
+				//====
 				break;
 			}
 			
 			case Consts.LOOPS.WHILE : {
+				if(getNextSymbol() != Consts.CHARACTERS.LEFT_BRACKET) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_LEFT_BRACKET);
+				}
+				
+				Expression();
+				
+				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_RIGHT_BRACKET);
+				}
+				//====
+				codeBlock();
+				//====
 				break;
 			}
 			
 			case Consts.LOOPS.FOR : {
+				if(getNextSymbol() != Consts.CHARACTERS.LEFT_BRACKET) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_LEFT_BRACKET);
+				}
+				
+				Operator();
+				
+				if(getNextSymbol() != Consts.EOS) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
+				}
+				//===
+				Expression();
+				
+				if(getNextSymbol() != Consts.EOS) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
+				}
+				//===	
+				
+				Operator();
+				
+				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_RIGHT_BRACKET);
+				}
+				//====
+				codeBlock();
 				break;
 			}
+			default : {
+				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_OPERATOR);
+			}
 		}
-		
-		
-		
 	}
 	
 	private void Expression() throws SyntaxException{
 		Term();
-		while(getNextSymbol() == Consts.OPERATORS.ADD ||
+
+		while(currentSymbol.getCode() == Consts.OPERATORS.ADD ||
 				currentSymbol.getCode() == Consts.OPERATORS.SUB){
 			Term();
 		}
@@ -79,24 +136,30 @@ public class Parser {
 	
 	private void Term() throws SyntaxException{
 		Factor();
-		while(getNextSymbol() == Consts.OPERATORS.MUL ||
+		
+		while(currentSymbol.getCode() == Consts.OPERATORS.MUL ||
 				currentSymbol.getCode() == Consts.OPERATORS.DIV){
 			Factor();
 		}
 	}
 	
 	private void Factor() throws SyntaxException{
-		if(getNextSymbol() == Consts.CHARACTERS.LEFT_BRACKET){
-			Expression();
-		}
-		
-		if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET){
-			throw new SyntaxException("Right braket expected"); // TODO fix error constants
-		}
-		
-		if(getNextSymbol() != Consts.LEXICALS.IDENTIFIER 
-				&& currentSymbol.getCode() != Consts.LEXICALS.CONSTANT){
-			throw new SyntaxException("Expected Identifier or constant zemi fuste");
+		switch(getNextSymbol()) {
+			case Consts.CHARACTERS.LEFT_BRACKET : {
+				Expression();
+				
+				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_RIGHT_BRACKET);
+				}
+				break;
+			}
+			case Consts.LEXICALS.IDENTIFIER :
+			case Consts.LEXICALS.CONSTANT : {
+				break;
+			}
+			default : {
+				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_FACTOR);
+			}
 		}
 	}
 	
@@ -107,7 +170,7 @@ public class Parser {
 					if(getNextSymbol() == Consts.OPERATORS.EQU) {
 						if(getNextSymbol() == Consts.LEXICALS.CONSTANT) {
 							if(this.isInt(this.currentSymbol)) {
-								if(getNextSymbol() == Consts.EOS.SEMICOLON) {
+								if(getNextSymbol() == Consts.EOS) {
 									return true;
 								}
 								else {
@@ -140,7 +203,7 @@ public class Parser {
 					if(getNextSymbol() == Consts.OPERATORS.EQU) {
 						if(getNextSymbol() == Consts.LEXICALS.CONSTANT) {
 							if(this.isFloat(this.currentSymbol)) { //TODO: pass only float values and not integers
-								if(getNextSymbol() == Consts.EOS.SEMICOLON) {
+								if(getNextSymbol() == Consts.EOS) {
 									return true;
 								}
 								else {
@@ -175,7 +238,7 @@ public class Parser {
 								if(getNextSymbol() == Consts.LEXICALS.CONSTANT) {
 									if(this.currentSymbol.getName().length() == 1) {
 										if(getNextSymbol() == Consts.CHARACTERS.APOSTROPHE) {
-											if(getNextSymbol() == Consts.EOS.SEMICOLON) {
+											if(getNextSymbol() == Consts.EOS) {
 												return true;
 											}
 											else {
@@ -219,7 +282,7 @@ public class Parser {
 						if(getNextSymbol() == Consts.CHARACTERS.QUOTE) {
 							if(getNextSymbol() == Consts.LEXICALS.CONSTANT) {
 								if(getNextSymbol() == Consts.CHARACTERS.QUOTE) {
-									if(getNextSymbol() == Consts.EOS.SEMICOLON) {
+									if(getNextSymbol() == Consts.EOS) {
 											return true;
 									}
 									else {
@@ -254,14 +317,21 @@ public class Parser {
 	
 	private int getNextSymbol() {
 		try {
-			return (this.currentSymbol = symbols.get(codeOrder.get(currentIndex++))).getCode();			
+			(this.currentSymbol = symbols.get(codeOrder.get(currentIndex++))).getCode();
+			Print(this.currentSymbol.getName());
+			return this.currentSymbol.getCode();			
 		}
 		catch(IndexOutOfBoundsException e) {
-			return Consts.UNKNOWN;}
+			return Consts.UNKNOWN;
+		}
 	}
 	
-	private void Print(String str) {
-		System.out.println(str);
+	private void Print(String x) {
+		System.out.println(x);
+	}
+	
+	private void Print(int x) {
+		System.out.println(x);
 	}
 	
 	private  boolean isInt(Symbol symbol) {
