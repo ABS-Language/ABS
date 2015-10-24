@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 public class Scanner {
-	private final  String CODE_FILE_PATH = "file.txt";
+	private String pathFile;
 	
 	private  boolean isString = false;
 	private  boolean isChar = false;
@@ -15,12 +15,16 @@ public class Scanner {
 	private  Hash symbols = new Hash(10);
 	private  ArrayList<Position> codeOrder = new ArrayList<>();
 	
+	public Scanner(String pathFile) {
+		this.pathFile = pathFile;
+	}
+	
 	public  boolean read(){
 		loadSpecialSymbols(); //tuka zarejda specialni simvoli
 		FileReader read = null;
 		
 		try {
-			read = new FileReader(CODE_FILE_PATH);
+			read = new FileReader(this.pathFile);
 		} 
 		catch (FileNotFoundException e) {
 				System.out.println("File not found!");

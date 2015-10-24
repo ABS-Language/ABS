@@ -1,7 +1,9 @@
 public class Main {
 	public static void main(String[] args) {
-	
-		Scanner scanner = new Scanner();
+		final String CODE_FILE_PATH = "file.txt";
+		
+		
+		Scanner scanner = new Scanner(CODE_FILE_PATH/*args*/);
 		if(scanner.read()) {
 			//scanner.getSymbolTable().printTable();
 			//scanner.printCodeOrder();
@@ -22,6 +24,8 @@ public class Main {
 			catch(NullPointerException e) {
 				System.out.println("Empty file provided.");
 			}
+			
+			
 			
 		}
 		

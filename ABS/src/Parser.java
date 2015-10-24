@@ -33,7 +33,6 @@ public class Parser {
 //			Operator();
 //		}
 		
-
 		if(this.getNextSymbol() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_RIGHT_CURLY_BRACKET);
 		}	
