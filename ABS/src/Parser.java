@@ -23,19 +23,18 @@ public class Parser {
 	}
 	
 	private void codeBlock() throws SyntaxException {
-		
 		if(getNextSymbol() != Consts.CHARACTERS.LEFT_CURLY_BRACKET) {
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_LEFT_CURLY_BRACKET);
 		}
 
 		Operator();
 
-//		while(getNextSymbol() == Consts.CHARACTERS.DOT) {
+//		while(getNextSymbol() == Consts.EOS) {
 //			Operator();
 //		}
-		getNextSymbol();
+		
+
 		if(this.getNextSymbol() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
-			
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_RIGHT_CURLY_BRACKET);
 		}	
 	}
@@ -48,10 +47,6 @@ public class Parser {
 				}
 				
 				Expression();
-				
-				if(getNextSymbol() != Consts.EOS) {
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
-				}
 
 				break;
 			}
@@ -69,11 +64,12 @@ public class Parser {
 				//====
 				codeBlock();
 				//====
-				if(getNextSymbol() == Consts.CONDITIONAL_OPERATORS.ELSE) {
-					codeBlock();
-				}
-				//====
 				break;
+//				if(getNextSymbol() == Consts.CONDITIONAL_OPERATORS.ELSE) {
+//					codeBlock();
+//				}
+//				//====
+//				break;
 			}
 			
 			case Consts.LOOPS.WHILE : {
@@ -132,13 +128,21 @@ public class Parser {
 				currentSymbol.getCode() == Consts.OPERATORS.SUB){
 			Term();
 		}
+		//reads next symbol from Term()
+		//if it doesnt pass returns to Expression() 
+		//if the read 'next symbol' doesnt pass the prev symbol position is returned
+		//to avoid reading the next symbol instead"**
+		currentIndex--;
 	}
 	
 	private void Term() throws SyntaxException{
 		Factor();
 		
-		while(currentSymbol.getCode() == Consts.OPERATORS.MUL ||
-				currentSymbol.getCode() == Consts.OPERATORS.DIV){
+		while(getNextSymbol() == Consts.OPERATORS.MUL 
+				|| currentSymbol.getCode() == Consts.OPERATORS.DIV 
+				|| currentSymbol.getCode() == Consts.OPERATORS.GREATER 
+				|| currentSymbol.getCode() == Consts.OPERATORS.LESS){
+			
 			Factor();
 		}
 	}
@@ -158,7 +162,7 @@ public class Parser {
 				break;
 			}
 			default : {
-				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_FACTOR);
+				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EXPRESSION);
 			}
 		}
 	}
@@ -318,7 +322,7 @@ public class Parser {
 	private int getNextSymbol() {
 		try {
 			(this.currentSymbol = symbols.get(codeOrder.get(currentIndex++))).getCode();
-			Print(this.currentSymbol.getName());
+			Print("getNextSymbol() :: #" + currentIndex + " -> " + this.currentSymbol.getName());
 			return this.currentSymbol.getCode();			
 		}
 		catch(IndexOutOfBoundsException e) {

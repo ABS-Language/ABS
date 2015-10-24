@@ -1,3 +1,5 @@
 {
-	ako(5) { bla stava k; 
+	za(i stava 0; i pomalko 3; i stava i + 1) {
+	bla stava 3
+	}
 }

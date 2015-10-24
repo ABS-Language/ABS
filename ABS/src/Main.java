@@ -18,7 +18,11 @@ public class Main {
 			} catch (SyntaxException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			} //first line
+			} 
+			catch(NullPointerException e) {
+				System.out.println("Empty file provided.");
+			}
+			
 		}
 		
 	}

@@ -88,15 +88,15 @@ public final class Consts {
 	}
 	
 	class ERRORS { // TODO: '' EXPECTED BUT '' FOUND
-		public final static String NOT_FOUND_EOF								= "'%s' found : End of file not found";
+		public final static String NOT_FOUND_EOF								= "'%s' found out of the Primary Block.";
 		
-		public final static String NOT_FOUND_OPERATOR							= "'%s' found : 'operator'expected.";
+		public final static String NOT_FOUND_OPERATOR							= "'operator'expected : '%s' found.";
 		
-		public final static String NOT_FOUND_EQU 								= "'%s' found : '=' expected.";
-		public final static String NOT_FOUND_EOS 								= "'%s' found : ';' expected.";
-		public final static String NOT_FOUND_IDENTIFIER							= "'%s' found : Identifier expected.";
-		public final static String NOT_FOUND_FACTOR								= "'%s' found : Factor expected.";
-		public final static String NOT_FOUND_SET_OPERATOR						= "'%s' found : 'SET' operator expected.";
+		public final static String NOT_FOUND_EQU 								= "Expected '=' : '%s' found.";
+		public final static String NOT_FOUND_EOS 								= "Expected ';' : %s' found .";
+		public final static String NOT_FOUND_IDENTIFIER							= "Expected Variable : '%s' found.";
+		public final static String NOT_FOUND_EXPRESSION							= "Expected Expression : '%s' found .";
+		public final static String NOT_FOUND_SET_OPERATOR						= "Expected 'SET' operator : '%s' found.";
 		
 		
 		public final static String INVALID_INTEGER 								= "Invalid int constant.";
@@ -104,9 +104,9 @@ public final class Consts {
 		public final static String INVALID_CHAR									= "Invalid char constant.";
 		public final static String INVALID_STRING								= "Invalid string constant.";
 		
-		public final static String NOT_FOUND_LEFT_BRACKET						= "'%s' found : '(' expected.";
-		public final static String NOT_FOUND_RIGHT_BRACKET						= "'%s' found : ')' expected.";
-		public final static String NOT_FOUND_LEFT_CURLY_BRACKET					= "'%s' found : '{' expected.";
-		public final static String NOT_FOUND_RIGHT_CURLY_BRACKET				= "'%s' found : '}' expected.";
+		public final static String NOT_FOUND_LEFT_BRACKET						= "Expected '(' : '%s' found.";
+		public final static String NOT_FOUND_RIGHT_BRACKET						= "Expected ')' : '%s' found.";
+		public final static String NOT_FOUND_LEFT_CURLY_BRACKET					= "Expected '{' : '%s' found.";
+		public final static String NOT_FOUND_RIGHT_CURLY_BRACKET				= "Expected '}' : '%s' found.";
 	}
 }
