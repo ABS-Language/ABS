@@ -90,13 +90,13 @@ public final class Consts {
 	class ERRORS { // TODO: '' EXPECTED BUT '' FOUND
 		public final static String NOT_FOUND_EOF								= "'%s' found out of the Primary Block.";
 		
-		public final static String NOT_FOUND_OPERATOR							= "'operator'expected : '%s' found.";
+		public final static String NOT_FOUND_OPERATOR							= "Expected Operator : '%s' found.";
 		
 		public final static String NOT_FOUND_EQU 								= "Expected '=' : '%s' found.";
 		public final static String NOT_FOUND_EOS 								= "Expected ';' : %s' found .";
 		public final static String NOT_FOUND_IDENTIFIER							= "Expected Variable : '%s' found.";
 		public final static String NOT_FOUND_EXPRESSION							= "Expected Expression : '%s' found .";
-		public final static String NOT_FOUND_SET_OPERATOR						= "Expected 'SET' operator : '%s' found.";
+		public final static String NOT_FOUND_SET_OPERATOR						= "Expected 'SET' Operator : '%s' found.";
 		
 		
 		public final static String INVALID_INTEGER 								= "Invalid int constant.";
