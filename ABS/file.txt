@@ -1,8 +1,3 @@
 {
-	cqlo a stava 10;
-	cqlo x stava 132890;
-	ako(a pomalko b){
-		a stava x
-	};
-	bla stava bla
+	bla stava 5;
 }

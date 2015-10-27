@@ -1,6 +1,7 @@
 
 public final class Consts {
 	public final static int UNKNOWN 		= 666;
+	public final static String DEFAULT_STRING = "";
 	
 	class FORBIDDEN {
 		public final static int ASCII_AT	= 64;
@@ -19,7 +20,8 @@ public final class Consts {
 		public final static int CONSTANT				= 2;
 	}
 	
-	class CONSTANTS {
+	class TYPES {
+		public final static int UNKNOWN_TYPE = 0;
 		public final static int INTEGER		= 12;
 		public final static int FLOAT		= 13;
 		public final static int DOUBLE		= 14;
@@ -27,7 +29,7 @@ public final class Consts {
 		public final static int STRING		= 16;
 	}
 	
-	class DATA_TYPES {
+	class DEFINITION_TYPES {
 		public final static int INTEGER		= 21;
 		public final static int FLOAT		= 22;
 		public final static int DOUBLE		= 23;
@@ -96,7 +98,8 @@ public final class Consts {
 		public final static String NOT_FOUND_EOS 								= "Expected ';' : %s' found .";
 		public final static String NOT_FOUND_IDENTIFIER							= "Expected Variable : '%s' found.";
 		public final static String NOT_FOUND_EXPRESSION							= "Expected Expression : '%s' found .";
-		public final static String NOT_FOUND_SET_OPERATOR						= "Expected 'SET' operator : '%s' found.";
+		public final static String NOT_FOUND_SET_OPERATOR						= "Expected 'SET' operator : '%s' found.";	
+		public final static String NOT_FOUND_VARIABLE							= "Variable '%s' not declared.";
 		
 		
 		public final static String INVALID_INTEGER 								= "Invalid int constant.";

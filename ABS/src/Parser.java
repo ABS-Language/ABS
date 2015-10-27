@@ -41,6 +41,9 @@ public class Parser {
 	private void Operator() throws SyntaxException{
 		switch(getNextSymbol()) {
 			case Consts.LEXICALS.IDENTIFIER : {
+				if(this.currentSymbol.getType() == Consts.TYPES.UNKNOWN_TYPE){
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_VARIABLE);
+				}
 				if(getNextSymbol() != Consts.OPERATORS.MOV) { //'stava'
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
 				}
@@ -114,10 +117,10 @@ public class Parser {
 				codeBlock();
 				break;
 			}
-			case Consts.DATA_TYPES.INTEGER : 
-			case Consts.DATA_TYPES.DOUBLE : 
-			case Consts.DATA_TYPES.CHAR : 
-			case Consts.DATA_TYPES.STRING : {
+			case Consts.DEFINITION_TYPES.INTEGER : 
+			case Consts.DEFINITION_TYPES.DOUBLE : 
+			case Consts.DEFINITION_TYPES.CHAR : 
+			case Consts.DEFINITION_TYPES.STRING : {
 				dataDefinition();
 				break;
 			}
@@ -175,11 +178,14 @@ public class Parser {
 	
 	private void dataDefinition() throws SyntaxException {
 		switch(this.currentSymbol.getCode()) {
-			case Consts.DATA_TYPES.INTEGER: {
+			case Consts.DEFINITION_TYPES.INTEGER: {
 				if(this.getNextSymbol() != Consts.LEXICALS.IDENTIFIER){
 					throw new SyntaxException(this.currentSymbol.getName(),
 							Consts.ERRORS.NOT_FOUND_IDENTIFIER);
 				}
+				
+				currentSymbol.setType(Consts.TYPES.INTEGER);
+				
 				if(this.getNextSymbol() != Consts.OPERATORS.MOV){
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
 				}

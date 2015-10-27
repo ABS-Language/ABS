@@ -1,11 +1,12 @@
 public class Symbol {
-	private final String DEFAULT_STRING = "";
 	private String name;
 	private int code;
+	private int type;
 	
 	Symbol() {
 		this.code = 0;
-		this.name = DEFAULT_STRING;
+		this.name = Consts.DEFAULT_STRING;
+		this.type = Consts.TYPES.UNKNOWN_TYPE;
 	}
 	
 	Symbol(String name) {
@@ -16,6 +17,13 @@ public class Symbol {
 	Symbol(String name, int code) {
 		this.code = code;
 		this.name = name;
+		this.type = type;
+	}
+	
+	Symbol(String name, int code, int type) {
+		this.code = code;
+		this.name = name;
+		this.type = type;
 	}
 	
 	public void setCode(int code) {
@@ -31,7 +39,15 @@ public class Symbol {
 	}
 	
 	public boolean isNull() {
-		return this.name == DEFAULT_STRING;
+		return this.name == Consts.DEFAULT_STRING;
+	}
+	
+	public void setType(int type) {
+		this.type = type;
+	}
+	
+	public int getType() {
+		return this.type;
 	}
 	
 	@Override
