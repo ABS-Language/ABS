@@ -33,7 +33,7 @@ public class Parser {
 //			Operator();
 //		}
 		
-		if(this.getNextSymbol() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
+		if(this.currentSymbol.getCode() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_RIGHT_CURLY_BRACKET);
 		}	
 	}
@@ -41,6 +41,9 @@ public class Parser {
 	private void Operator() throws SyntaxException{
 		switch(getNextSymbol()) {
 			case Consts.LEXICALS.IDENTIFIER : {
+				if(this.currentSymbol.getType() == Consts.TYPES.UNKNOWN_TYPE){
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_VARIABLE);
+				}
 				if(getNextSymbol() != Consts.OPERATORS.MOV) { //'stava'
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
 				}
@@ -114,6 +117,7 @@ public class Parser {
 				codeBlock();
 				break;
 			}
+<<<<<<< HEAD
 			case Consts.DATA_TYPES.INTEGER : 
 			case Consts.DATA_TYPES.FLOAT : 
 			case Consts.DATA_TYPES.CHAR : 
@@ -121,6 +125,18 @@ public class Parser {
 				dataDefinition();
 				break;
 			}
+=======
+			case Consts.DEFINITION_TYPES.INTEGER : 
+			case Consts.DEFINITION_TYPES.DOUBLE : 
+			case Consts.DEFINITION_TYPES.CHAR : 
+			case Consts.DEFINITION_TYPES.STRING : {
+				dataDefinition();
+				break;
+			}
+			case Consts.EOS : {
+				break;
+			}
+>>>>>>> origin/master
 			default : {
 				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_OPERATOR);
 			}
@@ -172,167 +188,18 @@ public class Parser {
 			}
 		}
 	}
-	
-//	private boolean dataDefinition() {
-//		switch(getNextSymbol()) {
-//			case Consts.DATA_TYPES.INTEGER: {
-//				if(getNextSymbol() == Consts.LEXICALS.IDENTIFIER) {
-//					if(getNextSymbol() == Consts.OPERATORS.EQU) {
-//						if(getNextSymbol() == Consts.LEXICALS.CONSTANT) {
-//							if(this.isInt(this.currentSymbol)) {
-//								if(getNextSymbol() == Consts.EOS) {
-//									return true;
-//								}
-//								else {
-//									Print(Consts.ERRORS.NOT_FOUND_EOS);
-//									return false;
-//								}
-//							}
-//							else {
-//								Print(Consts.ERRORS.INVALID_INTEGER);
-//								return false;
-//							}
-//						}
-//						else {
-//							Print(Consts.ERRORS.INVALID_INTEGER);
-//							return false;
-//						}
-//					}
-//					else {
-//						Print(Consts.ERRORS.NOT_FOUND_EQU);
-//						return false;
-//					}
-//				}
-//				else {
-//					Print(Consts.ERRORS.NOT_FOUND_IDENTIFIER);
-//					return false;
-//				}
-//			}
-//			case Consts.DATA_TYPES.FLOAT: {
-//				if(getNextSymbol() == Consts.LEXICALS.IDENTIFIER) {
-//					if(getNextSymbol() == Consts.OPERATORS.EQU) {
-//						if(getNextSymbol() == Consts.LEXICALS.CONSTANT) {
-//							if(this.isFloat(this.currentSymbol)) { //TODO: pass only float values and not integers
-//								if(getNextSymbol() == Consts.EOS) {
-//									return true;
-//								}
-//								else {
-//									Print(Consts.ERRORS.NOT_FOUND_EOS);
-//									return false;
-//								}
-//							}
-//							else {
-//								Print(Consts.ERRORS.INVALID_FLOAT);
-//								return false;
-//							}
-//						}
-//						else {
-//							Print(Consts.ERRORS.INVALID_FLOAT);
-//							return false;
-//						}
-//					}
-//					else {
-//						Print(Consts.ERRORS.NOT_FOUND_EQU);
-//						return false;
-//					}
-//				}
-//				else {
-//					Print(Consts.ERRORS.NOT_FOUND_IDENTIFIER);
-//					return false;
-//				}
-//			}
-//			case Consts.DATA_TYPES.CHAR: {
-//				if(getNextSymbol() == Consts.LEXICALS.IDENTIFIER) {
-//					if(getNextSymbol() == Consts.OPERATORS.EQU) {
-//						if(getNextSymbol() == Consts.CHARACTERS.APOSTROPHE) {
-//								if(getNextSymbol() == Consts.LEXICALS.CONSTANT) {
-//									if(this.currentSymbol.getName().length() == 1) {
-//										if(getNextSymbol() == Consts.CHARACTERS.APOSTROPHE) {
-//											if(getNextSymbol() == Consts.EOS) {
-//												return true;
-//											}
-//											else {
-//												Print(Consts.ERRORS.NOT_FOUND_EOS);
-//												return false;
-//											}
-//										}
-//										else {
-//												Print(Consts.ERRORS.INVALID_CHAR);
-//												return false;
-//										}
-//							}
-//							else {
-//									Print(Consts.ERRORS.INVALID_CHAR);
-//									return false;
-//							}
-//						}
-//						else {
-//								Print(Consts.ERRORS.INVALID_CHAR);
-//								return false;
-//						}
-//					}
-//					else {
-//							Print(Consts.ERRORS.INVALID_CHAR);
-//							return false;
-//					}
-//				}
-//				else {
-//						Print(Consts.ERRORS.NOT_FOUND_EQU);
-//						return false;
-//					}
-//				}
-//				else {
-//					Print(Consts.ERRORS.NOT_FOUND_IDENTIFIER);
-//					return false;
-//				}
-//			}
-//			case Consts.DATA_TYPES.STRING: {
-//				if(getNextSymbol() == Consts.LEXICALS.IDENTIFIER) {
-//					if(getNextSymbol() == Consts.OPERATORS.EQU) {
-//						if(getNextSymbol() == Consts.CHARACTERS.QUOTE) {
-//							if(getNextSymbol() == Consts.LEXICALS.CONSTANT) {
-//								if(getNextSymbol() == Consts.CHARACTERS.QUOTE) {
-//									if(getNextSymbol() == Consts.EOS) {
-//											return true;
-//									}
-//									else {
-//										Print(Consts.ERRORS.NOT_FOUND_EOS);
-//										return false;
-//									}
-//								}
-//								else {
-//									Print(Consts.ERRORS.INVALID_STRING);
-//									return false;
-//								}
-//							}
-//						}
-//						else {
-//							Print(Consts.ERRORS.INVALID_STRING);
-//							return false;
-//						}
-//					}
-//					else {
-//						Print(Consts.ERRORS.NOT_FOUND_EQU);
-//						return false;
-//					}
-//				}
-//				else {
-//					Print(Consts.ERRORS.NOT_FOUND_IDENTIFIER);
-//					return false;
-//				}
-//			}
-//		}
-//		return false;
-//	}
-	
+
 	private void dataDefinition() throws SyntaxException {
 		switch(this.currentSymbol.getCode()) {
-			case Consts.DATA_TYPES.INTEGER : {
-				if(getNextSymbol() != Consts.LEXICALS.IDENTIFIER) {
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_IDENTIFIER);
+			case Consts.DEFINITION_TYPES.INTEGER: {
+				if(this.getNextSymbol() != Consts.LEXICALS.IDENTIFIER){
+					throw new SyntaxException(this.currentSymbol.getName(),
+							Consts.ERRORS.NOT_FOUND_IDENTIFIER);
 				}
 				
-				if(getNextSymbol() != Consts.OPERATORS.MOV) {
+				currentSymbol.setType(Consts.TYPES.INTEGER);
+				
+				if(this.getNextSymbol() != Consts.OPERATORS.MOV){
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
 				}
 				
@@ -350,11 +217,23 @@ public class Parser {
 				}
 				
 				if(getNextSymbol() != Consts.OPERATORS.MOV) {
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
+
+				break;
+			}
+			case Consts.DEFINITION_TYPES.FLOAT: {
+				if(this.getNextSymbol() != Consts.LEXICALS.IDENTIFIER){
+					throw new SyntaxException(this.currentSymbol.getName(),
+							Consts.ERRORS.NOT_FOUND_IDENTIFIER);
+				}
+				
+				currentSymbol.setType(Consts.TYPES.FLOAT);
+				
+				if(this.getNextSymbol() != Consts.OPERATORS.MOV){
+				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
 				}
 				
 				Expression();
-				
+			
 				if(getNextSymbol() != Consts.EOS) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
 				}
@@ -392,6 +271,57 @@ public class Parser {
 				if(getNextSymbol() != Consts.EOS) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
 				}
+				break;
+			}
+			case Consts.DEFINITION_TYPES.CHAR: {
+				if(this.getNextSymbol() != Consts.LEXICALS.IDENTIFIER){
+					throw new SyntaxException(this.currentSymbol.getName(),
+							Consts.ERRORS.NOT_FOUND_IDENTIFIER);
+				}
+				
+				currentSymbol.setType(Consts.TYPES.CHAR);
+				
+				if(this.getNextSymbol() != Consts.OPERATORS.MOV){
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
+				}
+				
+				if(this.getNextSymbol() != Consts.CHARACTERS.APOSTROPHE){
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_APOSTROPHE);
+				}
+				
+				Expression();
+				
+				if(this.getNextSymbol() != Consts.CHARACTERS.APOSTROPHE){
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_APOSTROPHE);
+				}
+				
+				break;
+			}
+			case Consts.DEFINITION_TYPES.STRING: {
+				if(this.getNextSymbol() != Consts.LEXICALS.IDENTIFIER){
+					throw new SyntaxException(this.currentSymbol.getName(),
+							Consts.ERRORS.NOT_FOUND_IDENTIFIER);
+				}
+				
+				currentSymbol.setType(Consts.TYPES.STRING);
+				
+				if(this.getNextSymbol() != Consts.OPERATORS.MOV){
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
+				}
+				
+				if(this.getNextSymbol() == Consts.CHARACTERS.QUOTE){
+					if(this.getNextSymbol() != Consts.LEXICALS.CONSTANT) {
+						throw new SyntaxException(Consts.ERRORS.INVALID_STRING);
+					}
+					
+					if(this.getNextSymbol() != Consts.CHARACTERS.QUOTE){
+						throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_QUOTE);
+					}
+				}
+				else {
+					Expression();
+				}
+				
 				break;
 			}
 		}
