@@ -1,5 +1,8 @@
 {
-	za(i stava 0; i pomalko 3; i stava i + 1) {
-	bla stava 3
-	}
+	cqlo a stava 10;
+	cqlo x stava 132890;
+	ako(a pomalko b){
+		a stava x
+	};
+	bla stava bla
 }

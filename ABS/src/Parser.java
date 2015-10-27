@@ -29,11 +29,11 @@ public class Parser {
 
 		Operator();
 
-//		while(getNextSymbol() == Consts.EOS) {
-//			Operator();
-//		}
+		while(getNextSymbol() == Consts.EOS) {
+			Operator();
+		}
 		
-		if(this.getNextSymbol() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
+		if(this.currentSymbol.getCode() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_RIGHT_CURLY_BRACKET);
 		}	
 	}
@@ -114,6 +114,13 @@ public class Parser {
 				codeBlock();
 				break;
 			}
+			case Consts.DATA_TYPES.INTEGER : 
+			case Consts.DATA_TYPES.DOUBLE : 
+			case Consts.DATA_TYPES.CHAR : 
+			case Consts.DATA_TYPES.STRING : {
+				dataDefinition();
+				break;
+			}
 			default : {
 				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_OPERATOR);
 			}
@@ -166,156 +173,21 @@ public class Parser {
 		}
 	}
 	
-	private boolean dataDefinition() {
-		switch(getNextSymbol()) {
+	private void dataDefinition() throws SyntaxException {
+		switch(this.currentSymbol.getCode()) {
 			case Consts.DATA_TYPES.INTEGER: {
-				if(getNextSymbol() == Consts.LEXICALS.IDENTIFIER) {
-					if(getNextSymbol() == Consts.OPERATORS.EQU) {
-						if(getNextSymbol() == Consts.LEXICALS.CONSTANT) {
-							if(this.isInt(this.currentSymbol)) {
-								if(getNextSymbol() == Consts.EOS) {
-									return true;
-								}
-								else {
-									Print(Consts.ERRORS.NOT_FOUND_EOS);
-									return false;
-								}
-							}
-							else {
-								Print(Consts.ERRORS.INVALID_INTEGER);
-								return false;
-							}
-						}
-						else {
-							Print(Consts.ERRORS.INVALID_INTEGER);
-							return false;
-						}
-					}
-					else {
-						Print(Consts.ERRORS.NOT_FOUND_EQU);
-						return false;
-					}
+				if(this.getNextSymbol() != Consts.LEXICALS.IDENTIFIER){
+					throw new SyntaxException(this.currentSymbol.getName(),
+							Consts.ERRORS.NOT_FOUND_IDENTIFIER);
 				}
-				else {
-					Print(Consts.ERRORS.NOT_FOUND_IDENTIFIER);
-					return false;
+				if(this.getNextSymbol() != Consts.OPERATORS.MOV){
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
 				}
-			}
-			case Consts.DATA_TYPES.FLOAT: {
-				if(getNextSymbol() == Consts.LEXICALS.IDENTIFIER) {
-					if(getNextSymbol() == Consts.OPERATORS.EQU) {
-						if(getNextSymbol() == Consts.LEXICALS.CONSTANT) {
-							if(this.isFloat(this.currentSymbol)) { //TODO: pass only float values and not integers
-								if(getNextSymbol() == Consts.EOS) {
-									return true;
-								}
-								else {
-									Print(Consts.ERRORS.NOT_FOUND_EOS);
-									return false;
-								}
-							}
-							else {
-								Print(Consts.ERRORS.INVALID_FLOAT);
-								return false;
-							}
-						}
-						else {
-							Print(Consts.ERRORS.INVALID_FLOAT);
-							return false;
-						}
-					}
-					else {
-						Print(Consts.ERRORS.NOT_FOUND_EQU);
-						return false;
-					}
-				}
-				else {
-					Print(Consts.ERRORS.NOT_FOUND_IDENTIFIER);
-					return false;
-				}
-			}
-			case Consts.DATA_TYPES.CHAR: {
-				if(getNextSymbol() == Consts.LEXICALS.IDENTIFIER) {
-					if(getNextSymbol() == Consts.OPERATORS.EQU) {
-						if(getNextSymbol() == Consts.CHARACTERS.APOSTROPHE) {
-								if(getNextSymbol() == Consts.LEXICALS.CONSTANT) {
-									if(this.currentSymbol.getName().length() == 1) {
-										if(getNextSymbol() == Consts.CHARACTERS.APOSTROPHE) {
-											if(getNextSymbol() == Consts.EOS) {
-												return true;
-											}
-											else {
-												Print(Consts.ERRORS.NOT_FOUND_EOS);
-												return false;
-											}
-										}
-										else {
-												Print(Consts.ERRORS.INVALID_CHAR);
-												return false;
-										}
-							}
-							else {
-									Print(Consts.ERRORS.INVALID_CHAR);
-									return false;
-							}
-						}
-						else {
-								Print(Consts.ERRORS.INVALID_CHAR);
-								return false;
-						}
-					}
-					else {
-							Print(Consts.ERRORS.INVALID_CHAR);
-							return false;
-					}
-				}
-				else {
-						Print(Consts.ERRORS.NOT_FOUND_EQU);
-						return false;
-					}
-				}
-				else {
-					Print(Consts.ERRORS.NOT_FOUND_IDENTIFIER);
-					return false;
-				}
-			}
-			case Consts.DATA_TYPES.STRING: {
-				if(getNextSymbol() == Consts.LEXICALS.IDENTIFIER) {
-					if(getNextSymbol() == Consts.OPERATORS.EQU) {
-						if(getNextSymbol() == Consts.CHARACTERS.QUOTE) {
-							if(getNextSymbol() == Consts.LEXICALS.CONSTANT) {
-								if(getNextSymbol() == Consts.CHARACTERS.QUOTE) {
-									if(getNextSymbol() == Consts.EOS) {
-											return true;
-									}
-									else {
-										Print(Consts.ERRORS.NOT_FOUND_EOS);
-										return false;
-									}
-								}
-								else {
-									Print(Consts.ERRORS.INVALID_STRING);
-									return false;
-								}
-							}
-						}
-						else {
-							Print(Consts.ERRORS.INVALID_STRING);
-							return false;
-						}
-					}
-					else {
-						Print(Consts.ERRORS.NOT_FOUND_EQU);
-						return false;
-					}
-				}
-				else {
-					Print(Consts.ERRORS.NOT_FOUND_IDENTIFIER);
-					return false;
-				}
+				
+				Expression();
+				break;
 			}
 		}
-		return false;
 	}
 	
 	private int getNextSymbol() {
