@@ -1,4 +1,3 @@
 {
-	niz p stava 3;
-
+	cqlo a stava 3;
 }

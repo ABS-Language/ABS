@@ -27,15 +27,15 @@ public class Parser {
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_LEFT_CURLY_BRACKET);
 		}
 
-		Operator();
+		Operator(); //TODO: poveche ot edin operator pls
 
 //		while(getNextSymbol() == Consts.EOS) {
 //			Operator();
 //		}
 		
-		if(this.currentSymbol.getCode() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
+		if(getNextSymbol() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_RIGHT_CURLY_BRACKET);
-		}	
+		}
 	}
 	
 	private void Operator() throws SyntaxException{
@@ -123,7 +123,7 @@ public class Parser {
 			case Consts.DEFINITION_TYPES.STRING :  {
 				dataDefinition();
 				break;
-			}
+			}			
 			case Consts.EOS : {
 				break;
 			}
@@ -169,7 +169,12 @@ public class Parser {
 				}
 				break;
 			}
-			case Consts.LEXICALS.IDENTIFIER :
+			case Consts.LEXICALS.IDENTIFIER : {
+				if(this.currentSymbol.getType() == Consts.TYPES.UNKNOWN_TYPE) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_VARIABLE);
+				}
+				break;
+			}
 			case Consts.LEXICALS.CONSTANT : {
 				break;
 			}
@@ -182,9 +187,8 @@ public class Parser {
 	private void dataDefinition() throws SyntaxException {
 		switch(this.currentSymbol.getCode()) {
 			case Consts.DEFINITION_TYPES.INTEGER: {
-				if(this.getNextSymbol() != Consts.LEXICALS.IDENTIFIER){
-					throw new SyntaxException(this.currentSymbol.getName(),
-							Consts.ERRORS.NOT_FOUND_IDENTIFIER);
+				if(getNextSymbol() != Consts.LEXICALS.IDENTIFIER){
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_IDENTIFIER);
 				}
 				
 				currentSymbol.setType(Consts.TYPES.INTEGER);
@@ -202,14 +206,13 @@ public class Parser {
 			}
 			case Consts.DEFINITION_TYPES.FLOAT: {
 				if(this.getNextSymbol() != Consts.LEXICALS.IDENTIFIER){
-					throw new SyntaxException(this.currentSymbol.getName(),
-							Consts.ERRORS.NOT_FOUND_IDENTIFIER);
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_IDENTIFIER);
 				}
 				
 				currentSymbol.setType(Consts.TYPES.FLOAT);
 				
 				if(this.getNextSymbol() != Consts.OPERATORS.MOV){
-				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
 				}
 				
 				Expression();

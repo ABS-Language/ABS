@@ -95,9 +95,9 @@ public final class Consts {
 		public final static String NOT_FOUND_OPERATOR							= "Expected Operator : '%s' found.";
 		
 		public final static String NOT_FOUND_EQU 								= "Expected '=' : '%s' found.";
-		public final static String NOT_FOUND_EOS 								= "Expected ';' : %s' found .";
+		public final static String NOT_FOUND_EOS 								= "Expected ';' : %s' found.";
 		public final static String NOT_FOUND_IDENTIFIER							= "Expected Variable : '%s' found.";
-		public final static String NOT_FOUND_EXPRESSION							= "Expected Expression : '%s' found .";
+		public final static String NOT_FOUND_EXPRESSION							= "Expected Expression : '%s' found.";
 		public final static String NOT_FOUND_SET_OPERATOR						= "Expected 'SET' Operator : '%s' found.";
 	
 		public final static String NOT_FOUND_VARIABLE							= "Variable '%s' not declared.";
