@@ -117,26 +117,16 @@ public class Parser {
 				codeBlock();
 				break;
 			}
-<<<<<<< HEAD
-			case Consts.DATA_TYPES.INTEGER : 
-			case Consts.DATA_TYPES.FLOAT : 
-			case Consts.DATA_TYPES.CHAR : 
-			case Consts.DATA_TYPES.STRING :  {
-				dataDefinition();
-				break;
-			}
-=======
 			case Consts.DEFINITION_TYPES.INTEGER : 
-			case Consts.DEFINITION_TYPES.DOUBLE : 
+			case Consts.DEFINITION_TYPES.FLOAT : 
 			case Consts.DEFINITION_TYPES.CHAR : 
-			case Consts.DEFINITION_TYPES.STRING : {
+			case Consts.DEFINITION_TYPES.STRING :  {
 				dataDefinition();
 				break;
 			}
 			case Consts.EOS : {
 				break;
 			}
->>>>>>> origin/master
 			default : {
 				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_OPERATOR);
 			}
@@ -210,16 +200,6 @@ public class Parser {
 				}
 				break;
 			}
-			
-			case Consts.DATA_TYPES.FLOAT : {
-				if(getNextSymbol() != Consts.LEXICALS.IDENTIFIER) {
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_IDENTIFIER);
-				}
-				
-				if(getNextSymbol() != Consts.OPERATORS.MOV) {
-
-				break;
-			}
 			case Consts.DEFINITION_TYPES.FLOAT: {
 				if(this.getNextSymbol() != Consts.LEXICALS.IDENTIFIER){
 					throw new SyntaxException(this.currentSymbol.getName(),
@@ -234,40 +214,6 @@ public class Parser {
 				
 				Expression();
 			
-				if(getNextSymbol() != Consts.EOS) {
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
-				}
-				break;
-			}
-			
-			case Consts.DATA_TYPES.CHAR : {
-				if(getNextSymbol() != Consts.LEXICALS.IDENTIFIER) {
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_IDENTIFIER);
-				}
-				
-				if(getNextSymbol() != Consts.OPERATORS.MOV) {
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
-				}
-				
-				Expression();
-								
-				if(getNextSymbol() != Consts.EOS) {
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
-				}
-				break;
-			}
-			
-			case Consts.DATA_TYPES.STRING : {
-				if(getNextSymbol() != Consts.LEXICALS.IDENTIFIER) {
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_IDENTIFIER);
-				}
-				
-				if(getNextSymbol() != Consts.OPERATORS.MOV) {
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
-				}
-				
-				Expression();
-				
 				if(getNextSymbol() != Consts.EOS) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
 				}
