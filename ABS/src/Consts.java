@@ -111,5 +111,7 @@ public final class Consts {
 		public final static String NOT_FOUND_RIGHT_BRACKET						= "Expected ')' : '%s' found.";
 		public final static String NOT_FOUND_LEFT_CURLY_BRACKET					= "Expected '{' : '%s' found.";
 		public final static String NOT_FOUND_RIGHT_CURLY_BRACKET				= "Expected '}' : '%s' found.";
+		public final static String NOT_FOUND_APOSTROPHE							= "Expected '\'' : '%s' found.";
+		public final static String NOT_FOUND_QUOTE								= "Expected '\"' : '%s' found.";
 	}
 }
