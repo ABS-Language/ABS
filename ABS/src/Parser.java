@@ -27,7 +27,7 @@ public class Parser {
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_LEFT_CURLY_BRACKET);
 		}
 
-		Operator(); //TODO: poveche ot edin operator pls
+		Operator();
 
 		while(true) {
 			try {
@@ -50,17 +50,16 @@ public class Parser {
 				if(this.currentSymbol.getType() == Consts.TYPES.UNKNOWN_TYPE){
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_VARIABLE);
 				}
-				else {
-					//if you have getNextSymbol() + '==' 
-					//always return the index if the check fails
-					this.currentIndex--;
-				}
 				
 				if(getNextSymbol() != Consts.OPERATORS.MOV) { //'stava'
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
 				}
 				
 				Expression();
+				
+				if(getNextSymbol() != Consts.EOS) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
+				}
 
 				break;
 			}			
@@ -77,12 +76,16 @@ public class Parser {
 				//====
 				codeBlock();
 				//====
+				if(getNextSymbol() == Consts.CONDITIONAL_OPERATORS.ELSE) {
+					codeBlock();
+				}
+				else {
+					//if you have getNextSymbol() + '==' 
+					//always return the index if the check fails
+					this.currentIndex--;
+				}
+				//====
 				break;
-//				if(getNextSymbol() == Consts.CONDITIONAL_OPERATORS.ELSE) {
-//					codeBlock();
-//				}
-//				//====
-//				break;
 			}			
 			case Consts.LOOPS.WHILE : {
 				if(getNextSymbol() != Consts.CHARACTERS.LEFT_BRACKET) {
@@ -132,10 +135,7 @@ public class Parser {
 			case Consts.DEFINITION_TYPES.STRING :  {
 				dataDefinition();
 				break;
-			}			
-//			case Consts.EOS : {
-//				break;
-//			}
+			}
 			default : {
 				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_OPERATOR);
 			}
