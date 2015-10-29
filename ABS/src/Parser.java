@@ -29,9 +29,15 @@ public class Parser {
 
 		Operator(); //TODO: poveche ot edin operator pls
 
-//		while(getNextSymbol() == Consts.EOS) {
-//			Operator();
-//		}
+		while(true) {
+			try {
+				Operator();
+			}
+			catch(SyntaxException e) {
+				this.currentIndex--;
+				break;
+			}
+		}
 		
 		if(getNextSymbol() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_RIGHT_CURLY_BRACKET);
@@ -44,6 +50,12 @@ public class Parser {
 				if(this.currentSymbol.getType() == Consts.TYPES.UNKNOWN_TYPE){
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_VARIABLE);
 				}
+				else {
+					//if you have getNextSymbol() + '==' 
+					//always return the index if the check fails
+					this.currentIndex--;
+				}
+				
 				if(getNextSymbol() != Consts.OPERATORS.MOV) { //'stava'
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
 				}
@@ -51,8 +63,7 @@ public class Parser {
 				Expression();
 
 				break;
-			}
-			
+			}			
 			case Consts.CONDITIONAL_OPERATORS.IF : {
 				if(getNextSymbol() != Consts.CHARACTERS.LEFT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_LEFT_BRACKET);
@@ -72,8 +83,7 @@ public class Parser {
 //				}
 //				//====
 //				break;
-			}
-			
+			}			
 			case Consts.LOOPS.WHILE : {
 				if(getNextSymbol() != Consts.CHARACTERS.LEFT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_LEFT_BRACKET);
@@ -88,8 +98,7 @@ public class Parser {
 				codeBlock();
 				//====
 				break;
-			}
-			
+			}			
 			case Consts.LOOPS.FOR : {
 				if(getNextSymbol() != Consts.CHARACTERS.LEFT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_LEFT_BRACKET);
@@ -124,9 +133,9 @@ public class Parser {
 				dataDefinition();
 				break;
 			}			
-			case Consts.EOS : {
-				break;
-			}
+//			case Consts.EOS : {
+//				break;
+//			}
 			default : {
 				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_OPERATOR);
 			}
@@ -193,11 +202,14 @@ public class Parser {
 				
 				currentSymbol.setType(Consts.TYPES.INTEGER);
 				
-				if(this.getNextSymbol() != Consts.OPERATORS.MOV){
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
+				if(this.getNextSymbol() == Consts.OPERATORS.MOV){
+					Expression();
 				}
-				
-				Expression();
+				else {
+					//if you have getNextSymbol() + '==' 
+					//always return the index if the check fails
+					this.currentIndex--;
+				}
 				
 				if(getNextSymbol() != Consts.EOS) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
@@ -211,12 +223,15 @@ public class Parser {
 				
 				currentSymbol.setType(Consts.TYPES.FLOAT);
 				
-				if(this.getNextSymbol() != Consts.OPERATORS.MOV){
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
+				if(this.getNextSymbol() == Consts.OPERATORS.MOV){
+					Expression();
+				}
+				else {
+					//if you have getNextSymbol() + '==' 
+					//always return the index if the check fails
+					this.currentIndex--;
 				}
 				
-				Expression();
-			
 				if(getNextSymbol() != Consts.EOS) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
 				}
@@ -230,18 +245,32 @@ public class Parser {
 				
 				currentSymbol.setType(Consts.TYPES.CHAR);
 				
-				if(this.getNextSymbol() != Consts.OPERATORS.MOV){
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
+				if(getNextSymbol() == Consts.OPERATORS.MOV) {
+					if(getNextSymbol() == Consts.CHARACTERS.APOSTROPHE){
+						if(this.getNextSymbol() != Consts.LEXICALS.CONSTANT) {
+							throw new SyntaxException(Consts.ERRORS.INVALID_STRING);
+						}
+						
+						if(getNextSymbol() != Consts.CHARACTERS.APOSTROPHE){
+							throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_APOSTROPHE);
+						}						
+					}
+					else {
+						//if you have getNextSymbol() + '==' 
+						//always return the index if the check fails
+						this.currentIndex--;
+						
+						Expression();
+					}					
+				}
+				else {
+					//if you have getNextSymbol() + '==' 
+					//always return the index if the check fails
+					this.currentIndex--;
 				}
 				
-				if(this.getNextSymbol() != Consts.CHARACTERS.APOSTROPHE){
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_APOSTROPHE);
-				}
-				
-				Expression();
-				
-				if(this.getNextSymbol() != Consts.CHARACTERS.APOSTROPHE){
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_APOSTROPHE);
+				if(getNextSymbol() != Consts.EOS) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
 				}
 				
 				break;
@@ -254,21 +283,32 @@ public class Parser {
 				
 				currentSymbol.setType(Consts.TYPES.STRING);
 				
-				if(this.getNextSymbol() != Consts.OPERATORS.MOV){
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_SET_OPERATOR);
-				}
-				
-				if(this.getNextSymbol() == Consts.CHARACTERS.QUOTE){
-					if(this.getNextSymbol() != Consts.LEXICALS.CONSTANT) {
-						throw new SyntaxException(Consts.ERRORS.INVALID_STRING);
+				if(this.getNextSymbol() == Consts.OPERATORS.MOV){
+					if(this.getNextSymbol() == Consts.CHARACTERS.QUOTE){
+						if(this.getNextSymbol() != Consts.LEXICALS.CONSTANT) {
+							throw new SyntaxException(Consts.ERRORS.INVALID_STRING);
+						}
+						
+						if(this.getNextSymbol() != Consts.CHARACTERS.QUOTE){
+							throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_QUOTE);
+						}
 					}
-					
-					if(this.getNextSymbol() != Consts.CHARACTERS.QUOTE){
-						throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_QUOTE);
+					else {
+						//if you have getNextSymbol() + '==' 
+						//always return the index if the check fails
+						this.currentIndex--;
+						
+						Expression();
 					}
 				}
 				else {
-					Expression();
+					//if you have getNextSymbol() + '==' 
+					//always return the index if the check fails
+					this.currentIndex--;
+				}
+				
+				if(getNextSymbol() != Consts.EOS) {
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_EOS);
 				}
 				
 				break;
