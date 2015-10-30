@@ -28,16 +28,22 @@ public class Parser {
 		}
 
 		Operator();
-
-		while(true) {
-			try {
-				Operator();
-			}
-			catch(SyntaxException e) {
-				this.currentIndex--;
-				break;
-			}
+//
+//		while(true) {
+//			try {
+//				Operator();
+//			}
+//			catch(SyntaxException e) {
+//				this.currentIndex--;
+//				break;
+//			}
+//		}
+		
+		while(getNextSymbol() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
+			this.currentIndex--;
+			Operator();
 		}
+		this.currentIndex--;
 		
 		if(getNextSymbol() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.NOT_FOUND_RIGHT_CURLY_BRACKET);
@@ -149,11 +155,10 @@ public class Parser {
 				currentSymbol.getCode() == Consts.OPERATORS.SUB){
 			Term();
 		}
-		//reads next symbol from Term()
-		//if it doesnt pass returns to Expression() 
+		
 		//if the read 'next symbol' doesnt pass the prev symbol position is returned
-		//to avoid reading the next symbol instead"**
-		currentIndex--;
+				//to avoid reading the next symbol instead"**
+				currentIndex--;
 	}
 	
 	private void Term() throws SyntaxException{
@@ -162,10 +167,12 @@ public class Parser {
 		while(getNextSymbol() == Consts.OPERATORS.MUL 
 				|| currentSymbol.getCode() == Consts.OPERATORS.DIV 
 				|| currentSymbol.getCode() == Consts.OPERATORS.GREATER 
-				|| currentSymbol.getCode() == Consts.OPERATORS.LESS){
+				|| currentSymbol.getCode() == Consts.OPERATORS.LESS){ //TODO: nameri mqsto na greater i less
 			
 			Factor();
 		}
+		
+		
 	}
 	
 	private void Factor() throws SyntaxException{

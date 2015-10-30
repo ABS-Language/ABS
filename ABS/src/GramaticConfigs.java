@@ -2,17 +2,25 @@ public class GramaticConfigs {
 	public final static Symbol[] SPECIAL_SYMBOLS = { 
 			new Symbol("ako", Consts.CONDITIONAL_OPERATORS.IF),
 			new Symbol("inache", Consts.CONDITIONAL_OPERATORS.ELSE),
+			
 			new Symbol("za", Consts.LOOPS.FOR),
+			
 			new Symbol("dokato", Consts.LOOPS.WHILE),
+			
 			new Symbol("vazmojnost", Consts.CONDITIONAL_OPERATORS.SWITCH),
 			new Symbol("sluchai", Consts.CONDITIONAL_OPERATORS.CASE),
+			
 			new Symbol("cqlo", Consts.DEFINITION_TYPES.INTEGER),
 			new Symbol("drobno", Consts.DEFINITION_TYPES.FLOAT),
 			new Symbol("simvol", Consts.DEFINITION_TYPES.CHAR),
 			new Symbol("niz", Consts.DEFINITION_TYPES.STRING),
+			
 			new Symbol("izvedi", Consts.IO.OUTPUT),
 			new Symbol("vuvedi", Consts.IO.INPUT),
+			
 			new Symbol("stava", Consts.OPERATORS.MOV),
+			new Symbol("razlichno", Consts.OPERATORS.DIFF),
+			
 			new Symbol("pogolqmo", Consts.OPERATORS.GREATER),
 			new Symbol("pomalko", Consts.OPERATORS.LESS)
 	};

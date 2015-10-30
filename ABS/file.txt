@@ -1,3 +1,10 @@
 {
+	cqlo b stava 12345;
 	
-} 
+	cqlo br stava 0;	
+	
+	dokato(b) {
+		b stava b / 10;
+		br stava br + 1;
+	}
+}
