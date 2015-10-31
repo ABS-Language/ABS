@@ -3,27 +3,54 @@ public class Symbol {
 	private int code;
 	private int type;
 	
+	private int iValue;
+	private float fValue;
+	private String sValue;
+	private char cValue;
+	
+	
 	Symbol() {
 		this.code = 0;
 		this.name = Consts.DEFAULT_STRING;
 		this.type = Consts.TYPES.UNKNOWN_TYPE;
+		
+		this.iValue = 0;
+		this.fValue = 0;
+		this.cValue = 0;
+		this.sValue = null;
 	}
 	
 	Symbol(String name) {
 		this.code = 0;
 		this.name = name;
+		this.type = Consts.TYPES.UNKNOWN_TYPE;
+		
+		this.iValue = 0;
+		this.fValue = 0;
+		this.cValue = 0;
+		this.sValue = null;
 	}
 	
 	Symbol(String name, int code) {
 		this.code = code;
 		this.name = name;
-		this.type = type;
+		this.type = Consts.TYPES.UNKNOWN_TYPE;
+		
+		this.iValue = 0;
+		this.fValue = 0;
+		this.cValue = 0;
+		this.sValue = null;
 	}
 	
 	Symbol(String name, int code, int type) {
 		this.code = code;
 		this.name = name;
 		this.type = type;
+		
+		this.iValue = 0;
+		this.fValue = 0;
+		this.cValue = 0;
+		this.sValue = null;
 	}
 	
 	public void setCode(int code) {
@@ -48,6 +75,38 @@ public class Symbol {
 	
 	public int getType() {
 		return this.type;
+	}
+	
+	public float setIntValue() {
+		return this.iValue;
+	}
+	
+	public float getFloatValue() {
+		return this.fValue;
+	}
+	
+	public String getStringValue() {
+		return this.sValue;
+	}
+	
+	public char getCharValue() {
+		return this.cValue;
+	}
+	//======
+	public void setValue(int value) {
+		this.iValue = value;
+	}
+	
+	public void setValue(float value) {
+		this.fValue = value;
+	}
+	
+	public void setValue(String value) {
+		this.sValue = value;
+	}
+	
+	public void setValue(char value) {
+		this.cValue = value;
 	}
 	
 	@Override
