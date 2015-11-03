@@ -9,33 +9,31 @@ public class Tetrada{
 	
 	public String toString(){
 		String result = "";
-		return "";
+		for (Row row : tetrada) {
+			result += row.getOperator() + ", " 
+					+ row.getOp1() + ", "
+					+ row.getOp2() 
+					+ "/n";
+		}
+		return result;
 	}
-	//fix commit
-	//asdasd
+	
+	public void add(Row row) {
+		tetrada.add(row);
+	}
 }
 
 class Row {
-	private int line;
 	private int operator;
 	private Position op1;
 	private Position op2;
 	
-	public Row(int line, int operator, Position op1, Position op2){
-		this.line = line;
+	public Row(int operator, Position op1, Position op2){
 		this.operator = operator;
 		this.op1 = op1;
 		this.op2 = op2;
 	}
 	
-	public int getLine() {
-		return line;
-	}
-
-	public void setLine(int line) {
-		this.line = line;
-	}
-
 	public int getOperator() {
 		return operator;
 	}

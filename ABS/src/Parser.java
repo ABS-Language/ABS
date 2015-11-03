@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 
 public class Parser {
-	
 	private Tetrada tetrada;
 	private ArrayList<Position> codeOrder;
 	private Hash symbols;
@@ -30,16 +29,6 @@ public class Parser {
 		}
 
 		Operator();
-//
-//		while(true) {
-//			try {
-//				Operator();
-//			}
-//			catch(SyntaxException e) {
-//				this.currentIndex--;
-//				break;
-//			}
-//		}
 		
 		while(getNextSymbol() != Consts.CHARACTERS.RIGHT_CURLY_BRACKET) {
 			this.currentIndex--;
@@ -159,8 +148,8 @@ public class Parser {
 		}
 		
 		//if the read 'next symbol' doesnt pass the prev symbol position is returned
-				//to avoid reading the next symbol instead"**
-				currentIndex--;
+		//to avoid reading the next symbol instead"**
+		currentIndex--;
 	}
 	
 	private void Term() throws SyntaxException{
@@ -173,8 +162,6 @@ public class Parser {
 			
 			Factor();
 		}
-		
-		
 	}
 	
 	private void Factor() throws SyntaxException{
@@ -328,7 +315,7 @@ public class Parser {
 	private int getNextSymbol() {
 		try {
 			(this.currentSymbol = symbols.get(codeOrder.get(currentIndex++))).getCode();
-			Print("getNextSymbol() :: #" + currentIndex + " -> " + this.currentSymbol.getName());
+		//	Print("getNextSymbol() :: #" + currentIndex + " -> " + this.currentSymbol.getName());
 			return this.currentSymbol.getCode();			
 		}
 		catch(IndexOutOfBoundsException e) {

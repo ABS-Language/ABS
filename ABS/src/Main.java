@@ -25,9 +25,6 @@ public class Main {
 			catch(NullPointerException e) {
 				System.out.println("Empty file provided.");
 			}
-			
-			
-			
 		}
 		
 	}
