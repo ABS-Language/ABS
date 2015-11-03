@@ -1,10 +1,11 @@
 {
-	cqlo b stava 12345;
+	cqlo a stava 15;
+	a stava (10 - (15 + 10)) * 35;
+	dokato(a){
+		a stava 10;
+	}
 	
-	cqlo br stava 0;	
-	
-	dokato(b) {
-		b stava b / 10;
-		br stava br + 1;
+	ako(a) {
+		niz kiro stava "pesho";
 	}
 }
