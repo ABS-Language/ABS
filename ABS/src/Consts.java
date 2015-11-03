@@ -54,6 +54,10 @@ public final class Consts {
 		public final static int DIFF		= 108;
 		public final static int GREATER		= 109;
 		public final static int	LESS		= 110;
+		public final static int JMP			= 111;
+		public final static int JZ			= 112;
+		public final static int JG			= 113;
+		public final static int JL			= 114;
 	}
 	
 	class CONDITIONAL_OPERATORS {

@@ -2,14 +2,14 @@ import java.util.ArrayList;
 
 public class Parser {
 	
-	private ArrayList<Tetrada> tetradi;
+	private Tetrada tetrada;
 	private ArrayList<Position> codeOrder;
 	private Hash symbols;
 	private int currentIndex = 0;
 	private Symbol currentSymbol;
 	
 	public Parser(ArrayList<Position> codeOrder, Hash symbols ) {
-		this.tetradi = new ArrayList<>();
+		this.tetrada = new Tetrada();
 		this.codeOrder = codeOrder;
 		this.symbols = symbols;
 	}
