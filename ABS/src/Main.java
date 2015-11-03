@@ -1,5 +1,6 @@
 public class Main {
 	public static void main(String[] args) {
+		
 		final String CODE_FILE_PATH = "file.txt";
 		
 		
