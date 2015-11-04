@@ -2,31 +2,34 @@ public class Symbol {
 	private String name;
 	private int code;
 	private int type;
+	private Position pos;
 	
 	private int iValue;
-	private float fValue;
+	private double dValue;
 	private String sValue;
 	private char cValue;
 	
 	
 	Symbol() {
-		this.code = 0;
+		this.code = Consts.UNKNOWN;;
 		this.name = Consts.DEFAULT_STRING;
 		this.type = Consts.TYPES.UNKNOWN_TYPE;
+		this.pos = null;
 		
 		this.iValue = 0;
-		this.fValue = 0;
+		this.dValue = 0;
 		this.cValue = 0;
 		this.sValue = null;
 	}
 	
 	Symbol(String name) {
-		this.code = 0;
+		this.code = Consts.UNKNOWN;;
 		this.name = name;
 		this.type = Consts.TYPES.UNKNOWN_TYPE;
+		this.pos = null;
 		
 		this.iValue = 0;
-		this.fValue = 0;
+		this.dValue = 0;
 		this.cValue = 0;
 		this.sValue = null;
 	}
@@ -35,9 +38,10 @@ public class Symbol {
 		this.code = code;
 		this.name = name;
 		this.type = Consts.TYPES.UNKNOWN_TYPE;
+		this.pos = null;
 		
 		this.iValue = 0;
-		this.fValue = 0;
+		this.dValue = 0;
 		this.cValue = 0;
 		this.sValue = null;
 	}
@@ -46,19 +50,12 @@ public class Symbol {
 		this.code = code;
 		this.name = name;
 		this.type = type;
+		this.pos = null;
 		
 		this.iValue = 0;
-		this.fValue = 0;
+		this.dValue = 0;
 		this.cValue = 0;
 		this.sValue = null;
-	}
-	
-	public void setCode(int code) {
-		this.code = code;
-	}
-	
-	public int getCode() {
-		return this.code;
 	}
 	
 	public String getName() {
@@ -68,7 +65,15 @@ public class Symbol {
 	public boolean isNull() {
 		return this.name == Consts.DEFAULT_STRING;
 	}
+	//====
+	public void setCode(int code) {
+		this.code = code;
+	}
 	
+	public int getCode() {
+		return this.code;
+	}
+	//====
 	public void setType(int type) {
 		this.type = type;
 	}
@@ -76,37 +81,45 @@ public class Symbol {
 	public int getType() {
 		return this.type;
 	}
+	//====
+	public void setIntValue(int value) {
+		this.iValue = value;
+	}
 	
-	public float setIntValue() {
+	public int getIntValue() {
 		return this.iValue;
 	}
-	
-	public float getFloatValue() {
-		return this.fValue;
+	//====
+	public void setDoubleValue(double value) {
+		this.dValue = value;
 	}
 	
-	public String getStringValue() {
-		return this.sValue;
+	public double getDoubleValue() {
+		return this.dValue;
+	}
+	//====
+	public void setCharValue(char value) {
+		this.cValue = value;
 	}
 	
 	public char getCharValue() {
 		return this.cValue;
 	}
-	//======
-	public void setValue(int value) {
-		this.iValue = value;
-	}
-	
-	public void setValue(float value) {
-		this.fValue = value;
-	}
-	
-	public void setValue(String value) {
+	//====
+	public void setStringValue(String value) {
 		this.sValue = value;
 	}
 	
-	public void setValue(char value) {
-		this.cValue = value;
+	public String getStringValue() {
+		return this.sValue;
+	}
+	//====
+	public void setPosition(Position pos) {
+		this.pos = pos;
+	}
+	
+	public Position getPosition() {
+		return this.pos;
 	}
 	
 	@Override

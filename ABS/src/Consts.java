@@ -21,12 +21,11 @@ public final class Consts {
 	}
 	
 	class TYPES {
-		public final static int UNKNOWN_TYPE = 0;
-		public final static int INTEGER		= 12;
-		public final static int FLOAT		= 13;
-		public final static int DOUBLE		= 14;
-		public final static int CHAR		= 15;
-		public final static int STRING		= 16;
+		public final static int UNKNOWN_TYPE 	= 11;
+		public final static int INTEGER			= 12;
+		public final static int DOUBLE			= 13;
+		public final static int CHAR			= 14;
+		public final static int STRING			= 15;
 	}
 	
 	class DEFINITION_TYPES {
@@ -95,28 +94,35 @@ public final class Consts {
 	}
 	
 	class ERRORS {
-		public final static String NOT_FOUND_EOF								= "'%s' found out of the Primary Block.";
+		class SYNTAX {
+			public final static String NOT_FOUND_EOF								= "'%s' found out of the Primary Block.";
+			
+			public final static String NOT_FOUND_OPERATOR							= "Expected Operator : '%s' found.";
+			
+			public final static String NOT_FOUND_EQU 								= "Expected '=' : '%s' found.";
+			public final static String NOT_FOUND_EOS 								= "Expected ';' : %s' found.";
+			public final static String NOT_FOUND_IDENTIFIER							= "Expected Variable : '%s' found.";
+			public final static String NOT_FOUND_EXPRESSION							= "Expected Expression : '%s' found.";
+			public final static String NOT_FOUND_SET_OPERATOR						= "Expected 'SET' Operator : '%s' found.";
 		
-		public final static String NOT_FOUND_OPERATOR							= "Expected Operator : '%s' found.";
-		
-		public final static String NOT_FOUND_EQU 								= "Expected '=' : '%s' found.";
-		public final static String NOT_FOUND_EOS 								= "Expected ';' : %s' found.";
-		public final static String NOT_FOUND_IDENTIFIER							= "Expected Variable : '%s' found.";
-		public final static String NOT_FOUND_EXPRESSION							= "Expected Expression : '%s' found.";
-		public final static String NOT_FOUND_SET_OPERATOR						= "Expected 'SET' Operator : '%s' found.";
-	
-		public final static String NOT_FOUND_VARIABLE							= "Variable '%s' not declared.";
-		
-		public final static String INVALID_INTEGER 								= "Invalid int constant.";
-		public final static String INVALID_FLOAT								= "Invalid float constant.";
-		public final static String INVALID_CHAR									= "Invalid char constant.";
-		public final static String INVALID_STRING								= "Invalid string constant.";
-		
-		public final static String NOT_FOUND_LEFT_BRACKET						= "Expected '(' : '%s' found.";
-		public final static String NOT_FOUND_RIGHT_BRACKET						= "Expected ')' : '%s' found.";
-		public final static String NOT_FOUND_LEFT_CURLY_BRACKET					= "Expected '{' : '%s' found.";
-		public final static String NOT_FOUND_RIGHT_CURLY_BRACKET				= "Expected '}' : '%s' found.";
-		public final static String NOT_FOUND_APOSTROPHE							= "Expected '\'' : '%s' found.";
-		public final static String NOT_FOUND_QUOTE								= "Expected '\"' : '%s' found.";
+			public final static String NOT_FOUND_VARIABLE							= "Variable '%s' not declared.";
+			
+			public final static String INVALID_INTEGER 								= "Invalid int constant.";
+			public final static String INVALID_FLOAT								= "Invalid float constant.";
+			public final static String INVALID_CHAR									= "Invalid char constant.";
+			public final static String INVALID_STRING								= "Invalid string constant.";
+			
+			public final static String NOT_FOUND_LEFT_BRACKET						= "Expected '(' : '%s' found.";
+			public final static String NOT_FOUND_RIGHT_BRACKET						= "Expected ')' : '%s' found.";
+			public final static String NOT_FOUND_LEFT_CURLY_BRACKET					= "Expected '{' : '%s' found.";
+			public final static String NOT_FOUND_RIGHT_CURLY_BRACKET				= "Expected '}' : '%s' found.";
+			public final static String NOT_FOUND_APOSTROPHE							= "Expected '\'' : '%s' found.";
+			public final static String NOT_FOUND_QUOTE								= "Expected '\"' : '%s' found.";
+			
+			public final static String INVALID_OPERATOR_TYPES						= "Mismatched operator types";
+		}
+		class LEXICAL {
+			public final static String INVALID_CHARACTER							= "Invalid character found! '%1' : '%2'";
+		}
 	}
 }

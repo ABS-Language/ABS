@@ -2,18 +2,26 @@ import java.util.ArrayList;
 
 public class Tetrada{
 	private ArrayList<Row> tetrada;
+	private static Hash hash; //TODO: for testing purpose
 	
 	public Tetrada(){
 		this.tetrada = new ArrayList<Row>();
 	}
 	
+	public Tetrada(Hash hash) { //TODO: for testing purpose
+		this.tetrada = new ArrayList<Row>();
+		Tetrada.hash = hash;
+	}
+	
+	@Override
 	public String toString(){
 		String result = "";
 		for (Row row : tetrada) {
-			result += row.getOperator() + ", " 
-					+ row.getOp1() + ", "
-					+ row.getOp2() 
-					+ "/n";
+			result += row.getOperator() + " | " 
+					+ Tetrada.hash.get(row.getOp1()) + " | "
+					+ Tetrada.hash.get(row.getOp2()) + " | " 
+					+ Tetrada.hash.get(row.getResult())
+					+ "\n";
 		}
 		return result;
 	}
@@ -21,21 +29,27 @@ public class Tetrada{
 	public void add(Row row) {
 		tetrada.add(row);
 	}
+	
+	public static Hash getHash() {
+		return Tetrada.hash;
+	}
 }
 
 class Row {
 	private int operator;
 	private Position op1;
 	private Position op2;
+	private Position result;
 	
-	public Row(int operator, Position op1, Position op2){
+	public Row(int operator, Position op1, Position op2, Position result){
 		this.operator = operator;
 		this.op1 = op1;
 		this.op2 = op2;
+		this.result = result;
 	}
 	
 	public int getOperator() {
-		return operator;
+		return this.operator;
 	}
 
 	public void setOperator(int operator) {
@@ -43,7 +57,7 @@ class Row {
 	}
 
 	public Position getOp1() {
-		return op1;
+		return this.op1;
 	}
 
 	public void setOp1(Position op1) {
@@ -51,10 +65,22 @@ class Row {
 	}
 
 	public Position getOp2() {
-		return op2;
+		return this.op2;
 	}
 
 	public void setOp2(Position op2) {
 		this.op2 = op2;
+	}
+	
+	public Position getResult() {
+		return this.result;
+	}
+	
+	@Override
+	public String toString(){
+		return this.operator + " | " 
+				+ Tetrada.getHash().get(op1)
+				+ Tetrada.getHash().get(op2)
+				+ Tetrada.getHash().get(result);
 	}
 }

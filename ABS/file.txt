@@ -1,11 +1,3 @@
 {
-	cqlo a stava 15;
-	a stava (10 - (15 + 10)) * 35;
-	dokato(a){
-		a stava 10;
-	}
-	
-	ako(a) {
-		niz kiro stava "pesho";
-	}
+	simvol p stava '1';
 }

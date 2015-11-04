@@ -90,6 +90,8 @@ public class Hash {
 		
 		pos.setChain(global__array[cell].add(symbol));
 		
+		symbol.setPosition(pos);
+		
 		return pos;		
 	}
 	

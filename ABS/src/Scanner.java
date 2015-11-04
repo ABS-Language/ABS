@@ -19,7 +19,7 @@ public class Scanner {
 		this.pathFile = pathFile;
 	}
 	
-	public  boolean read(){
+	public void read() throws LexicalException{
 		loadSpecialSymbols(); //tuka zarejda specialni simvoli
 		FileReader read = null;
 		
@@ -127,8 +127,7 @@ public class Scanner {
 						(ch > Consts.PERMITTED.ASCII_HIGH && ch < Consts.PERMITTED.ASCII_CYRILLIC_LOW)
 						|| ch == Consts.FORBIDDEN.ASCII_AT) {
 							if(ch != Consts.SEPARATORS.ASCII_TAB) {
-								System.out.println("Invalid character on " + line + " : " + (i+1));
-								return false;
+								throw new LexicalException(Consts.ERRORS.LEXICAL.INVALID_CHARACTER, line, i+1);
 							}
 						}
 						//==
@@ -167,11 +166,10 @@ public class Scanner {
 		
 		try {
 			buffer.close();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} 
+		catch (IOException e) {
+			return;
 		}
-		return true;
 	}
 	
 	private  void loadSpecialSymbols(){
@@ -188,7 +186,7 @@ public class Scanner {
 		return codeOrder;
 	}
 	
-	public  Hash getSymbolTable() {
+	public Hash getSymbolTable() {
 		return symbols;
 	}
 	
