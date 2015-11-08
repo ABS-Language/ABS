@@ -1,3 +1,4 @@
 {
-	simvol p stava '1';
+	simvol p;
+	p stava 'x';
 }

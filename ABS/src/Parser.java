@@ -6,6 +6,7 @@ public class Parser {
 	private Hash symbols; 
 	private int currentIndex = 0;
 	private Symbol currentSymbol;
+	private Position receiver;
 	
 	private int nextVar = 1;
 	
@@ -56,6 +57,8 @@ public class Parser {
 				if(this.currentSymbol.getType() == Consts.TYPES.UNKNOWN_TYPE){
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_VARIABLE);
 				}
+				
+				this.receiver = this.currentSymbol.getPosition();
 				
 				if(getNextSymbol() != Consts.OPERATORS.MOV) { //'stava'
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_SET_OPERATOR);
@@ -232,8 +235,9 @@ public class Parser {
 				|| currentSymbol.getCode() == Consts.OPERATORS.DIV 
 				|| currentSymbol.getCode() == Consts.OPERATORS.GREATER 
 				|| currentSymbol.getCode() == Consts.OPERATORS.LESS){ //TODO: nameri mqsto na greater i less
-			int opCode = currentSymbol.getCode();
+			
 			Op2 = Factor();
+			int opCode = currentSymbol.getCode();
 			
 			if(Op1.getType() == Op2.getType()) {
 				Symbol result = new Symbol("&" + nextVar++, Consts.LEXICALS.IDENTIFIER, Consts.TYPES.INTEGER);
@@ -266,6 +270,8 @@ public class Parser {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_VARIABLE);
 				}
 				
+				tetrada.add(new Row(Consts.OPERATORS.MOV, this.currentSymbol.getPosition(), null, this.receiver ));
+				
 				return this.currentSymbol;
 			}
 			case Consts.LEXICALS.CONSTANT : {
@@ -276,30 +282,45 @@ public class Parser {
 					this.currentSymbol.setType(Consts.TYPES.DOUBLE);
 				}
 				
+				tetrada.add(new Row(Consts.OPERATORS.MOV, this.currentSymbol.getPosition(), null, this.receiver ));
+				
 				return this.currentSymbol;
 			}
+			
 			case Consts.CHARACTERS.APOSTROPHE : {
 				if(getNextSymbol() != Consts.LEXICALS.CONSTANT) { 
 					throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_CHAR);
 				}
 				
 				this.currentSymbol.setType(Consts.TYPES.CHAR);
-
+				Position pos = this.currentSymbol.getPosition();
+				
+				if(getNextSymbol() != Consts.CHARACTERS.APOSTROPHE) { 
+					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_APOSTROPHE);
+				}
+				
+				tetrada.add(new Row(Consts.OPERATORS.MOV, pos, null, this.receiver ));
+				
 				return this.currentSymbol;
 			}
+			
 			case Consts.CHARACTERS.QUOTE : {
 				if(getNextSymbol() != Consts.LEXICALS.CONSTANT) { 
 					throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_STRING);
 				}
 				
 				this.currentSymbol.setType(Consts.TYPES.STRING);
+				Position pos = this.currentSymbol.getPosition();
 				
 				if(getNextSymbol() != Consts.CHARACTERS.QUOTE) { 
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_QUOTE);
 				}
 				
+				tetrada.add(new Row(Consts.OPERATORS.MOV, pos, null, this.receiver ));
+				
 				return this.currentSymbol;
 			}
+			
 			default : {
 				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EXPRESSION);
 			}
