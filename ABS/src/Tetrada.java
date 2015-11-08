@@ -17,10 +17,10 @@ public class Tetrada{
 	public String toString(){
 		String result = "";
 		for (Row row : tetrada) {
-			Position op2 = row.getOp2();
 			result += row.getOperator() + " | " 
 					+ Tetrada.hash.get(row.getOp1()) + " | "
-					+ op2 == null ? " - " : (Tetrada.hash.get(row.getOp2())) + " | "
+					+ ((row.getOp2() == null) ? " - " : (Tetrada.hash.get(row.getOp2()))) 
+					+ " | "
 					+ Tetrada.hash.get(row.getResult())
 					+ "\n";
 		}
