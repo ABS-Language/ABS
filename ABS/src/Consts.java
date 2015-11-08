@@ -30,10 +30,9 @@ public final class Consts {
 	
 	class DEFINITION_TYPES {
 		public final static int INTEGER		= 21;
-		public final static int FLOAT		= 22;
-		public final static int DOUBLE		= 23;
-		public final static int CHAR		= 24;
-		public final static int STRING		= 25;
+		public final static int DOUBLE		= 22;
+		public final static int CHAR		= 23;
+		public final static int STRING		= 24;
 	}
 	
 	class SEPARATORS {

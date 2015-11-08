@@ -185,7 +185,7 @@ public class Parser {
 				break;
 			}
 			case Consts.DEFINITION_TYPES.INTEGER : 
-			case Consts.DEFINITION_TYPES.FLOAT : 
+			case Consts.DEFINITION_TYPES.DOUBLE : 
 			case Consts.DEFINITION_TYPES.CHAR : 
 			case Consts.DEFINITION_TYPES.STRING :  {
 				dataDefinition();
@@ -225,8 +225,8 @@ public class Parser {
 		
 		return Op1;
 	}
-	
-	private Symbol Term(Symbol Op1) throws SyntaxException{
+	//TODO : fix operators mismatch in integer and double and rest(nai-dobriq)
+	private Symbol Term(Symbol Op1) throws SyntaxException{ 
 		Symbol Op2 = new Symbol();
 		
 		Op1 = Factor();
@@ -239,16 +239,41 @@ public class Parser {
 			Op2 = Factor();
 			int opCode = currentSymbol.getCode();
 			
-			if(Op1.getType() == Op2.getType()) {
-				Symbol result = new Symbol("&" + nextVar++, Consts.LEXICALS.IDENTIFIER, Consts.TYPES.INTEGER);
+			switch(Op1.getType()){
+				case Consts.TYPES.INTEGER :{
+					if(Op2.getType() == Consts.TYPES.INTEGER ||
+						Op2.getType() == Consts.TYPES.DOUBLE){
+						Symbol result = new Symbol("&" + nextVar++, Consts.LEXICALS.IDENTIFIER, Consts.TYPES.INTEGER);
+						
+						tetrada.add(new Row(opCode, Op1.getPosition(), Op2.getPosition(), symbols.lookupInsert(result)));
+						
+						Op1 = result;
+					} 
+					else {
+						throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
+					}
+
+					 break;
+				}
 				
-				tetrada.add(new Row(opCode, Op1.getPosition(), Op2.getPosition(), symbols.lookupInsert(result)));
-				
-				Op1 = result;
+				case Consts.TYPES.DOUBLE :{
+					if(Op2.getType() == Consts.TYPES.INTEGER ||
+						Op2.getType() == Consts.TYPES.DOUBLE){
+						Symbol result = new Symbol("&" + nextVar++, Consts.LEXICALS.IDENTIFIER, Consts.TYPES.INTEGER);
+						
+						tetrada.add(new Row(opCode, Op1.getPosition(), Op2.getPosition(), symbols.lookupInsert(result)));
+						
+						Op1 = result;
+					} 
+					else {
+						throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
+					}
+
+					 break;
+				}
 			}
-			else {
-				throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
-			}
+			
+			
 		}
 		
 		return Op1;

@@ -1,4 +1,4 @@
 {
-	simvol p;
-	p stava 'x';
+	drobno a;
+	a stava 1243;
 }

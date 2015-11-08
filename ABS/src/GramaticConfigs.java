@@ -11,7 +11,7 @@ public class GramaticConfigs {
 			new Symbol("sluchai", Consts.CONDITIONAL_OPERATORS.CASE),
 			
 			new Symbol("cqlo", Consts.DEFINITION_TYPES.INTEGER),
-			new Symbol("drobno", Consts.DEFINITION_TYPES.FLOAT),
+			new Symbol("drobno", Consts.DEFINITION_TYPES.DOUBLE),
 			new Symbol("simvol", Consts.DEFINITION_TYPES.CHAR),
 			new Symbol("niz", Consts.DEFINITION_TYPES.STRING),
 			
