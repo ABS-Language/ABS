@@ -15,13 +15,12 @@ public class Tetrada{
 	
 	@Override
 	public String toString(){
-		String result = "";
+		String result = new String();
 		for (Row row : tetrada) {
 			result += row.getOperator() + " | " 
 					+ Tetrada.hash.get(row.getOp1()) + " | "
-					+ ((row.getOp2() == null) ? " - " : (Tetrada.hash.get(row.getOp2()))) 
-					+ " | "
-					+ Tetrada.hash.get(row.getResult())
+					+ ((row.getOp2() == null) ? " null " : Tetrada.hash.get(row.getOp2())) + " | "
+					+ ((row.getResult() == null) ? " null " : Tetrada.hash.get(row.getResult()))
 					+ "\n";
 		}
 		return result;
