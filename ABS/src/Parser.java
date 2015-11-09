@@ -6,7 +6,7 @@ public class Parser {
 	private Hash symbols; 
 	private int currentIndex = 0;
 	private Symbol currentSymbol;
-	private Position receiver;
+	private Symbol receiver;
 	
 	private int nextVar = 1;
 	
@@ -25,7 +25,7 @@ public class Parser {
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOF);
 		}
 		
-		Print(tetrada.toString());
+	//	Print(tetrada.toString());
 		
 		return true;
 	}
@@ -58,7 +58,7 @@ public class Parser {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_VARIABLE);
 				}
 				
-				this.receiver = this.currentSymbol.getPosition();
+				this.receiver = this.currentSymbol;
 				
 				if(getNextSymbol() != Consts.OPERATORS.MOV) { //'stava'
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_SET_OPERATOR);
@@ -68,7 +68,6 @@ public class Parser {
 				
 				Symbol Op2 = new Symbol();
 				Op2 = Expression(Op2);
-				Print("OP2 :: " );
 				
 				if(getNextSymbol() != Consts.EOS) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOS);
@@ -78,7 +77,10 @@ public class Parser {
 					case Consts.TYPES.INTEGER : {
 						if(Op2.getType() == Consts.TYPES.INTEGER
 						|| Op2.getType() == Consts.TYPES.DOUBLE) {
-							tetrada.add(new Row(Consts.OPERATORS.MOV, Op1.getPosition(), Op2.getPosition(), symbols.insert(new Symbol())));
+							tetrada.add(new Row(Consts.OPERATORS.MOV, 
+									Op1.getPosition(),
+									Op2.getPosition(),
+									symbols.insert(new Symbol())));
 						}
 						else {
 							throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
@@ -97,7 +99,11 @@ public class Parser {
 					}
 					case Consts.TYPES.CHAR : {
 						if(Op2.getType() == Consts.TYPES.CHAR) {
-							tetrada.add(new Row(Consts.OPERATORS.MOV, Op1.getPosition(), Op2.getPosition(), symbols.insert(new Symbol())));
+						//	if(Op2.)
+							tetrada.add(new Row(Consts.OPERATORS.MOV, 
+									Op1.getPosition(), 
+									Op2.getPosition(), 
+									symbols.insert(new Symbol())));
 						}
 						else {
 							throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
@@ -123,7 +129,7 @@ public class Parser {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_LEFT_BRACKET);
 				}
 				
-			//	Expression(); TODO: 
+			//	Expression(); TODO: IF
 				
 				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_RIGHT_BRACKET);
@@ -147,7 +153,7 @@ public class Parser {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_LEFT_BRACKET);
 				}
 				
-			//	Expression(); TODO: 
+			//	Expression(); TODO:  WHILE
 				
 				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_RIGHT_BRACKET);
@@ -168,7 +174,7 @@ public class Parser {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOS);
 				}
 				//===
-			//	Expression(); TODO: 
+			//	Expression(); TODO: FOR
 				
 				if(getNextSymbol() != Consts.EOS) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOS);
@@ -206,17 +212,71 @@ public class Parser {
 				currentSymbol.getCode() == Consts.OPERATORS.SUB){
 			int opCode = currentSymbol.getCode();
 			Op2 = Term(Op2);
-			
-			if(Op1.getType() == Op2.getType()) {
-				Symbol result = new Symbol("&" + nextVar++, Consts.LEXICALS.IDENTIFIER, Consts.TYPES.INTEGER);
-				
-				tetrada.add(new Row(opCode, Op1.getPosition(), Op2.getPosition(), symbols.insert(result)));
-				
-				Op1 = result;
+			switch(Op1.getType()){
+			case Consts.TYPES.INTEGER :{
+				if(Op2.getType() == Consts.TYPES.INTEGER ||
+					Op2.getType() == Consts.TYPES.DOUBLE){
+					Symbol result = new Symbol("&" + nextVar++, 
+													Consts.LEXICALS.IDENTIFIER, 
+													Consts.TYPES.INTEGER);
+					
+					tetrada.add(new Row(opCode, 
+							Op1.getPosition(), 
+							Op2.getPosition(), 
+							symbols.lookupInsert(result)));
+					
+					Op1 = result;
+				} 
+				else {
+					throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
+				}
+
+				 break;
 			}
-			else {
+			
+			case Consts.TYPES.DOUBLE :{
+				if(Op2.getType() == Consts.TYPES.INTEGER ||
+					Op2.getType() == Consts.TYPES.DOUBLE){
+					Symbol result = new Symbol("&" + nextVar++, 
+													Consts.LEXICALS.IDENTIFIER, 
+													Consts.TYPES.DOUBLE);
+					
+					tetrada.add(new Row(opCode, 
+							Op1.getPosition(), 
+							Op2.getPosition(), 
+							symbols.lookupInsert(result)));
+					
+					Op1 = result;
+				} 
+				else {
+					throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
+				}
+
+				 break;
+			}
+			case Consts.TYPES.STRING : { 
+				if(Op2.getType() == Consts.TYPES.STRING){
+						Symbol result = new Symbol("&" + nextVar++,
+													Consts.LEXICALS.IDENTIFIER,
+													Consts.TYPES.STRING);
+						
+						tetrada.add(new Row(opCode,
+								Op1.getPosition(),
+								Op2.getPosition(),
+								symbols.lookupInsert(result)));
+						
+						Op1 = result;
+					} 
+					else {
+						throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
+					}
+
+					 break;
+			}
+			default : {
 				throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
 			}
+		}
 		}
 		
 		//if the read 'next symbol' doesnt pass the prev symbol position is returned
@@ -225,7 +285,7 @@ public class Parser {
 		
 		return Op1;
 	}
-	//TODO : fix operators mismatch in integer and double and rest(nai-dobriq)
+	//TODO : fix operators mismatches
 	private Symbol Term(Symbol Op1) throws SyntaxException{ 
 		Symbol Op2 = new Symbol();
 		
@@ -236,16 +296,22 @@ public class Parser {
 				|| currentSymbol.getCode() == Consts.OPERATORS.GREATER 
 				|| currentSymbol.getCode() == Consts.OPERATORS.LESS){ //TODO: nameri mqsto na greater i less
 			
-			Op2 = Factor();
 			int opCode = currentSymbol.getCode();
+			
+			Op2 = Factor();
 			
 			switch(Op1.getType()){
 				case Consts.TYPES.INTEGER :{
 					if(Op2.getType() == Consts.TYPES.INTEGER ||
 						Op2.getType() == Consts.TYPES.DOUBLE){
-						Symbol result = new Symbol("&" + nextVar++, Consts.LEXICALS.IDENTIFIER, Consts.TYPES.INTEGER);
+						Symbol result = new Symbol("&" + nextVar++,
+								Consts.LEXICALS.IDENTIFIER,
+								Consts.TYPES.INTEGER);
 						
-						tetrada.add(new Row(opCode, Op1.getPosition(), Op2.getPosition(), symbols.lookupInsert(result)));
+						tetrada.add(new Row(opCode,
+								Op1.getPosition(),
+								Op2.getPosition(),
+								symbols.lookupInsert(result)));
 						
 						Op1 = result;
 					} 
@@ -259,9 +325,14 @@ public class Parser {
 				case Consts.TYPES.DOUBLE :{
 					if(Op2.getType() == Consts.TYPES.INTEGER ||
 						Op2.getType() == Consts.TYPES.DOUBLE){
-						Symbol result = new Symbol("&" + nextVar++, Consts.LEXICALS.IDENTIFIER, Consts.TYPES.INTEGER);
+						Symbol result = new Symbol("&" + nextVar++,
+								Consts.LEXICALS.IDENTIFIER,
+								Consts.TYPES.DOUBLE);
 						
-						tetrada.add(new Row(opCode, Op1.getPosition(), Op2.getPosition(), symbols.lookupInsert(result)));
+						tetrada.add(new Row(opCode,
+								Op1.getPosition(),
+								Op2.getPosition(),
+								symbols.lookupInsert(result)));
 						
 						Op1 = result;
 					} 
@@ -270,6 +341,9 @@ public class Parser {
 					}
 
 					 break;
+				}
+				default : {
+					throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
 				}
 			}
 			
@@ -295,8 +369,6 @@ public class Parser {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_VARIABLE);
 				}
 				
-				tetrada.add(new Row(Consts.OPERATORS.MOV, this.currentSymbol.getPosition(), null, this.receiver ));
-				
 				return this.currentSymbol;
 			}
 			case Consts.LEXICALS.CONSTANT : {
@@ -307,13 +379,12 @@ public class Parser {
 					this.currentSymbol.setType(Consts.TYPES.DOUBLE);
 				}
 				
-				tetrada.add(new Row(Consts.OPERATORS.MOV, this.currentSymbol.getPosition(), null, this.receiver ));
-				
-				return this.currentSymbol;
+				break;
 			}
 			
 			case Consts.CHARACTERS.APOSTROPHE : {
-				if(getNextSymbol() != Consts.LEXICALS.CONSTANT) { 
+				if(getNextSymbol() != Consts.LEXICALS.CONSTANT 
+						|| this.currentSymbol.getName().length() != 1) { 
 					throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_CHAR);
 				}
 				
@@ -324,9 +395,7 @@ public class Parser {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_APOSTROPHE);
 				}
 				
-				tetrada.add(new Row(Consts.OPERATORS.MOV, pos, null, this.receiver ));
-				
-				return this.currentSymbol;
+				break;
 			}
 			
 			case Consts.CHARACTERS.QUOTE : {
@@ -341,15 +410,15 @@ public class Parser {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_QUOTE);
 				}
 				
-				tetrada.add(new Row(Consts.OPERATORS.MOV, pos, null, this.receiver ));
-				
-				return this.currentSymbol;
+				break;
 			}
 			
 			default : {
 				throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EXPRESSION);
 			}
 		}
+		
+		return this.currentSymbol;
 	}
 
 	private void dataDefinition() throws SyntaxException {
@@ -359,9 +428,16 @@ public class Parser {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_IDENTIFIER);
 				}
 				
+				if(this.currentSymbol.getType() != Consts.TYPES.UNKNOWN_TYPE) {
+					throw new SyntaxException(this.currentSymbol.getName(), 
+							Consts.ERRORS.SYNTAX.INVALID_VARIABLE);
+				}
+				
 				currentSymbol.setType(Consts.TYPES.INTEGER);
 				
-				if(this.getNextSymbol() == Consts.OPERATORS.MOV) {
+				this.receiver = this.currentSymbol;
+				
+				if(getNextSymbol() == Consts.OPERATORS.MOV) {
 					Symbol op = new Symbol();
 					op = Expression(op);
 
@@ -369,6 +445,8 @@ public class Parser {
 						&& op.getType() != Consts.TYPES.DOUBLE) {
 						throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
 					}
+					
+					tetrada.add(new Row(Consts.OPERATORS.MOV, op.getPosition(), null, this.receiver.getPosition()));
 				}
 				else {
 					//if you have getNextSymbol() + '==' 
@@ -387,6 +465,8 @@ public class Parser {
 				}
 				
 				currentSymbol.setType(Consts.TYPES.DOUBLE);
+				
+				this.receiver = this.currentSymbol;
 				
 				if(this.getNextSymbol() == Consts.OPERATORS.MOV){
 					Symbol op = new Symbol();
@@ -428,6 +508,8 @@ public class Parser {
 						
 						this.currentSymbol.setType(Consts.TYPES.CHAR);
 						
+						this.receiver = this.currentSymbol;
+						
 						if(getNextSymbol() != Consts.CHARACTERS.APOSTROPHE){
 							throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_APOSTROPHE);
 						}						
@@ -464,10 +546,19 @@ public class Parser {
 				
 				currentSymbol.setType(Consts.TYPES.STRING);
 				
+				this.receiver = this.currentSymbol;
+				
 				if(this.getNextSymbol() == Consts.OPERATORS.MOV){
 					if(this.getNextSymbol() == Consts.CHARACTERS.QUOTE){
-						if(this.getNextSymbol() != Consts.LEXICALS.CONSTANT) {
-							throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_STRING);
+						if(this.getNextSymbol() == Consts.LEXICALS.CONSTANT) {
+							//add
+							}
+						else {
+							//add empty
+							
+							//if you have getNextSymbol() + '==' 
+							//always return the index if the check fails
+							this.currentIndex--;
 						}
 						
 						this.currentSymbol.setType(Consts.TYPES.STRING);

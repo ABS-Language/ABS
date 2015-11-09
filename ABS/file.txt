@@ -1,4 +1,3 @@
 {
-	drobno a;
-	a stava 1243;
+	cqlo a stava 3;
 }

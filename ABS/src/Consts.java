@@ -110,6 +110,7 @@ public final class Consts {
 			public final static String INVALID_FLOAT								= "Invalid float constant.";
 			public final static String INVALID_CHAR									= "Invalid char constant.";
 			public final static String INVALID_STRING								= "Invalid string constant.";
+			public final static String INVALID_VARIABLE								= "Variable '%s' already defined.";
 			
 			public final static String NOT_FOUND_LEFT_BRACKET						= "Expected '(' : '%s' found.";
 			public final static String NOT_FOUND_RIGHT_BRACKET						= "Expected ')' : '%s' found.";
