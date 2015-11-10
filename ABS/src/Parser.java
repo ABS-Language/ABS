@@ -157,8 +157,10 @@ public class Parser {
 				
 				Symbol op = new Symbol(); 
 				op = Expression(op);
+			
+				int downIndex = tetrada.getLastElementIndex() + 1;
 				
-				int downIndex = tetrada.getLastElementIndex();
+				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, null, null));
 				
 				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_RIGHT_BRACKET);
@@ -352,6 +354,7 @@ public class Parser {
 
 					 break;
 				}
+				
 				default : {
 					throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
 				}
@@ -486,6 +489,7 @@ public class Parser {
 						&& op.getType() != Consts.TYPES.DOUBLE) {
 						throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
 					}
+					tetrada.add(new Row(Consts.OPERATORS.MOV, op.getPosition(), null, this.receiver.getPosition()));
 				}
 				else {
 					//if you have getNextSymbol() + '==' 
@@ -506,6 +510,8 @@ public class Parser {
 				
 				currentSymbol.setType(Consts.TYPES.CHAR);
 				
+				this.receiver = this.currentSymbol;
+				
 				if(getNextSymbol() == Consts.OPERATORS.MOV) {
 					if(getNextSymbol() == Consts.CHARACTERS.APOSTROPHE){
 						if(getNextSymbol() != Consts.LEXICALS.CONSTANT) {
@@ -517,12 +523,13 @@ public class Parser {
 						}
 						
 						this.currentSymbol.setType(Consts.TYPES.CHAR);
-						
-						this.receiver = this.currentSymbol;
+
+						tetrada.add(new Row(Consts.OPERATORS.MOV, this.currentSymbol.getPosition(), null, this.receiver.getPosition()));
 						
 						if(getNextSymbol() != Consts.CHARACTERS.APOSTROPHE){
 							throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_APOSTROPHE);
-						}						
+						}	
+
 					}
 					else if(this.currentSymbol.getCode() == Consts.LEXICALS.IDENTIFIER) {
 						if(this.currentSymbol.getType() == Consts.TYPES.UNKNOWN_TYPE) {
@@ -534,7 +541,7 @@ public class Parser {
 					}
 					else {
 						throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_CHAR);
-					}					
+					}
 				}
 				else {
 					//if you have getNextSymbol() + '==' 
@@ -561,10 +568,14 @@ public class Parser {
 				if(this.getNextSymbol() == Consts.OPERATORS.MOV){
 					if(this.getNextSymbol() == Consts.CHARACTERS.QUOTE){
 						if(this.getNextSymbol() == Consts.LEXICALS.CONSTANT) {
-							//add
+
+							tetrada.add(new Row(Consts.OPERATORS.MOV, this.currentSymbol.getPosition(), null, this.receiver.getPosition()));
+							
 							}
 						else {
-							//add empty
+
+							tetrada.add(new Row(Consts.OPERATORS.MOV, this.currentSymbol.getPosition(), null, this.receiver.getPosition()));
+							
 							
 							//if you have getNextSymbol() + '==' 
 							//always return the index if the check fails

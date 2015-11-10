@@ -26,6 +26,7 @@ public final class Consts {
 		public final static int DOUBLE			= 13;
 		public final static int CHAR			= 14;
 		public final static int STRING			= 15;
+		public final static int BOOL			= 16;
 	}
 	
 	class DEFINITION_TYPES {
@@ -85,7 +86,8 @@ public final class Consts {
 		public final static int APOSTROPHE				= 507;
 		public final static int COMMA					= 508;
 		public final static int DOT						= 509;
-		
+
+		public final static int EMPTY_STRING			= 510;
 	}
 	
 	class IO {

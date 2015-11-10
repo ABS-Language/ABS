@@ -16,8 +16,10 @@ public class Tetrada{
 	@Override
 	public String toString(){
 		String result = new String();
+		int counter = 0;
 		for (Row row : tetrada) {
-			result += row.getOperator() + " | " 
+			result += counter++ + ". " + 
+					row.getOperator() + " | " 
 					+ ((row.getOp1() instanceof Integer) ? (int)row.getOp1() : Tetrada.getHash().get((Position)row.getOp1()))+ " | "
 					+ ((row.getOp2() == null) ? " null " : Tetrada.hash.get(row.getOp2())) + " | "
 					+ ((row.getResult() == null) ? " null " : "\'" + Tetrada.hash.get(row.getResult()) + "\'")
@@ -44,7 +46,7 @@ public class Tetrada{
 	}
 	
 	public void addJumpLine(int index, int lineToContinue){
-		this.tetrada.get(index).setOp1(new Position());
+		this.tetrada.get(index).setOp1(lineToContinue);
 	}
 }
 

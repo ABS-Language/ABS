@@ -7,7 +7,7 @@ public class Main {
 		Scanner scanner = new Scanner(CODE_FILE_PATH/*args*/);
 		try {
 			scanner.read();
-			//scanner.getSymbolTable().printTable();
+			scanner.getSymbolTable().printTable();
 			//scanner.printCodeOrder();
 
 			Parser p = new Parser(scanner.getCodeOrder(), scanner.getSymbolTable());

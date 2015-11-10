@@ -65,6 +65,9 @@ public class Scanner {
 									codeOrder.add(symbols.lookupInsert(new Symbol(word, Consts.LEXICALS.CONSTANT)));
 									word = "";
 								}
+								else{
+									codeOrder.add(symbols.lookupInsert(new Symbol("", Consts.LEXICALS.CONSTANT)));
+								}
 								isString = false;
 								
 								codeOrder.add(symbols.lookupInsert(new Symbol(ch + "", Consts.CHARACTERS.QUOTE)));

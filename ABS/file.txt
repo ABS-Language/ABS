@@ -1,6 +1,11 @@
 {
 	cqlo a stava 10;
-	dokato(a){
-		a stava 10;
+	cqlo b stava 1;
+	dokato(a pogolqmo b){
+		cqlo x stava 66;
+		cqlo y stava 99;
+		drobno t stava 54.3;
+		niz pesho2 stava "";
+		simvol kiro stava 'k';
 	}
 }

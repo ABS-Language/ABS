@@ -43,6 +43,7 @@ public class GramaticConfigs {
 		new Symbol("ravno", Consts.OPERATORS.EQU),
 		new Symbol(" ", Consts.SEPARATORS.ASCII_SPACE),
 		new Symbol("	", Consts.SEPARATORS.ASCII_SPACE),
-		new Symbol(",", Consts.CHARACTERS.COMMA)
+		new Symbol(",", Consts.CHARACTERS.COMMA),
+		new Symbol("", Consts.CHARACTERS.EMPTY_STRING)
 	};
 }	
