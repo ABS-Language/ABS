@@ -18,7 +18,7 @@ public class Tetrada{
 		String result = new String();
 		for (Row row : tetrada) {
 			result += row.getOperator() + " | " 
-					+ Tetrada.hash.get(row.getOp1()) + " | "
+					+ ((row.getOp1() instanceof Integer) ? (int)row.getOp1() : Tetrada.getHash().get((Position)row.getOp1()))+ " | "
 					+ ((row.getOp2() == null) ? " null " : Tetrada.hash.get(row.getOp2())) + " | "
 					+ ((row.getResult() == null) ? " null " : "\'" + Tetrada.hash.get(row.getResult()) + "\'")
 					+ "\n";
@@ -28,25 +28,40 @@ public class Tetrada{
 	
 	public void add(Row row) {
 		tetrada.add(row);
-		System.out.println(row.getOperator() + " | " 
-				+ Tetrada.hash.get(row.getOp1()) + " | "
-				+ ((row.getOp2() == null) ? " null " : Tetrada.hash.get(row.getOp2())) + " | "
-				+ ((row.getResult() == null) ? " null " : "\'" + Tetrada.hash.get(row.getResult()) + "\'")
-				);
+//		System.out.println(row.getOperator() + " | " 
+//				+ Tetrada.hash.get(row.getOp1()) + " | "
+//				+ ((row.getOp2() == null) ? " null " : Tetrada.hash.get(row.getOp2())) + " | "
+//				+ ((row.getResult() == null) ? " null " : "\'" + Tetrada.hash.get(row.getResult()) + "\'")
+//				);
 	}
 	
 	public static Hash getHash() {
 		return Tetrada.hash;
 	}
+	
+	public int getLastElementIndex(){
+		return this.tetrada.size() - 1;
+	}
+	
+	public void addJumpLine(int index, int lineToContinue){
+		this.tetrada.get(index).setOp1(new Position());
+	}
 }
 
 class Row {
 	private int operator;
-	private Position op1;
+	private Object op1;
 	private Position op2;
 	private Position result;
 	
 	public Row(int operator, Position op1, Position op2, Position result){
+		this.operator = operator;
+		this.op1 = op1;
+		this.op2 = op2;
+		this.result = result;
+	}
+	
+	public Row(int operator, int op1, Position op2, Position result){
 		this.operator = operator;
 		this.op1 = op1;
 		this.op2 = op2;
@@ -61,11 +76,19 @@ class Row {
 		this.operator = operator;
 	}
 
-	public Position getOp1() {
+	public int getOp1AsInt() {
+		return (int)(this.op1);
+	}
+	
+	public Object getOp1() {
 		return this.op1;
 	}
 
 	public void setOp1(Position op1) {
+		this.op1 = op1;
+	}
+	
+	public void setOp1(int op1){
 		this.op1 = op1;
 	}
 
@@ -84,7 +107,7 @@ class Row {
 	@Override
 	public String toString(){
 		return this.operator + " | " 
-				+ Tetrada.getHash().get(op1)
+				+ ((op1 instanceof Integer) ? op1 : Tetrada.getHash().get((Position)op1))
 				+ Tetrada.getHash().get(op2)
 				+ Tetrada.getHash().get(result);
 	}

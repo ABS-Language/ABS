@@ -1,3 +1,6 @@
 {
-	cqlo a stava 3;
+	cqlo a stava 10;
+	dokato(a){
+		a stava 10;
+	}
 }

@@ -56,6 +56,7 @@ public final class Consts {
 		public final static int JZ			= 112;
 		public final static int JG			= 113;
 		public final static int JL			= 114;
+		public final static int NZ			= 115;
 	}
 	
 	class CONDITIONAL_OPERATORS {

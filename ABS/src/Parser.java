@@ -25,7 +25,7 @@ public class Parser {
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOF);
 		}
 		
-	//	Print(tetrada.toString());
+		Print(tetrada.toString());
 		
 		return true;
 	}
@@ -152,8 +152,13 @@ public class Parser {
 				if(getNextSymbol() != Consts.CHARACTERS.LEFT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_LEFT_BRACKET);
 				}
+
+				int upIndex = this.tetrada.getLastElementIndex() + 1;
 				
-			//	Expression(); TODO:  WHILE
+				Symbol op = new Symbol(); 
+				op = Expression(op);
+				
+				int downIndex = tetrada.getLastElementIndex();
 				
 				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_RIGHT_BRACKET);
@@ -161,6 +166,11 @@ public class Parser {
 				//====
 				codeBlock();
 				//====
+				
+				this.tetrada.add(new Row(Consts.OPERATORS.JMP, upIndex, null, null));
+				
+				this.tetrada.addJumpLine(downIndex, this.tetrada.getLastElementIndex() + 1);
+				
 				break;
 			}			
 			case Consts.LOOPS.FOR : {
