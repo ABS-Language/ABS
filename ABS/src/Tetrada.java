@@ -109,7 +109,7 @@ class Row {
 	@Override
 	public String toString(){
 		return this.operator + " | " 
-				+ ((op1 instanceof Integer) ? op1 : Tetrada.getHash().get((Position)op1))
+				+ ((op1 instanceof Integer) ? op1 + "." : Tetrada.getHash().get((Position)op1))
 				+ Tetrada.getHash().get(op2)
 				+ Tetrada.getHash().get(result);
 	}

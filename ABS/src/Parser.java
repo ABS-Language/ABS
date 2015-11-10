@@ -129,16 +129,32 @@ public class Parser {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_LEFT_BRACKET);
 				}
 				
-			//	Expression(); TODO: IF
+				Symbol op = new  Symbol();
+				op = Expression(op);
+				
+				int ifEndIndex = tetrada.getLastElementIndex() + 1;
+				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, null, null));
 				
 				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_RIGHT_BRACKET);
 				}
 				//====
 				codeBlock();
+						
+				int elseStartIndex = tetrada.getLastElementIndex() + 1;
+				this.tetrada.add(new Row(Consts.OPERATORS.JMP, -1, null, null));
+
+				this.tetrada.addJumpLine(ifEndIndex, this.tetrada.getLastElementIndex() + 1);
+				
+				int endElseIndex = tetrada.getLastElementIndex() + 1;
+				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, null, null));
+				
 				//====
 				if(getNextSymbol() == Consts.CONDITIONAL_OPERATORS.ELSE) {
+					this.tetrada.addJumpLine(elseStartIndex, this.tetrada.getLastElementIndex() + 1);
 					codeBlock();
+					
+					this.tetrada.addJumpLine(endElseIndex, this.tetrada.getLastElementIndex() + 1);
 				}
 				else {
 					//if you have getNextSymbol() + '==' 
