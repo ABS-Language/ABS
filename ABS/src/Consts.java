@@ -1,6 +1,7 @@
 
 public final class Consts {
 	public final static int UNKNOWN 			= 666;
+	public final static int PROGRAM_END			= -1;
 	public final static String DEFAULT_STRING 	= "";
 	
 	class FORBIDDEN {
@@ -26,7 +27,6 @@ public final class Consts {
 		public final static int DOUBLE			= 13;
 		public final static int CHAR			= 14;
 		public final static int STRING			= 15;
-		public final static int BOOL			= 16;
 	}
 	
 	class DEFINITION_TYPES {
@@ -57,7 +57,6 @@ public final class Consts {
 		public final static int JZ			= 112;
 		public final static int JG			= 113;
 		public final static int JL			= 114;
-		public final static int NZ			= 115;
 	}
 	
 	class CONDITIONAL_OPERATORS {
@@ -86,7 +85,7 @@ public final class Consts {
 		public final static int APOSTROPHE				= 507;
 		public final static int COMMA					= 508;
 		public final static int DOT						= 509;
-
+		
 		public final static int EMPTY_STRING			= 510;
 	}
 	

@@ -25,6 +25,8 @@ public class Parser {
 			throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOF);
 		}
 		
+		tetrada.add(new Row(Consts.PROGRAM_END, null, null, null));
+		
 		Print(tetrada.toString());
 		
 		return true;
