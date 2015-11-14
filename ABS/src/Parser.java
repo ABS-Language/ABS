@@ -204,8 +204,13 @@ public class Parser {
 				if(getNextSymbol() != Consts.EOS) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOS);
 				}
+				
 				//===
-			//	Expression(); TODO: FOR
+				Symbol op = new Symbol(); 
+				op = Expression(op);
+				
+				int downIndex = tetrada.getLastElementIndex() + 1;
+				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, null, null));
 				
 				if(getNextSymbol() != Consts.EOS) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOS);
@@ -219,6 +224,10 @@ public class Parser {
 				}
 				//====
 				codeBlock();
+				
+				this.tetrada.add(new Row(Consts.OPERATORS.JMP, downIndex - 1, null, null));
+				
+				this.tetrada.addJumpLine(downIndex, this.tetrada.getLastElementIndex() + 1);
 				break;
 			}
 			case Consts.DEFINITION_TYPES.INTEGER : 
