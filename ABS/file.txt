@@ -3,10 +3,9 @@
 	cqlo b stava 1;
 	ako(a pomalko b){
 		cqlo x stava 99;
-		cqlo t stava 100;
+		cqlo y stava 6;
 	}
 	inache{
 		cqlo p stava 55;
-		cqlo h stava 77;
 	}
 }
