@@ -201,10 +201,6 @@ public class Parser {
 				
 				Operator();
 				
-				if(getNextSymbol() != Consts.EOS) {
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOS);
-				}
-				
 				//===
 				Symbol op = new Symbol(); 
 				op = Expression(op);

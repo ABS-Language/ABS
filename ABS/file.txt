@@ -1,6 +1,6 @@
 {
 	cqlo b stava 10;
-	za(cqlo a stava 5;; a pomalko b; a stava a + 1;){
+	za(cqlo a stava 5; a pomalko b; a stava a + 1;){
 		cqlo x stava 1000;
 		niz kiro stava "pesho";
 	} 
