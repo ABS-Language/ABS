@@ -134,6 +134,7 @@ public class Parser {
 				Symbol op = new  Symbol();
 				op = Expression(op);
 				
+
 				int ifEndIndex = tetrada.getLastElementIndex() + 1;
 				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, null, null));
 				
@@ -142,15 +143,14 @@ public class Parser {
 				}
 				//====
 				codeBlock();
-						
+
 				int elseStartIndex = tetrada.getLastElementIndex() + 1;
 				this.tetrada.add(new Row(Consts.OPERATORS.JMP, -1, null, null));
 
+				
+				int endElseIndex = tetrada.getLastElementIndex();
+
 				this.tetrada.addJumpLine(ifEndIndex, this.tetrada.getLastElementIndex() + 1);
-				
-				int endElseIndex = tetrada.getLastElementIndex() + 1;
-				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, null, null));
-				
 				//====
 				if(getNextSymbol() == Consts.CONDITIONAL_OPERATORS.ELSE) {
 					this.tetrada.addJumpLine(elseStartIndex, this.tetrada.getLastElementIndex() + 1);
@@ -161,6 +161,7 @@ public class Parser {
 				else {
 					//if you have getNextSymbol() + '==' 
 					//always return the index if the check fails
+					this.tetrada.addJumpLine(endElseIndex, this.tetrada.getLastElementIndex() + 1);
 					this.currentIndex--;
 				}
 				//====
@@ -200,11 +201,12 @@ public class Parser {
 				
 				Operator();
 				
-				if(getNextSymbol() != Consts.EOS) {
-					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOS);
-				}
 				//===
-			//	Expression(); TODO: FOR
+				Symbol op = new Symbol(); 
+				op = Expression(op);
+				
+				int downIndex = tetrada.getLastElementIndex() + 1;
+				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, null, null));
 				
 				if(getNextSymbol() != Consts.EOS) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOS);
@@ -218,6 +220,10 @@ public class Parser {
 				}
 				//====
 				codeBlock();
+				
+				this.tetrada.add(new Row(Consts.OPERATORS.JMP, downIndex - 1, null, null));
+				
+				this.tetrada.addJumpLine(downIndex, this.tetrada.getLastElementIndex() + 1);
 				break;
 			}
 			case Consts.DEFINITION_TYPES.INTEGER : 
