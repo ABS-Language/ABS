@@ -307,25 +307,40 @@ public class Parser {
 				throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
 			}
 		}
-		}
+	}
+	
+	if(currentSymbol.getCode() == Consts.OPERATORS.GREATER 
+			|| currentSymbol.getCode() == Consts.OPERATORS.LESS) {
+		int opCode = currentSymbol.getCode();
 		
+		Symbol op = new Symbol();
+		op = Expression(op);
+		
+		Symbol result = new Symbol("&" + nextVar++,
+				Consts.LEXICALS.IDENTIFIER,
+				Consts.TYPES.INTEGER);
+		
+		tetrada.add(new Row(opCode,
+				Op1.getPosition(),
+				op.getPosition(),
+				symbols.lookupInsert(result)));
+	}
+	else {	
 		//if the read 'next symbol' doesnt pass the prev symbol position is returned
 		//to avoid reading the next symbol instead"**
 		currentIndex--;
-		
-		return Op1;
 	}
-	//TODO : fix operators mismatches
+		
+	return Op1;
+}
+
 	private Symbol Term(Symbol Op1) throws SyntaxException{ 
 		Symbol Op2 = new Symbol();
 		
 		Op1 = Factor();
 		
 		while(getNextSymbol() == Consts.OPERATORS.MUL 
-				|| currentSymbol.getCode() == Consts.OPERATORS.DIV 
-				|| currentSymbol.getCode() == Consts.OPERATORS.GREATER 
-				|| currentSymbol.getCode() == Consts.OPERATORS.LESS){ //TODO: nameri mqsto na greater i less
-			
+				|| currentSymbol.getCode() == Consts.OPERATORS.DIV) {			
 			int opCode = currentSymbol.getCode();
 			
 			Op2 = Factor();

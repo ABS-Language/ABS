@@ -1,12 +1,6 @@
 {
 	cqlo a stava 10;
-	cqlo b stava 1;
-	ako(a pomalko b){
-		cqlo x stava 99;
-		cqlo t stava 100;
-	}
-	inache{
-		cqlo p stava 55;
-		cqlo h stava 77;
+	ako(a+1 pomalko 10+5-6*15) {
+	cqlo b;
 	}
 }
