@@ -134,9 +134,11 @@ public class Parser {
 				Symbol op = new  Symbol();
 				op = Expression(op);
 				
-
+				int lastIndex = this.tetrada.getLastElementIndex();
+				Position result = this.tetrada.get(lastIndex).getResult();
+				
 				int ifEndIndex = tetrada.getLastElementIndex() + 1;
-				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, null, null)); //TODO: fix JZ second parameter to be variable
+				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, result, null)); 
 				
 				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_RIGHT_BRACKET);
@@ -179,7 +181,10 @@ public class Parser {
 			
 				int downIndex = tetrada.getLastElementIndex() + 1;
 				
-				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, null, null)); //TODO: fix JZ second parameter to be variable
+				int lastIndex = this.tetrada.getLastElementIndex();
+				Position result = this.tetrada.get(lastIndex).getResult();
+				
+				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, result, null)); 
 				
 				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_RIGHT_BRACKET);
@@ -206,7 +211,11 @@ public class Parser {
 				op = Expression(op);
 				
 				int downIndex = tetrada.getLastElementIndex() + 1;
-				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, null, null)); //TODO: fix JZ second parameter to be variable
+				
+				int lastIndex = this.tetrada.getLastElementIndex();
+				Position result = this.tetrada.get(lastIndex).getResult();
+				
+				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, result, null)); 
 				
 				if(getNextSymbol() != Consts.EOS) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOS);
