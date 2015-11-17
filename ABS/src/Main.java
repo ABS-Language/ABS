@@ -5,12 +5,15 @@ public class Main {
 		
 		
 		Scanner scanner = new Scanner(CODE_FILE_PATH/*args*/);
+		
+		Parser p = new Parser(scanner.getCodeOrder(), scanner.getSymbolTable());
+		
 		try {
 			scanner.read();
-			scanner.getSymbolTable().printTable();
+			//scanner.getSymbolTable().printTable();
 			//scanner.printCodeOrder();
 
-			Parser p = new Parser(scanner.getCodeOrder(), scanner.getSymbolTable());
+			
 
 			try {
 				if(p.read()) {
@@ -33,5 +36,8 @@ public class Main {
 				e1.printStackTrace();
 		}
 		
+		Assemblifier asm = new Assemblifier(p.getTetrada());
+		asm.toAsm();
+		asm.toString();
 	}
 }

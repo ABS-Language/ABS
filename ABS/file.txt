@@ -1,6 +1,3 @@
 {
-	cqlo a;
-	ako(a pomalko 10-5*3) { 
-		cqlo b;
-	}
+	cqlo a stava 1+2+3+4+5;
 }

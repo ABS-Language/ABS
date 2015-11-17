@@ -666,7 +666,7 @@ public class Parser {
 	private int getNextSymbol() {
 		try {
 			(this.currentSymbol = symbols.get(codeOrder.get(currentIndex++))).getCode();
-			Print("getNextSymbol() :: #" + currentIndex + " -> " + this.currentSymbol.getName() + " [type :: " + this.currentSymbol.getType() +"]");
+		//	Print("getNextSymbol() :: #" + currentIndex + " -> " + this.currentSymbol.getName() + " [type :: " + this.currentSymbol.getType() +"]");
 			return this.currentSymbol.getCode();			
 		}
 		catch(IndexOutOfBoundsException e) {
@@ -706,5 +706,9 @@ public class Parser {
 	     {
 	         return false;
 	     }
+	}
+	
+	public Tetrada getTetrada() {
+		return tetrada;
 	}
 }

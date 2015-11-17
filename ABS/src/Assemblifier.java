@@ -3,10 +3,18 @@ import java.util.ArrayList;
 public class Assemblifier {
 	private Tetrada tetrada;
 	
-	ArrayList<Roww> asm;
+	private final ArrayList<AsemblyRow> asm = new ArrayList<>();
 	
 	public Assemblifier(Tetrada tetrada) {
 		this.tetrada = tetrada;
+	}
+	
+	public String toString() {
+		for (AsemblyRow row : asm) {
+			System.out.println(row);
+		}
+		
+		return new String();
 	}
 	
 	public void toAsm() {
@@ -17,46 +25,35 @@ public class Assemblifier {
 			
 			switch(row.getOperator()) {
 				case Consts.OPERATORS.ADD : {
-					asm.add(new Roww("ADD", 
-							(Position)row.getOp1(), 
-							row.getOp2(), 
-							row.getResult()));
+					asm.add(new AsemblyRow("MOV", 
+							"AX", 
+							(Position)row.getOp1()));
+					asm.add(new AsemblyRow("ADD", "AX", row.getOp2()));
 					
 					break;
 				}
 				case Consts.OPERATORS.DIFF : {
-					asm.add(new Roww("CMP",
-							(Position)row.getOp1(), 
-							row.getOp2(), 
-							row.getResult()));		
+					asm.add(new AsemblyRow("CMP", (Position)row.getOp1(), row.getOp2()));		
 					
-					//TODO: JNZ
+					//TODO: JZ
+					//asm.add(new AsemblyRow("JZ", "RED", op2))
 									
 					break;
 				}
 				case Consts.OPERATORS.DIV : {
-					asm.add(new Roww("DIV", 
-							(Position)row.getOp1(), 
-							row.getOp2(), 
-							row.getResult()));
+					
 					
 					break;
 				}
 				case Consts.OPERATORS.EQU : {
-					asm.add(new Roww("CMP", 
-							(Position)row.getOp1(), 
-							row.getOp2(), 
-							row.getResult()));
+					
 					
 					//TODO: JZ
 					
 					break;
 				}
 				case Consts.OPERATORS.GREATER : {
-					asm.add(new Roww("CMP", 
-							(Position)row.getOp1(), 
-							row.getOp2(), 
-							row.getResult()));
+					
 					
 					//TODO: JNG
 					
@@ -83,10 +80,7 @@ public class Assemblifier {
 					break;
 				}
 				case Consts.OPERATORS.LESS : {
-					asm.add(new Roww("CMP", 
-							(Position)row.getOp1(), 
-							row.getOp2(), 
-							row.getResult()));
+					
 					
 					//TODO: JG
 					
@@ -98,26 +92,23 @@ public class Assemblifier {
 					break;
 				}
 				case Consts.OPERATORS.MOV : {
-					asm.add(new Roww("MOV", 
-							(Position)row.getOp1(), 
-							row.getOp2(), 
-							row.getResult()));
+					asm.add(new AsemblyRow("MOV", row.getResult(), (Position)row.getOp1()));
 					
 					break;
 				}
 				case Consts.OPERATORS.MUL : {
-					asm.add(new Roww("MUL", 
-							(Position)row.getOp1(), 
-							row.getOp2(), 
-							row.getResult()));
+					
 					
 					break;
 				}
 				case Consts.OPERATORS.SUB : {
-					asm.add(new Roww("SUB", 
-							(Position)row.getOp1(), 
-							row.getOp2(), 
-							row.getResult()));
+					
+					
+					break;
+				}
+				
+				case Consts.PROGRAM_END : {
+					asm.add(new AsemblyRow("INT", "21h", null));
 					
 					break;
 				}
@@ -126,12 +117,29 @@ public class Assemblifier {
 	}
 }
 
-class Roww {
-	public Roww(String instruction, Position op1, Position op2, Position result) {
-		
+class AsemblyRow {
+//	public AsemblyRow(String instruction, int op1, Position op2, Position result) {
+//		
+//	}
+	private String instruction;
+	private Object op1;
+	private Position op2;
+	
+	public AsemblyRow(String instruction, String op1, Position op2) {
+		this.instruction = instruction;
+		this.op1 = (String)op1;
+		this.op2 = op2;
 	}
 	
-	public Roww(String instruction, int op1, Position op2, Position result) {
-		
+	public AsemblyRow(String instruction, Position op1, Position op2) {
+		this.instruction = instruction;
+		this.op1 = (Position)op1;
+		this.op2 = op2;
 	}
+	
+	public String toString() {
+		return this.instruction + " | " 
+					+ op1 + " | "
+					+ op2;
+		}
 }
