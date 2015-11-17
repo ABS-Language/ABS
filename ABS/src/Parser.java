@@ -328,8 +328,7 @@ public class Parser {
 			|| currentSymbol.getCode() == Consts.OPERATORS.LESS) {
 		int opCode = currentSymbol.getCode();
 		
-		Symbol op = new Symbol();
-		op = Expression(op);
+		Op2 = Expression(Op2);
 		
 		Symbol result = new Symbol("&" + nextVar++,
 				Consts.LEXICALS.IDENTIFIER,
@@ -337,8 +336,10 @@ public class Parser {
 		
 		tetrada.add(new Row(opCode,
 				Op1.getPosition(),
-				op.getPosition(),
+				Op2.getPosition(),
 				symbols.lookupInsert(result)));
+		
+		Op1 = result;
 	}
 	else {	
 		//if the read 'next symbol' doesnt pass the prev symbol position is returned
