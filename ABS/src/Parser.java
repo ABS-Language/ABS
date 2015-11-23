@@ -52,7 +52,7 @@ public class Parser {
 	
 	
 	private void Operator() throws SyntaxException{
-		Symbol Op1;
+		Symbol Op1 = null;
 		
 		switch(getNextSymbol()) {
 			case Consts.LEXICALS.IDENTIFIER : {
@@ -66,23 +66,20 @@ public class Parser {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_SET_OPERATOR);
 				}
 				
-				Op1 = this.currentSymbol;
-				
-				Symbol Op2 = new Symbol();
-				Op2 = Expression(Op2);
+				Op1 = Expression(Op1);
 				
 				if(getNextSymbol() != Consts.EOS) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_EOS);
 				}
 				
-				switch(Op1.getType()) {
+				switch(this.receiver.getType()) {
 					case Consts.TYPES.INTEGER : {
-						if(Op2.getType() == Consts.TYPES.INTEGER
-						|| Op2.getType() == Consts.TYPES.DOUBLE) {
+						if(Op1.getType() == Consts.TYPES.INTEGER
+						|| Op1.getType() == Consts.TYPES.DOUBLE) {
 							tetrada.add(new Row(Consts.OPERATORS.MOV, 
-									Op1.getPosition(),
-									Op2.getPosition(),
-									symbols.insert(new Symbol())));
+									this.receiver.getPosition(),
+									null,
+									Op1.getPosition()));
 						}
 						else {
 							throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
@@ -90,9 +87,12 @@ public class Parser {
 						break;
 					}
 					case Consts.TYPES.DOUBLE : {
-						if(Op2.getType() == Consts.TYPES.DOUBLE
-						|| Op2.getType() == Consts.TYPES.INTEGER) {
-							tetrada.add(new Row(Consts.OPERATORS.MOV, Op1.getPosition(), Op2.getPosition(), symbols.insert(new Symbol())));
+						if(Op1.getType() == Consts.TYPES.DOUBLE
+						|| Op1.getType() == Consts.TYPES.INTEGER) {
+							tetrada.add(new Row(Consts.OPERATORS.MOV, 
+									this.receiver.getPosition(),
+									null,
+									Op1.getPosition()));
 						}
 						else {
 							throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
@@ -100,12 +100,12 @@ public class Parser {
 						break;
 					}
 					case Consts.TYPES.CHAR : {
-						if(Op2.getType() == Consts.TYPES.CHAR) {
+						if(Op1.getType() == Consts.TYPES.CHAR) {
 						//	if(Op2.)
 							tetrada.add(new Row(Consts.OPERATORS.MOV, 
-									Op1.getPosition(), 
-									Op2.getPosition(), 
-									symbols.insert(new Symbol())));
+									this.receiver.getPosition(),
+									null,
+									Op1.getPosition()));
 						}
 						else {
 							throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
@@ -113,9 +113,12 @@ public class Parser {
 						break;
 					}
 					case Consts.TYPES.STRING : {
-						if(Op2.getType() == Consts.TYPES.STRING
-						|| Op2.getType() == Consts.TYPES.CHAR) {
-							tetrada.add(new Row(Consts.OPERATORS.MOV, Op1.getPosition(), Op2.getPosition(), symbols.insert(new Symbol())));
+						if(Op1.getType() == Consts.TYPES.STRING
+						|| Op1.getType() == Consts.TYPES.CHAR) {
+							tetrada.add(new Row(Consts.OPERATORS.MOV, 
+									this.receiver.getPosition(),
+									null,
+									Op1.getPosition()));
 						}
 						else {
 							throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);

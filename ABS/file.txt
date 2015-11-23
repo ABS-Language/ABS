@@ -1,9 +1,3 @@
 {
-	cqlo asd stava 3+5;
-	ako(3 pomalko 2) {
-		cqlo a stava 3;
-		}
-		inache {
-			cqlo b stava 3;
-			}
+	cqlo sum stava 3+5;
 }
