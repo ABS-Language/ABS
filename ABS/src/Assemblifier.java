@@ -2,11 +2,17 @@ import java.util.ArrayList;
 
 public class Assemblifier {
 	private Tetrada tetrada;
+	private Hash hash; //test reasons
 	
 	private final ArrayList<AsemblyRow> asm = new ArrayList<>();
 	
 	public Assemblifier(Tetrada tetrada) {
 		this.tetrada = tetrada;
+	}
+	
+	public Assemblifier(Tetrada tetrada, Hash hash) {//test reasons
+		this.tetrada = tetrada;
+		this.hash = hash;
 	}
 	
 	public String toString() {
@@ -80,7 +86,7 @@ public class Assemblifier {
 					break;
 				}
 				case Consts.OPERATORS.LESS : {
-					
+					asm.add(new AsemblyRow("CMP", (Position)row.getOp1(), row.getOp2()));
 					
 					//TODO: JG
 					
@@ -139,7 +145,8 @@ class AsemblyRow {
 	
 	public String toString() {
 		return this.instruction + " | " 
-					+ op1 + " | "
-					+ op2;
-		}
+		+ ((op1 instanceof Integer || op1 instanceof String) ? op1 + 
+				((op1 instanceof Integer) ? "." : "") : Tetrada.getHash().get((Position)op1)) + " | "
+		+ ((op2 == null) ? "null" : Tetrada.getHash().get(op2));
+	}
 }

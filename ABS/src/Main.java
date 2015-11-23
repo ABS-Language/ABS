@@ -36,7 +36,7 @@ public class Main {
 				e1.printStackTrace();
 		}
 		
-		Assemblifier asm = new Assemblifier(p.getTetrada());
+		Assemblifier asm = new Assemblifier(p.getTetrada(), scanner.getSymbolTable());
 		asm.toAsm();
 		asm.toString();
 	}
