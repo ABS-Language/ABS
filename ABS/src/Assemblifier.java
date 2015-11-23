@@ -16,8 +16,9 @@ public class Assemblifier {
 	}
 	
 	public String toString() {
+		int line = 0;
 		for (AsemblyRow row : asm) {
-			System.out.println(row);
+			System.out.println((line++ + " | ") + row);
 		}
 		
 		return new String();
@@ -88,7 +89,15 @@ public class Assemblifier {
 				case Consts.OPERATORS.LESS : {
 					asm.add(new AsemblyRow("CMP", (Position)row.getOp1(), row.getOp2()));
 					
-					//TODO: JG
+					asm.add(new AsemblyRow("JL", "cmp1", null));
+					
+					asm.add(new AsemblyRow("MOV", "0", (Position)row.getResult())); //not less
+					asm.add(new AsemblyRow("JMP", "cmp2", null));
+					
+					asm.add(new AsemblyRow("cmp1:"));
+					asm.add(new AsemblyRow("MOV", "1", (Position)row.getResult())); //less
+					
+					asm.add(new AsemblyRow("cmp2:"));
 					
 					break;
 				}
@@ -143,10 +152,48 @@ class AsemblyRow {
 		this.op2 = op2;
 	}
 	
+	public AsemblyRow(String instruction, int op1, Position op2) {
+		this.instruction = instruction;
+		this.op1 = (Integer)op1;
+		this.op2 = op2;
+	}
+	
+	public AsemblyRow(String instruction) {
+		this.instruction = instruction;
+	}
+	
 	public String toString() {
+		String output = "";
+		
+		output += this.instruction + " | ";
+		
+		if(op1 == null) {
+			output += "null | null";
+			
+			return output;
+		}
+		else {
+			if(op1 instanceof Integer || op1 instanceof String) {
+				output += op1;
+				
+				if(op1 instanceof Integer) {
+					output += ".";
+				}
+			}
+			else {
+				output += Tetrada.getHash().get((Position)op1);
+			}
+			
+			output += " | ";
+			
+			output += ((op2 == null) ? "null" : Tetrada.getHash().get(op2));
+		}
+		
+		return output;
+		/*
 		return this.instruction + " | " 
 		+ ((op1 instanceof Integer || op1 instanceof String) ? op1 + 
-				((op1 instanceof Integer) ? "." : "") : Tetrada.getHash().get((Position)op1)) + " | "
-		+ ((op2 == null) ? "null" : Tetrada.getHash().get(op2));
+				(op1 == null) ? ((op1 instanceof Integer) ? "." : "") : Tetrada.getHash().get((Position)op1)) + " | "
+		+ ((op2 == null) ? "null" : Tetrada.getHash().get(op2));*/
 	}
 }
