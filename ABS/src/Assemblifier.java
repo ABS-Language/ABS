@@ -33,9 +33,9 @@ public class Assemblifier {
 			switch(row.getOperator()) {
 				case Consts.OPERATORS.ADD : {
 					asm.add(new AsemblyRow("MOV", 
-							"AX", 
+							"EAX", 
 							(Position)row.getOp1()));
-					asm.add(new AsemblyRow("ADD", "AX", row.getOp2()));
+					asm.add(new AsemblyRow("ADD", "EAX", row.getOp2()));
 					
 					break;
 				}
@@ -100,7 +100,7 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.JZ : {
-					//
+					asm.add(new AsemblyRow("JZ", "FALSE:", ""));
 					
 					break;
 				}
@@ -134,8 +134,8 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.MOV : {
-					asm.add(new AsemblyRow("MOV", "AL", row.getResult()));
-					asm.add(new AsemblyRow("MOV", (Position)row.getOp1(), "AL"));
+					asm.add(new AsemblyRow("MOV", "EAX", row.getResult()));
+					asm.add(new AsemblyRow("MOV", (Position)row.getOp1(), "EAX"));
 					
 					break;
 				}
