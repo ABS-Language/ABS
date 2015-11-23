@@ -39,6 +39,7 @@ public class Assemblifier {
 					
 					break;
 				}
+				
 				case Consts.OPERATORS.DIFF : {
 					asm.add(new AsemblyRow("CMP", (Position)row.getOp1(), row.getOp2()));		
 					
@@ -47,11 +48,13 @@ public class Assemblifier {
 									
 					break;
 				}
+				
 				case Consts.OPERATORS.DIV : {
 					
 					
 					break;
 				}
+				
 				case Consts.OPERATORS.EQU : {
 					
 					
@@ -59,6 +62,7 @@ public class Assemblifier {
 					
 					break;
 				}
+				
 				case Consts.OPERATORS.GREATER : {
 					
 					
@@ -66,26 +70,31 @@ public class Assemblifier {
 					
 					break;
 				}
+				
 				case Consts.OPERATORS.JG : {
 					//
 					
 					break;
 				}
+				
 				case Consts.OPERATORS.JL : {
 					//
 					
 					break;
 				}
+				
 				case Consts.OPERATORS.JMP : {
 					//
 					
 					break;
 				}
+				
 				case Consts.OPERATORS.JZ : {
 					//
 					
 					break;
 				}
+				
 				case Consts.OPERATORS.LESS : {
 					asm.add(new AsemblyRow("CMP", (Position)row.getOp1(), row.getOp2()));
 					
@@ -106,21 +115,25 @@ public class Assemblifier {
 					
 					break;
 				}
+				
 				case Consts.OPERATORS.MOD : {
 					//
 					
 					break;
 				}
+				
 				case Consts.OPERATORS.MOV : {
 					asm.add(new AsemblyRow("MOV", (Position)row.getOp1(), row.getResult()));
 					
 					break;
 				}
+				
 				case Consts.OPERATORS.MUL : {
 					
 					
 					break;
 				}
+				
 				case Consts.OPERATORS.SUB : {
 					
 					
