@@ -34,6 +34,7 @@ public class Assemblifier {
 				case Consts.OPERATORS.ADD : {
 					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
 					asm.add(new AsemblyRow("ADD", "EAX", row.getOp2()));
+					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					
 					break;
 				}
@@ -42,16 +43,18 @@ public class Assemblifier {
 					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
 					asm.add(new AsemblyRow("CMP", "EAX", row.getOp2()));
 					
-					asm.add(new AsemblyRow("CMOVNE", "AL", "1")); //Move if not equal (ZF=0)
-					asm.add(new AsemblyRow("CMOVE", "AL", "0")); //Move if equal (ZF=1)
+					asm.add(new AsemblyRow("CMOVNE", "EAX", "1")); //Move if not equal (ZF=0)
+					asm.add(new AsemblyRow("CMOVE", "EAX", "0")); //Move if equal (ZF=1)
 					
-					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "AL"));
+					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 									
 					break;
 				}
 				
 				case Consts.OPERATORS.DIV : {
-					
+					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					asm.add(new AsemblyRow("DIV", "EAX", row.getOp2()));
+					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					
 					break;
 				}
@@ -60,10 +63,10 @@ public class Assemblifier {
 					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
 					asm.add(new AsemblyRow("CMP", "EAX", row.getOp2()));
 					
-					asm.add(new AsemblyRow("CMOVE", "AL", "1")); //Move if equal (ZF=1)
-					asm.add(new AsemblyRow("CMOVNE", "AL", "0")); //Move if not equal (ZF=0)
+					asm.add(new AsemblyRow("CMOVE", "EAX", "1")); //Move if equal (ZF=1)
+					asm.add(new AsemblyRow("CMOVNE", "EAX", "0")); //Move if not equal (ZF=0)
 					
-					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "AL"));
+					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					
 					break;
 				}
@@ -72,9 +75,9 @@ public class Assemblifier {
 					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
 					asm.add(new AsemblyRow("CMP", "EAX", row.getOp2()));
 					
-					asm.add(new AsemblyRow("CMOVG ", "AL", "1")); //Move if greater (ZF=0 and SF=OF)
-					asm.add(new AsemblyRow("CMOVNG", "AL", "0")); //Move if not greater (ZF=1 or SF<>OF)
-					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "AL"));
+					asm.add(new AsemblyRow("CMOVG ", "EAX", "1")); //Move if greater (ZF=0 and SF=OF)
+					asm.add(new AsemblyRow("CMOVNG", "EAX", "0")); //Move if not greater (ZF=1 or SF<>OF)
+					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					
 					break;
 				}
@@ -107,9 +110,9 @@ public class Assemblifier {
 					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
 					asm.add(new AsemblyRow("CMP", "EAX", row.getOp2()));
 					
-					asm.add(new AsemblyRow("CMOVL", "AL", "1")); //Move if less (SF<>OF)
-					asm.add(new AsemblyRow("CMOVNL ", "AL", "0"));  //Move if not less (SF=OF)
-					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "AL"));
+					asm.add(new AsemblyRow("CMOVL", "EAX", "1")); //Move if less (SF<>OF)
+					asm.add(new AsemblyRow("CMOVNL ", "EAX", "0"));  //Move if not less (SF=OF)
+					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					/*
 					asm.add(new AsemblyRow("JL", "cmp1", null));
 					
@@ -126,26 +129,32 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.MOD : {
-					//
+					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					asm.add(new AsemblyRow("MOD", "EAX", row.getOp2()));
+					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					
 					break;
 				}
 				
 				case Consts.OPERATORS.MOV : {
-					asm.add(new AsemblyRow("MOV", row.getResult(), "EAX"));
-					asm.add(new AsemblyRow("MOV", (Position)row.getOp1(), "EAX"));
+					// TODO check if MOV is PametPamet
+					asm.add(new AsemblyRow("MOV", (Position)row.getOp1(), (Position)row.getResult()));
 					
 					break;
 				}
 				
 				case Consts.OPERATORS.MUL : {
-					
+					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					asm.add(new AsemblyRow("MUL", "EAX", row.getOp2()));
+					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					
 					break;
 				}
 				
 				case Consts.OPERATORS.SUB : {
-					
+					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					asm.add(new AsemblyRow("SUB", "EAX", row.getOp2()));
+					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					
 					break;
 				}
