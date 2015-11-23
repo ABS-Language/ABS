@@ -89,6 +89,10 @@ public class Assemblifier {
 				case Consts.OPERATORS.LESS : {
 					asm.add(new AsemblyRow("CMP", (Position)row.getOp1(), row.getOp2()));
 					
+					asm.add(new AsemblyRow("CMOVL", "AX", "1")); //Move if less (SF<>OF)
+					asm.add(new AsemblyRow("CMOVNL ", "AX", "0"));  //Move if not less (SF=OF)
+					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "AX"));
+					/*
 					asm.add(new AsemblyRow("JL", "cmp1", null));
 					
 					asm.add(new AsemblyRow("MOV", "0", (Position)row.getResult())); //not less
@@ -98,6 +102,7 @@ public class Assemblifier {
 					asm.add(new AsemblyRow("MOV", "1", (Position)row.getResult())); //less
 					
 					asm.add(new AsemblyRow("cmp2:"));
+					*/
 					
 					break;
 				}
@@ -107,7 +112,7 @@ public class Assemblifier {
 					break;
 				}
 				case Consts.OPERATORS.MOV : {
-					asm.add(new AsemblyRow("MOV", row.getResult(), (Position)row.getOp1()));
+					asm.add(new AsemblyRow("MOV", (Position)row.getOp1(), row.getResult()));
 					
 					break;
 				}
@@ -123,7 +128,7 @@ public class Assemblifier {
 				}
 				
 				case Consts.PROGRAM_END : {
-					asm.add(new AsemblyRow("INT", "21h", null));
+					asm.add(new AsemblyRow("INT", "21h", ""));
 					
 					break;
 				}
@@ -138,12 +143,18 @@ class AsemblyRow {
 //	}
 	private String instruction;
 	private Object op1;
-	private Position op2;
+	private Object op2;
 	
 	public AsemblyRow(String instruction, String op1, Position op2) {
 		this.instruction = instruction;
 		this.op1 = (String)op1;
 		this.op2 = op2;
+	}
+	
+	public AsemblyRow(String instruction, String op1, String op2) {
+		this.instruction = instruction;
+		this.op1 = (String)op1;
+		this.op2 = (String)op2;
 	}
 	
 	public AsemblyRow(String instruction, Position op1, Position op2) {
@@ -152,11 +163,19 @@ class AsemblyRow {
 		this.op2 = op2;
 	}
 	
+	public AsemblyRow(String instruction, Position op1, String op2) {
+		this.instruction = instruction;
+		this.op1 = (Position)op1;
+		this.op2 = (String)op2;
+	}
+	
 	public AsemblyRow(String instruction, int op1, Position op2) {
 		this.instruction = instruction;
 		this.op1 = (Integer)op1;
 		this.op2 = op2;
 	}
+	
+	
 	
 	public AsemblyRow(String instruction) {
 		this.instruction = instruction;
@@ -186,7 +205,15 @@ class AsemblyRow {
 			
 			output += " | ";
 			
-			output += ((op2 == null) ? "null" : Tetrada.getHash().get(op2));
+			if(op2 == null) {
+				output += "null";
+			}
+			else if(op2 instanceof String) {
+				output += op2;
+			}
+			else {
+				output += Tetrada.getHash().get((Position)op2);
+			}
 		}
 		
 		return output;

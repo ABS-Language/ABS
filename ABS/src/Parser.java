@@ -508,7 +508,7 @@ public class Parser {
 						throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
 					}
 					
-					tetrada.add(new Row(Consts.OPERATORS.MOV, op.getPosition(), null, this.receiver.getPosition()));
+					tetrada.add(new Row(Consts.OPERATORS.MOV, this.receiver.getPosition(), null, op.getPosition()));
 				}
 				else {
 					//if you have getNextSymbol() + '==' 
