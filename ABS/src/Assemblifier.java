@@ -101,7 +101,8 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.JZ : {
-					asm.add(new AsemblyRow("JZ", "FALSE:", ""));
+					asm.add(new AsemblyRow("JZ", "LABEL" + row.getOp1AsInt() + ":", ""));
+					
 					
 					break;
 				}
@@ -161,7 +162,6 @@ public class Assemblifier {
 				
 				case Consts.PROGRAM_END : {
 					asm.add(new AsemblyRow("INT", "21h", ""));
-					
 					break;
 				}
 			}
@@ -173,48 +173,54 @@ class AsemblyRow {
 //	public AsemblyRow(String instruction, int op1, Position op2, Position result) {
 //		
 //	}
+	private String label;
 	private String instruction;
 	private Object op1;
 	private Object op2;
 	
 	public AsemblyRow(String instruction, String op1, Position op2) {
+		this.label = "";
 		this.instruction = instruction;
 		this.op1 = (String)op1;
 		this.op2 = op2;
 	}
 	
 	public AsemblyRow(String instruction, String op1, String op2) {
+		this.label = "";
 		this.instruction = instruction;
 		this.op1 = (String)op1;
 		this.op2 = (String)op2;
 	}
 	
 	public AsemblyRow(String instruction, Position op1, Position op2) {
+		this.label = "";
 		this.instruction = instruction;
 		this.op1 = (Position)op1;
 		this.op2 = op2;
 	}
 	
 	public AsemblyRow(String instruction, Position op1, String op2) {
+		this.label = "";
 		this.instruction = instruction;
 		this.op1 = (Position)op1;
 		this.op2 = (String)op2;
 	}
 	
 	public AsemblyRow(String instruction, int op1, Position op2) {
+		this.label = "";
 		this.instruction = instruction;
 		this.op1 = (Integer)op1;
 		this.op2 = op2;
 	}
 	
-	
-	
-	public AsemblyRow(String instruction) {
-		this.instruction = instruction;
+	public void setLabel(String name) {
+		this.label = name;
 	}
 	
 	public String toString() {
 		String output = "";
+		
+		output += this.label + " | ";
 		
 		output += this.instruction + " | ";
 		

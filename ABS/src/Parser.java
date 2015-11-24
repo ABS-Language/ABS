@@ -2,7 +2,10 @@ import java.util.ArrayList;
 
 public class Parser {
 	private Tetrada tetrada;
+	
 	private ArrayList<Position> codeOrder;
+	private final ArrayList<Integer> branches = new ArrayList<>();
+	
 	private Hash symbols; 
 	private int currentIndex = 0;
 	private Symbol currentSymbol;
@@ -26,6 +29,8 @@ public class Parser {
 		}
 		
 		tetrada.add(new Row(Consts.PROGRAM_END, null, null, null));
+		
+		setBranches();
 		
 		Print(tetrada.toString());
 		
@@ -151,22 +156,31 @@ public class Parser {
 
 				int elseStartIndex = tetrada.getLastElementIndex() + 1;
 				this.tetrada.add(new Row(Consts.OPERATORS.JMP, -1, null, null));
-
 				
 				int endElseIndex = tetrada.getLastElementIndex();
 
-				this.tetrada.addJumpLine(ifEndIndex, this.tetrada.getLastElementIndex() + 1);
+				int line = this.tetrada.getLastElementIndex() + 1;
+				this.tetrada.addJumpLine(ifEndIndex, line);
+				branches.add(line);
 				//====
 				if(getNextSymbol() == Consts.CONDITIONAL_OPERATORS.ELSE) {
-					this.tetrada.addJumpLine(elseStartIndex, this.tetrada.getLastElementIndex() + 1);
+					line = this.tetrada.getLastElementIndex() + 1;
+					this.tetrada.addJumpLine(elseStartIndex, line);
+					branches.add(line);
+					
 					codeBlock();
 					
-					this.tetrada.addJumpLine(endElseIndex, this.tetrada.getLastElementIndex() + 1);
+					line = this.tetrada.getLastElementIndex() + 1;
+					this.tetrada.addJumpLine(endElseIndex, line);
+					branches.add(line);
 				}
 				else {
 					//if you have getNextSymbol() + '==' 
 					//always return the index if the check fails
-					this.tetrada.addJumpLine(endElseIndex, this.tetrada.getLastElementIndex() + 1);
+					line = this.tetrada.getLastElementIndex() + 1;
+					this.tetrada.addJumpLine(endElseIndex, line);
+					branches.add(line);
+					
 					this.currentIndex--;
 				}
 				//====
@@ -198,7 +212,9 @@ public class Parser {
 				
 				this.tetrada.add(new Row(Consts.OPERATORS.JMP, upIndex, null, null));
 				
-				this.tetrada.addJumpLine(downIndex, this.tetrada.getLastElementIndex() + 1);
+				int line = this.tetrada.getLastElementIndex() + 1;
+				this.tetrada.addJumpLine(downIndex, line);
+				branches.add(line);
 				
 				break;
 			}			
@@ -235,7 +251,10 @@ public class Parser {
 				
 				this.tetrada.add(new Row(Consts.OPERATORS.JMP, downIndex - 1, null, null));
 				
-				this.tetrada.addJumpLine(downIndex, this.tetrada.getLastElementIndex() + 1);
+				int line = this.tetrada.getLastElementIndex() + 1;
+				this.tetrada.addJumpLine(downIndex, line);
+				branches.add(line);
+				
 				break;
 			}
 			case Consts.DEFINITION_TYPES.INTEGER : 
@@ -682,8 +701,10 @@ public class Parser {
 		System.out.println(x);
 	}
 	
-	private void Print(int x) {
-		System.out.println(x);
+	private void setBranches() {
+		for(Integer i : branches) {
+			tetrada.get(i).setBranch();
+		}
 	}
 	
 	//! constants only

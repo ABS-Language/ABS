@@ -1,3 +1,6 @@
+<<<<<<< HEAD
 {
-	cqlo sum stava 3+5;
+	ako(3 pomalko 5) {
+		cqlo a stava 5;
+		}
 }
