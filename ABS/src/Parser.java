@@ -203,6 +203,8 @@ public class Parser {
 				
 				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, result, null)); 
 				
+				
+				
 				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_RIGHT_BRACKET);
 				}
@@ -211,6 +213,7 @@ public class Parser {
 				//====
 				
 				this.tetrada.add(new Row(Consts.OPERATORS.JMP, upIndex, null, null));
+				branches.add(upIndex);
 				
 				int line = this.tetrada.getLastElementIndex() + 1;
 				this.tetrada.addJumpLine(downIndex, line);
