@@ -1,4 +1,5 @@
-{
-	cqlo k stava 123;
-	cqlo asd stava 5 + 10 * 7 / 85 pomalko 10;
+{ 
+	ako(3 pomalko 5) {
+		cqlo a stava 5;
+		}
 }

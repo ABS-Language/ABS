@@ -20,6 +20,7 @@ public class Tetrada{
 				
 		for (Row row : tetrada) {
 			result += counter++ + ". ";
+			result += (row.getBranch() ? "true" : "false") + " | ";
 			
 			switch(row.getOperator()) {
 				case Consts.OPERATORS.ADD : result += "ADD | "; break;
