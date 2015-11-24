@@ -36,7 +36,7 @@ public class Assemblifier {
 					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
 					
 					if(row.getBranch()) {
-						aRow.setLabel("label");
+						aRow.setLabel("LABEL" + i + ":");
 					}
 					
 					asm.add(aRow);
@@ -50,7 +50,7 @@ public class Assemblifier {
 					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
 					
 					if(row.getBranch()) {
-						aRow.setLabel("label");
+						aRow.setLabel("LABEL" + i + ":");
 					}
 					
 					asm.add(aRow);
@@ -68,7 +68,7 @@ public class Assemblifier {
 					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
 					
 					if(row.getBranch()) {
-						aRow.setLabel("label");
+						aRow.setLabel("LABEL" + i + ":");
 					}
 					
 					asm.add(aRow);
@@ -83,7 +83,7 @@ public class Assemblifier {
 					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
 					
 					if(row.getBranch()) {
-						aRow.setLabel("label");
+						aRow.setLabel("LABEL" + i + ":");
 					}
 					
 					asm.add(aRow);
@@ -102,7 +102,7 @@ public class Assemblifier {
 					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
 
 					if(row.getBranch()) {
-							aRow.setLabel("label");
+							aRow.setLabel("LABEL" + i + ":");
 					}
 
 					asm.add(aRow);
@@ -145,7 +145,7 @@ public class Assemblifier {
 					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
 							
 					if(row.getBranch()) {
-						aRow.setLabel("label");
+						aRow.setLabel("LABEL" + i + ":");
 					}
 
 					asm.add(aRow);
@@ -174,7 +174,7 @@ public class Assemblifier {
 					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
 							
 					if(row.getBranch()) {
-						aRow.setLabel("label");
+						aRow.setLabel("LABEL" + i + ":");
 					}
 
 					asm.add(aRow);
@@ -191,7 +191,7 @@ public class Assemblifier {
 					aRow = new AsemblyRow("MOV", (Position)row.getOp1(), (Position)row.getResult());
 							
 					if(row.getBranch()) {
-						aRow.setLabel("label");
+						aRow.setLabel("LABEL" + i + ":");
 					}
 					
 					asm.add(aRow);
@@ -203,7 +203,7 @@ public class Assemblifier {
 					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
 							
 					if(row.getBranch()) {
-						aRow.setLabel("label");
+						aRow.setLabel("LABEL" + i + ":");
 					}
 					
 					asm.add(aRow);
@@ -218,7 +218,7 @@ public class Assemblifier {
 					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
 							
 					if(row.getBranch()) {
-						aRow.setLabel("label");
+						aRow.setLabel("LABEL" + i + ":");
 					}
 					
 					asm.add(aRow);
@@ -233,7 +233,7 @@ public class Assemblifier {
 					aRow = new AsemblyRow("INT", "21h", "");
 							
 					if(row.getBranch()) {
-						aRow.setLabel("label");
+						aRow.setLabel("LABEL" + i + ":");
 					}
 					
 					asm.add(aRow);

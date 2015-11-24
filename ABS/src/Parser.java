@@ -251,11 +251,11 @@ public class Parser {
 				codeBlock();
 				
 				this.tetrada.add(new Row(Consts.OPERATORS.JMP, downIndex - 1, null, null));
-				branches.add(downIndex - 1);
+				branches.add(downIndex - 1); //JMP
 				
 				int line = this.tetrada.getLastElementIndex() + 1;
 				this.tetrada.addJumpLine(downIndex, line);
-				branches.add(line);
+				branches.add(line); //JZ
 				
 				break;
 			}
