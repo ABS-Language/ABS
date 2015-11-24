@@ -201,9 +201,7 @@ public class Parser {
 				int lastIndex = this.tetrada.getLastElementIndex();
 				Position result = this.tetrada.get(lastIndex).getResult();
 				
-				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, result, null)); 
-				
-				
+				this.tetrada.add(new Row(Consts.OPERATORS.JZ, -1, result, null)); 				
 				
 				if(getNextSymbol() != Consts.CHARACTERS.RIGHT_BRACKET) {
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_RIGHT_BRACKET);
@@ -213,11 +211,11 @@ public class Parser {
 				//====
 				
 				this.tetrada.add(new Row(Consts.OPERATORS.JMP, upIndex, null, null));
-				branches.add(upIndex);
+				branches.add(upIndex); //JMP
 				
 				int line = this.tetrada.getLastElementIndex() + 1;
 				this.tetrada.addJumpLine(downIndex, line);
-				branches.add(line);
+				branches.add(line); //JZ 
 				
 				break;
 			}			
@@ -253,6 +251,7 @@ public class Parser {
 				codeBlock();
 				
 				this.tetrada.add(new Row(Consts.OPERATORS.JMP, downIndex - 1, null, null));
+				branches.add(downIndex - 1);
 				
 				int line = this.tetrada.getLastElementIndex() + 1;
 				this.tetrada.addJumpLine(downIndex, line);

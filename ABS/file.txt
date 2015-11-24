@@ -2,7 +2,7 @@
 	cqlo a stava 3;
 	cqlo b stava 5;
 	
-	dokato(a pogolqmo 0) {
+	za(a stava 3; a pomalko 10; a stava a + 1;) {
 		b stava b + a;
 		a stava a - 1;
 	}
