@@ -21,18 +21,25 @@ public class Assemblifier {
 			System.out.println((line++ + " | ") + row);
 		}
 		
-		return new String();
+		return "";
 	}
 	
 	public void toAsm() {
 		Row row;
+		AsemblyRow aRow;
 		
 		for(int i = 0; i < tetrada.size(); i++) {
 			row = tetrada.get(i);
 			
 			switch(row.getOperator()) {
 				case Consts.OPERATORS.ADD : {
-					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
+					
+					if(row.getBranch()) {
+						aRow.setLabel("label");
+					}
+					
+					asm.add(aRow);
 					asm.add(new AsemblyRow("ADD", "EAX", row.getOp2()));
 					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					
@@ -40,7 +47,13 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.DIFF : {
-					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
+					
+					if(row.getBranch()) {
+						aRow.setLabel("label");
+					}
+					
+					asm.add(aRow);
 					asm.add(new AsemblyRow("CMP", "EAX", row.getOp2()));
 					
 					asm.add(new AsemblyRow("CMOVNE", "EAX", "1")); //Move if not equal (ZF=0)
@@ -52,7 +65,14 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.DIV : {
-					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
+					
+					if(row.getBranch()) {
+						aRow.setLabel("label");
+					}
+					
+					asm.add(aRow);
+					
 					asm.add(new AsemblyRow("DIV", "EAX", row.getOp2()));
 					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					
@@ -60,7 +80,14 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.EQU : {
-					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
+					
+					if(row.getBranch()) {
+						aRow.setLabel("label");
+					}
+					
+					asm.add(aRow);
+					
 					asm.add(new AsemblyRow("CMP", "EAX", row.getOp2()));
 					
 					asm.add(new AsemblyRow("CMOVE", "EAX", "1")); //Move if equal (ZF=1)
@@ -72,7 +99,14 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.GREATER : {
-					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
+
+					if(row.getBranch()) {
+							aRow.setLabel("label");
+					}
+
+					asm.add(aRow);
+					
 					asm.add(new AsemblyRow("CMP", "EAX", row.getOp2()));
 					
 					asm.add(new AsemblyRow("CMOVG ", "EAX", "1")); //Move if greater (ZF=0 and SF=OF)
@@ -83,19 +117,19 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.JG : {
-					//
+					asm.add(new AsemblyRow("JG", "LABEL" + row.getOp1AsInt() + ":", ""));
 					
 					break;
 				}
 				
 				case Consts.OPERATORS.JL : {
-					//
+					asm.add(new AsemblyRow("JL", "LABEL" + row.getOp1AsInt() + ":", ""));
 					
 					break;
 				}
 				
 				case Consts.OPERATORS.JMP : {
-					//
+					asm.add(new AsemblyRow("JMP", "LABEL" + row.getOp1AsInt() + ":", ""));
 					
 					break;
 				}
@@ -108,7 +142,14 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.LESS : {
-					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
+							
+					if(row.getBranch()) {
+						aRow.setLabel("label");
+					}
+
+					asm.add(aRow);
+				
 					asm.add(new AsemblyRow("CMP", "EAX", row.getOp2()));
 					
 					asm.add(new AsemblyRow("CMOVL", "EAX", "1")); //Move if less (SF<>OF)
@@ -130,7 +171,14 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.MOD : {
-					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
+							
+					if(row.getBranch()) {
+						aRow.setLabel("label");
+					}
+
+					asm.add(aRow);
+					
 					asm.add(new AsemblyRow("MOD", "EAX", row.getOp2()));
 					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					
@@ -139,13 +187,27 @@ public class Assemblifier {
 				
 				case Consts.OPERATORS.MOV : {
 					// TODO check if MOV is PametPamet
-					asm.add(new AsemblyRow("MOV", (Position)row.getOp1(), (Position)row.getResult()));
+					
+					aRow = new AsemblyRow("MOV", (Position)row.getOp1(), (Position)row.getResult());
+							
+					if(row.getBranch()) {
+						aRow.setLabel("label");
+					}
+					
+					asm.add(aRow);
 					
 					break;
 				}
 				
 				case Consts.OPERATORS.MUL : {
-					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
+							
+					if(row.getBranch()) {
+						aRow.setLabel("label");
+					}
+					
+					asm.add(aRow);
+					
 					asm.add(new AsemblyRow("MUL", "EAX", row.getOp2()));
 					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					
@@ -153,7 +215,14 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.SUB : {
-					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
+							
+					if(row.getBranch()) {
+						aRow.setLabel("label");
+					}
+					
+					asm.add(aRow);
+					
 					asm.add(new AsemblyRow("SUB", "EAX", row.getOp2()));
 					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
 					
@@ -161,7 +230,14 @@ public class Assemblifier {
 				}
 				
 				case Consts.PROGRAM_END : {
-					asm.add(new AsemblyRow("INT", "21h", ""));
+					aRow = new AsemblyRow("INT", "21h", "");
+							
+					if(row.getBranch()) {
+						aRow.setLabel("label");
+					}
+					
+					asm.add(aRow);
+					
 					break;
 				}
 			}

@@ -1,6 +1,20 @@
-<<<<<<< HEAD
 {
-	ako(3 pomalko 5) {
-		cqlo a stava 5;
+	cqlo a stava 3;
+	cqlo b stava 5;
+	
+	dokato(a pogolqmo 0) {
+		b stava b + a;
+		a stava a - 1;
+	}
+	
+	ako(b pogolqmo a) {
+		ako(b pogolqmo 13) {
+			b stava 10;
 		}
+		
+		a stava b;
+	}
+	inache {
+		b stava 0; 
+	}
 }
