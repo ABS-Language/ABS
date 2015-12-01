@@ -117,26 +117,44 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.JG : {
-					asm.add(new AsemblyRow("JG", "LABEL" + row.getOp1AsInt() + ":", ""));
+					aRow = new AsemblyRow("JG", "LABEL" + row.getOp1AsInt() + ":", "");
+					
+					if(row.getBranch()) {
+						aRow.setLabel("LABEL" + i + ":");
+					}
+					asm.add(aRow);
 					
 					break;
 				}
 				
 				case Consts.OPERATORS.JL : {
-					asm.add(new AsemblyRow("JL", "LABEL" + row.getOp1AsInt() + ":", ""));
+					aRow = new AsemblyRow("JL", "LABEL" + row.getOp1AsInt() + ":", "");
+					
+					if(row.getBranch()) {
+						aRow.setLabel("LABEL" + i + ":");
+					}
+					asm.add(aRow);
 					
 					break;
 				}
 				
 				case Consts.OPERATORS.JMP : {
-					asm.add(new AsemblyRow("JMP", "LABEL" + row.getOp1AsInt() + ":", ""));
+					aRow = new AsemblyRow("JMP", "LABEL" + row.getOp1AsInt() + ":", "");
 					
+					if(row.getBranch()) {
+						aRow.setLabel("LABEL" + i + ":");
+					}
+					asm.add(aRow);
 					break;
 				}
 				
 				case Consts.OPERATORS.JZ : {
-					asm.add(new AsemblyRow("JZ", "LABEL" + row.getOp1AsInt() + ":", ""));
+					aRow = new AsemblyRow("JZ", "LABEL" + row.getOp1AsInt() + ":", "");
 					
+					if(row.getBranch()) {
+						aRow.setLabel("LABEL" + i + ":");
+					}
+					asm.add(aRow);
 					
 					break;
 				}

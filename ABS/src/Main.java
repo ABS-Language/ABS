@@ -38,6 +38,9 @@ public class Main {
 		
 		Assemblifier asm = new Assemblifier(p.getTetrada(), scanner.getSymbolTable());
 		asm.toAsm();
-		asm.toString();
+//		asm.toString();
+		
+		Interpretefier i = new Interpretefier(p.getTetrada(), scanner.getSymbolTable());
+		i.start();
 	}
 }
