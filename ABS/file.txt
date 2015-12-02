@@ -1,20 +1,3 @@
 {
-	cqlo a stava 3;
-	cqlo b stava 5;
-	
-	za(a stava 3; a pomalko 10; a stava a + 1;) {
-		b stava b + a;
-		a stava a - 1;
-	}
-	
-	ako(b pogolqmo a) {
-		ako(b pogolqmo 13) {
-			b stava 10;
-		}
-		
-		a stava b;
-	}
-	inache {
-		b stava 0; 
-	}
+	cqlo b stava 10 + 10 - 5 * 12 /43;
 }
