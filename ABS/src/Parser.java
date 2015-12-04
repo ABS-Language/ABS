@@ -475,7 +475,6 @@ public class Parser {
 				}
 				
 				this.currentSymbol.setType(Consts.TYPES.CHAR);
-				Position pos = this.currentSymbol.getPosition();
 				
 				if(getNextSymbol() != Consts.CHARACTERS.APOSTROPHE) { 
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_APOSTROPHE);
@@ -490,7 +489,6 @@ public class Parser {
 				}
 				
 				this.currentSymbol.setType(Consts.TYPES.STRING);
-				Position pos = this.currentSymbol.getPosition();
 				
 				if(getNextSymbol() != Consts.CHARACTERS.QUOTE) { 
 					throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_QUOTE);
