@@ -18,7 +18,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
@@ -69,15 +72,29 @@ public class IDE extends JFrame{
 						chooser.setFileFilter(filter);
 						
 						if(chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+							
+							FileReader read = null;
+							
 							try {
-								codeWindow.write(
-										new BufferedWriter(
-												new FileWriter(chooser.getSelectedFile())));
-								
-								//TODO: ne raboti
+								read = new FileReader(chooser.getSelectedFile());
 							} 
-							catch (IOException e) {
-								return;
+							catch (FileNotFoundException e) {
+									System.out.println("File not found!");
+									e.printStackTrace();
+							}
+							
+							BufferedReader buffer = new BufferedReader(read);
+							
+							String textRead;
+							
+							try {
+								while((textRead = buffer.readLine()) != null) {	
+									System.out.println(textRead);
+									codeWindow.setText(textRead);
+								}
+							} catch (IOException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
 							}
 							
 						}

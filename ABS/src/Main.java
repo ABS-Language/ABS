@@ -3,7 +3,7 @@ public class Main {
 		
 		final String CODE_FILE_PATH = "file.txt";
 		
-//		new IDE();
+		new IDE();
 		
 		Scanner scanner = new Scanner(CODE_FILE_PATH/*args*/);
 		
