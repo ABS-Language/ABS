@@ -545,19 +545,19 @@ public class Interpretefier {
 					break;
 				}
 				
-				case Consts.OPERATORS.JG : {
+				case Consts.OPERATORS.JG : { //TODO : JG
 					break;
 				}
 				
-				case Consts.OPERATORS.JL : {
+				case Consts.OPERATORS.JL : {//TODO : JL
 					break;
 				}
 				
-				case Consts.OPERATORS.JMP : {
+				case Consts.OPERATORS.JMP : {//TODO : JMP
 					break;
 				}
 				
-				case Consts.OPERATORS.JZ : {
+				case Consts.OPERATORS.JZ : {//TODO : JZ
 					break;
 				}
 				
