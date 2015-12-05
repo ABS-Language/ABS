@@ -20,6 +20,7 @@ public class GramaticConfigs {
 			
 			new Symbol("stava", Consts.OPERATORS.MOV),
 			new Symbol("razlichno", Consts.OPERATORS.DIFF),
+			new Symbol("ravno", Consts.OPERATORS.EQU),
 			
 			new Symbol("pogolqmo", Consts.OPERATORS.GREATER),
 			new Symbol("pomalko", Consts.OPERATORS.LESS)
@@ -40,7 +41,7 @@ public class GramaticConfigs {
 		new Symbol("*", Consts.OPERATORS.MUL),
 		new Symbol("/", Consts.OPERATORS.DIV),
 		new Symbol("%", Consts.OPERATORS.MOD),
-		new Symbol("ravno", Consts.OPERATORS.EQU),
+//		new Symbol("ravno", Consts.OPERATORS.EQU),
 		new Symbol(" ", Consts.SEPARATORS.ASCII_SPACE),
 		new Symbol("	", Consts.SEPARATORS.ASCII_SPACE),
 		new Symbol(",", Consts.CHARACTERS.COMMA),

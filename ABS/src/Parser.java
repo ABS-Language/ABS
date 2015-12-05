@@ -348,14 +348,16 @@ public class Parser {
 	}
 	
 	if(currentSymbol.getCode() == Consts.OPERATORS.GREATER 
-			|| currentSymbol.getCode() == Consts.OPERATORS.LESS) {
+			|| currentSymbol.getCode() == Consts.OPERATORS.LESS
+			|| currentSymbol.getCode() == Consts.OPERATORS.DIFF
+			|| currentSymbol.getCode() == Consts.OPERATORS.EQU) {
 		int opCode = currentSymbol.getCode();
 		
 		Op2 = Expression(Op2);
 		
 		Symbol result = new Symbol("&" + nextVar++,
 				Consts.LEXICALS.IDENTIFIER,
-				Consts.TYPES.DOUBLE);
+				Consts.TYPES.INTEGER);
 		
 		tetrada.add(new Row(opCode,
 				Op1.getPosition(),
@@ -460,7 +462,7 @@ public class Parser {
 	
 			case Consts.LEXICALS.CONSTANT : {
 				if(isInt(this.currentSymbol)) {
-					this.currentSymbol.setType(Consts.TYPES.DOUBLE);
+					this.currentSymbol.setType(Consts.TYPES.INTEGER);
 				}
 				else if(isDouble(this.currentSymbol)) {
 					this.currentSymbol.setType(Consts.TYPES.DOUBLE);
