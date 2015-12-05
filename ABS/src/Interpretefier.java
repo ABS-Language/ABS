@@ -7,6 +7,7 @@ public class Interpretefier {
 	
 	public Interpretefier(Tetrada tetrada, Hash hash){
 		this.tetrada = tetrada;
+		this.hash = hash;
 	}
 	
 	public void start(){

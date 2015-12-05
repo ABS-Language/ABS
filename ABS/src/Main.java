@@ -3,7 +3,7 @@ public class Main {
 		
 		final String CODE_FILE_PATH = "file.txt";
 		
-		new IDE();
+//		new IDE();
 		
 		Scanner scanner = new Scanner(CODE_FILE_PATH/*args*/);
 		
@@ -11,7 +11,7 @@ public class Main {
 
 		try {
 			scanner.read();
-			//scanner.getSymbolTable().printTable();
+//			scanner.getSymbolTable().printTable();
 			//scanner.printCodeOrder();
 
 			
@@ -37,9 +37,9 @@ public class Main {
 				e1.printStackTrace();
 		}
 		
-		Assemblifier asm = new Assemblifier(p.getTetrada(), scanner.getSymbolTable());
-		asm.toAsm();
-		asm.toString();
+//		Assemblifier asm = new Assemblifier(p.getTetrada(), scanner.getSymbolTable());
+//		asm.toAsm();
+//		asm.toString();
 		
 		Interpretefier i = new Interpretefier(p.getTetrada(), scanner.getSymbolTable());
 		i.start();
