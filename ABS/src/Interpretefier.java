@@ -721,7 +721,14 @@ public class Interpretefier {
 					break;
 				}
 				
-				case Consts.OPERATORS.MOD : {// TODO : MOD
+				case Consts.OPERATORS.MOD : {
+					result = hash.get(currentRow.getResult());
+					
+					op1 = hash.get((Position)currentRow.getOp1());
+					op2 = hash.get((Position)currentRow.getOp2());
+							
+					result.setDoubleValue(op1.getDoubleValue() % op2.getDoubleValue());
+					
 					break;
 				}
 				

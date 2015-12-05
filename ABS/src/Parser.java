@@ -362,7 +362,8 @@ public class Parser {
 		Op1 = Factor();
 		
 		while(getNextSymbol() == Consts.OPERATORS.MUL 
-				|| currentSymbol.getCode() == Consts.OPERATORS.DIV) {			
+				|| currentSymbol.getCode() == Consts.OPERATORS.DIV ||
+				currentSymbol.getCode() == Consts.OPERATORS.MOD) {			
 			int opCode = currentSymbol.getCode();
 			
 			Op2 = Factor();
