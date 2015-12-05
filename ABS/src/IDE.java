@@ -70,11 +70,12 @@ public class IDE extends JFrame{
 							bw.write(codeWindow.getText());
 				            bw.flush();
 				            bw.close();
-				            compile();
-						} catch (Exception e) {
+						} 
+			            catch (Exception e) {
 							console.append("Error!");
 						}
-						
+			            
+			           compile();  //TODO: try-catch
 					}
 				});
 			}
@@ -151,7 +152,6 @@ public class IDE extends JFrame{
 	}
 	
 	private void compile(){
-		
 		final String CODE_FILE_PATH = "file.txt";
 		Scanner scanner = new Scanner(CODE_FILE_PATH/*args*/);
 		
@@ -160,9 +160,7 @@ public class IDE extends JFrame{
 		try {
 			scanner.read();
 //			scanner.getSymbolTable().printTable();
-			//scanner.printCodeOrder();
-
-			
+			//scanner.printCodeOrder();			
 
 			try {
 				if(p.read()) {
