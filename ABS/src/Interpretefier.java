@@ -721,7 +721,7 @@ public class Interpretefier {
 					break;
 				}
 				
-				case Consts.OPERATORS.MOD : {
+				case Consts.OPERATORS.MOD : {// TODO : MOD
 					break;
 				}
 				
