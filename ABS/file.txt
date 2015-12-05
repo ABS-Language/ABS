@@ -1,5 +1,5 @@
 {
 	cqlo b stava 3;
-	cqlo c stava 5;
-	niz kiro stava "kiro";
+	cqlo a stava 10;
+	cqlo x stava a + b;
 }

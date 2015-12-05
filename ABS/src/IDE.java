@@ -86,16 +86,18 @@ public class IDE extends JFrame{
 							BufferedReader buffer = new BufferedReader(read);
 							
 							String textRead;
+							String code = "";
 							
 							try {
 								while((textRead = buffer.readLine()) != null) {	
-									System.out.println(textRead);
-									codeWindow.setText(textRead);
+									code += textRead + "\n";
 								}
 							} catch (IOException e) {
 								// TODO Auto-generated catch block
 								e.printStackTrace();
 							}
+							
+							codeWindow.setText(code);
 							
 						}
 						 
