@@ -51,7 +51,7 @@ public class Interpretefier {
 					break;
 				}
 				
-				case Consts.OPERATORS.DIFF : {
+				case Consts.OPERATORS.DIFF : { //TODO : Same as EQU
 					break;
 				}
 				
@@ -80,12 +80,112 @@ public class Interpretefier {
 					break;
 				}
 				
-				case Consts.OPERATORS.EQU : {
-					break;
+				case Consts.OPERATORS.EQU : { //TODO parser doesnt support ravno!
+					result = hash.get(currentRow.getResult());
+					
+					switch(result.getType()) {
+						case Consts.TYPES.INTEGER : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							int temp = 0;
+							
+							if(op1.getIntValue() == op2.getIntValue()){
+								temp = 1;
+							}
+							
+							result.setIntValue(temp);
+							System.out.println(temp);
+							
+							break;
+						}
+						
+						case Consts.TYPES.DOUBLE : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							int temp = 0;
+							
+							if(op1.getDoubleValue() == op2.getDoubleValue()){
+								temp = 1;
+							}
+							
+							result.setIntValue(temp);
+							System.out.println(temp);
+							
+							break;
+						}
+						
+						case Consts.TYPES.STRING : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							int temp = 0;
+							
+							if(op1.getStringValue().equals(op2.getStringValue())){
+								temp = 1;
+							}
+							
+							result.setIntValue(temp);
+							System.out.println(temp);
+							
+							break;
+						}
+						
+						case Consts.TYPES.CHAR : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							int temp = 0;
+							
+							if(op1.getCharValue() == op2.getCharValue()){
+								temp = 1;
+							}
+							
+							result.setIntValue(temp);
+							System.out.println(temp);
+							
+							break;
+						}
+					}
 				}
 				
-				case Consts.OPERATORS.GREATER : {
-					break;
+				case Consts.OPERATORS.GREATER : { //TODO : think of string
+					result = hash.get(currentRow.getResult());
+					
+					switch(result.getType()) {
+						case Consts.TYPES.INTEGER : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							int temp = 0;
+							
+							if(op1.getIntValue() > op2.getIntValue()){
+								temp = 1;
+							}
+							
+							result.setIntValue(temp);
+							System.out.println(temp);
+							
+							break;
+						}
+						
+						case Consts.TYPES.DOUBLE : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							int temp = 0;
+							
+							if(op1.getDoubleValue() > op2.getDoubleValue()){
+								temp = 1;
+							}
+							
+							result.setIntValue(temp);
+							System.out.println(temp);
+							
+							break;
+						}
+					}
 				}
 				
 				case Consts.OPERATORS.JG : {
@@ -104,8 +204,42 @@ public class Interpretefier {
 					break;
 				}
 				
-				case Consts.OPERATORS.LESS : {
-					break;
+				case Consts.OPERATORS.LESS : {//TODO : think of string
+					result = hash.get(currentRow.getResult());
+					
+					switch(result.getType()) {
+						case Consts.TYPES.INTEGER : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							int temp = 0;
+							
+							if(op1.getIntValue() < op2.getIntValue()){
+								temp = 1;
+							}
+							
+							result.setIntValue(temp);
+							System.out.println(temp);
+							
+							break;
+						}
+						
+						case Consts.TYPES.DOUBLE : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							int temp = 0;
+							
+							if(op1.getDoubleValue() < op2.getDoubleValue()){
+								temp = 1;
+							}
+							
+							result.setIntValue(temp);
+							System.out.println(temp);
+							
+							break;
+						}
+					}
 				}
 				
 				case Consts.OPERATORS.MOD : {

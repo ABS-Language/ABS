@@ -1,5 +1,7 @@
 {
-	drobno a stava 10.6;
-	drobno b stava 11.4;
-	cqlo x stava a + b;
+	niz a stava "kiro";
+	niz b stava "pesho";
+	ako(10 pomalko 5){
+		cqlo x stava 10;
+	}
 }
