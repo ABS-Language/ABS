@@ -15,13 +15,17 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 
 public class IDE extends JFrame{
-	private final int FRAME_WIDTH = 1200;
-	private final int FRAME_HEIGHT = 700;
+	private final int FRAME_WIDTH = 900;
+	private final int FRAME_HEIGHT = 600;
 	
 	private final JTextArea console = new JTextArea(5, 30);
 	private final JTextArea codeWindow = new JTextArea(5, 30);
@@ -52,6 +56,28 @@ public class IDE extends JFrame{
 		contentPane.add(btnPanel, BorderLayout.NORTH);
 		{
 			btnPanel.add(btnRun);
+			{
+				btnRun.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent arg0) {
+						File file = new File("file.txt");
+			            try {
+							file.createNewFile();
+				            FileWriter fw = null;
+							fw = new FileWriter(file);
+				            BufferedWriter bw = new BufferedWriter(fw);
+							bw.write(codeWindow.getText());
+				            bw.flush();
+				            bw.close();
+				            compile();
+						} catch (Exception e) {
+							console.append("Error!");
+						}
+						
+					}
+				});
+			}
 			btnPanel.add(btnDebug);
 			btnPanel.add(btnOpen);
 			{
@@ -122,5 +148,48 @@ public class IDE extends JFrame{
 		
 		
 		this.setVisible(true);
+	}
+	
+	private void compile(){
+		
+		final String CODE_FILE_PATH = "file.txt";
+		Scanner scanner = new Scanner(CODE_FILE_PATH/*args*/);
+		
+		Parser p = new Parser(scanner.getCodeOrder(), scanner.getSymbolTable());
+
+		try {
+			scanner.read();
+//			scanner.getSymbolTable().printTable();
+			//scanner.printCodeOrder();
+
+			
+
+			try {
+				if(p.read()) {
+					System.out.println("Syntax Analyze Successful.");
+				}
+				else {
+					System.out.println("Syntax Analyze Failed");
+				}
+			} 
+			catch (SyntaxException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
+		}
+		catch(NullPointerException e) {
+			System.out.println("Syntax Analyze Failed");
+			e.printStackTrace();
+		}
+		catch (LexicalException e1) {
+				e1.printStackTrace();
+		}
+		
+//		Assemblifier asm = new Assemblifier(p.getTetrada(), scanner.getSymbolTable());
+//		asm.toAsm();
+//		asm.toString();
+		
+		Interpretefier i = new Interpretefier(p.getTetrada(), scanner.getSymbolTable());
+		i.start();
 	}
 }
