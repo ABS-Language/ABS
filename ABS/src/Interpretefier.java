@@ -19,30 +19,17 @@ public class Interpretefier {
 			switch(currentRow.getOperator()){
 				case Consts.OPERATORS.ADD : {
 					result = hash.get(currentRow.getResult());
+					op1 = hash.get((Position)currentRow.getOp1());
+					op2 = hash.get((Position)currentRow.getOp2());
 										
 					switch(result.getType()) {
-						case Consts.TYPES.INTEGER : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
-							
-							result.setIntValue(op1.getIntValue() + op2.getIntValue());
-							
-							break;
-						}
-						
 						case Consts.TYPES.DOUBLE : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
-							
 							result.setDoubleValue(op1.getDoubleValue() + op2.getDoubleValue());
 
 							break;
 						}
 						
 						case Consts.TYPES.STRING : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
-							
 							result.setStringValue(op1.getStringValue() + op2.getStringValue());
 
 							break;
@@ -774,51 +761,20 @@ public class Interpretefier {
 				case Consts.OPERATORS.MUL : {
 					result = hash.get(currentRow.getResult());
 					
-					switch(result.getType()) {
-						case Consts.TYPES.INTEGER : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
+					op1 = hash.get((Position)currentRow.getOp1());
+					op2 = hash.get((Position)currentRow.getOp2());
 							
-							result.setIntValue(op1.getIntValue() * op2.getIntValue());
-							
-							break;
-						}
-						
-						case Consts.TYPES.DOUBLE : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
-							
-							result.setDoubleValue(op1.getDoubleValue() * op2.getDoubleValue());
-
-							break;
-						}
-					}
+					result.setDoubleValue(op1.getDoubleValue() * op2.getDoubleValue());
 					
 					break;
 				}
 				
 				case Consts.OPERATORS.SUB : {
 					result = hash.get(currentRow.getResult());
-					
-					switch(result.getType()) {
-						case Consts.TYPES.INTEGER : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
+					op1 = hash.get((Position)currentRow.getOp1());
+					op2 = hash.get((Position)currentRow.getOp2());
 							
-							result.setIntValue(op1.getIntValue() - op2.getIntValue());
-							
-							break;
-						}
-						
-						case Consts.TYPES.DOUBLE : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
-							
-							result.setDoubleValue(op1.getDoubleValue() - op2.getDoubleValue());
-
-							break;
-						}
-					}
+					result.setDoubleValue(op1.getDoubleValue() - op2.getDoubleValue());
 					
 					break;
 				}
