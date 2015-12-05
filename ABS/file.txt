@@ -1,3 +1,5 @@
 {
-	cqlo b stava 10 + 10 - 5 * 12 /43;
+	cqlo b stava 3;
+	cqlo c stava 5;
+	niz kiro stava "kiro";
 }
