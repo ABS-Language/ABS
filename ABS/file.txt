@@ -1,5 +1,5 @@
 {
-	cqlo b stava 3;
-	cqlo a stava 10;
+	drobno a stava 10.6;
+	cqlo b stava 11;
 	cqlo x stava a + b;
 }

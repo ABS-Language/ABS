@@ -560,7 +560,7 @@ public class Parser {
 						&& op.getType() != Consts.TYPES.DOUBLE) {
 						throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
 					}
-					tetrada.add(new Row(Consts.OPERATORS.MOV, op.getPosition(), null, this.receiver.getPosition()));
+					tetrada.add(new Row(Consts.OPERATORS.MOV, this.receiver.getPosition(), null, op.getPosition()));
 				}
 				else {
 					//if you have getNextSymbol() + '==' 
@@ -595,7 +595,7 @@ public class Parser {
 						
 						this.currentSymbol.setType(Consts.TYPES.CHAR);
 
-						tetrada.add(new Row(Consts.OPERATORS.MOV, this.currentSymbol.getPosition(), null, this.receiver.getPosition()));
+						tetrada.add(new Row(Consts.OPERATORS.MOV, this.receiver.getPosition(), null, this.currentSymbol.getPosition()));
 						
 						if(getNextSymbol() != Consts.CHARACTERS.APOSTROPHE){
 							throw new SyntaxException(this.currentSymbol.getName(), Consts.ERRORS.SYNTAX.NOT_FOUND_APOSTROPHE);
@@ -640,12 +640,12 @@ public class Parser {
 					if(this.getNextSymbol() == Consts.CHARACTERS.QUOTE){
 						if(this.getNextSymbol() == Consts.LEXICALS.CONSTANT) {
 
-							tetrada.add(new Row(Consts.OPERATORS.MOV, this.currentSymbol.getPosition(), null, this.receiver.getPosition()));
+							tetrada.add(new Row(Consts.OPERATORS.MOV, this.receiver.getPosition(), null, this.currentSymbol.getPosition()));
 							
 							}
 						else {
 
-							tetrada.add(new Row(Consts.OPERATORS.MOV, this.currentSymbol.getPosition(), null, this.receiver.getPosition()));
+							tetrada.add(new Row(Consts.OPERATORS.MOV, this.receiver.getPosition(), null, this.currentSymbol.getPosition()));
 							
 							
 							//if you have getNextSymbol() + '==' 

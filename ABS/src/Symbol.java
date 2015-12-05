@@ -1,3 +1,4 @@
+
 public class Symbol {
 	private String name;
 	private int code;
@@ -87,7 +88,15 @@ public class Symbol {
 	}
 	
 	public int getIntValue() {
-		return this.iValue;
+		if(this.code == Consts.LEXICALS.CONSTANT){
+			return (int)Double.parseDouble(this.name);
+		}
+		
+		if(this.type == Consts.TYPES.INTEGER){
+			return this.iValue;
+		}
+		
+		return (int)this.dValue;
 	}
 	//====
 	public void setDoubleValue(double value) {
@@ -95,7 +104,15 @@ public class Symbol {
 	}
 	
 	public double getDoubleValue() {
-		return this.dValue;
+		if(this.code == Consts.LEXICALS.CONSTANT){
+			return Double.parseDouble(this.name);
+		}
+		
+		if(this.type == Consts.TYPES.DOUBLE){
+			return this.dValue;
+		}
+		
+		return (double)this.iValue;
 	}
 	//====
 	public void setCharValue(char value) {
@@ -103,6 +120,10 @@ public class Symbol {
 	}
 	
 	public char getCharValue() {
+		if(this.code == Consts.LEXICALS.CONSTANT){
+			return this.name.charAt(0);
+		}
+		
 		return this.cValue;
 	}
 	//====
@@ -111,6 +132,9 @@ public class Symbol {
 	}
 	
 	public String getStringValue() {
+		if(this.code == Consts.LEXICALS.CONSTANT){
+			return this.name;
+		}
 		return this.sValue;
 	}
 	//====

@@ -24,23 +24,24 @@ public class Interpretefier {
 						case Consts.TYPES.INTEGER : {
 							op1 = hash.get((Position)currentRow.getOp1());
 							op2 = hash.get((Position)currentRow.getOp2());
-													
-							result.setIntValue(
-									op1.getIntValue() == 0 ? 
-											Integer.parseInt(op1.getName()) 
-												: op1.getIntValue() 
-							+
-									op2.getIntValue() == 0 ? 
-											Integer.parseInt(op2.getName()) 
-												: op1.getIntValue() 
-							);
 							
+							int tempResult = (int)(op1.getIntValue() + op2.getDoubleValue());
+							System.out.println(tempResult);
+							result.setIntValue(tempResult);
+
+							System.out.println(result.getIntValue());
 							break;
 						}
 						
 						case Consts.TYPES.DOUBLE : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
 							
+							double tempResult = (double)(op1.getDoubleValue() + op2.getDoubleValue());
+							System.out.println(tempResult);
 							
+							result.setDoubleValue((double)(op1.getIntValue() + op2.getIntValue()));
+							System.out.println(result.getDoubleValue());
 							break;
 						}
 					}
@@ -87,7 +88,30 @@ public class Interpretefier {
 				}
 				
 				case Consts.OPERATORS.MOV : {
+					op1 = hash.get((Position)currentRow.getOp1());
+					result = hash.get((Position)currentRow.getResult());
 					
+					switch(op1.getType()){
+						case Consts.TYPES.INTEGER :{
+							op1.setIntValue((int)result.getIntValue());
+							break;
+						}
+						
+						case Consts.TYPES.DOUBLE : {
+							op1.setDoubleValue((double)result.getDoubleValue());
+							break;
+						}
+						
+						case Consts.TYPES.STRING : {
+							op1.setStringValue(result.getStringValue());
+							break;
+						}
+						
+						case Consts.TYPES.CHAR : {
+							op1.setCharValue(result.getCharValue());
+							break;
+						}
+					}
 					
 					break;
 				}
