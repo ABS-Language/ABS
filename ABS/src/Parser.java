@@ -281,7 +281,8 @@ public class Parser {
 			int opCode = currentSymbol.getCode();
 			Op2 = Term(Op2);
 			switch(Op1.getType()){
-			case Consts.TYPES.INTEGER :{
+			case Consts.TYPES.INTEGER :
+			case Consts.TYPES.DOUBLE : {
 				if(Op2.getType() == Consts.TYPES.INTEGER ||
 					Op2.getType() == Consts.TYPES.DOUBLE){
 					Symbol result = new Symbol("&" + nextVar++, 
@@ -302,26 +303,6 @@ public class Parser {
 				 break;
 			}
 			
-			case Consts.TYPES.DOUBLE :{
-				if(Op2.getType() == Consts.TYPES.INTEGER ||
-					Op2.getType() == Consts.TYPES.DOUBLE){
-					Symbol result = new Symbol("&" + nextVar++, 
-													Consts.LEXICALS.IDENTIFIER, 
-													Consts.TYPES.DOUBLE);
-					
-					tetrada.add(new Row(opCode, 
-							Op1.getPosition(), 
-							Op2.getPosition(), 
-							symbols.lookupInsert(result)));
-					
-					Op1 = result;
-				} 
-				else {
-					throw new SyntaxException(Consts.ERRORS.SYNTAX.INVALID_OPERATOR_TYPES);
-				}
-
-				 break;
-			}
 			case Consts.TYPES.STRING : { 
 				if(Op2.getType() == Consts.TYPES.STRING){
 						Symbol result = new Symbol("&" + nextVar++,
