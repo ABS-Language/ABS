@@ -1,29 +1,22 @@
 -- IF CONSRUCTION
-ako (?)
-{} 
-inache {}
+ako (expression) codeBlock()
+[inache codeBlock()] optional
 
 -- FOR CONSRUCTION
-za( broqch ; uslovie; sledstvie)
-{
-}
+za( operator ; expression; operator) codeBlock()
 
 -- WHILE CONSRUCTION
-dokato(uslovie) {}
+dokato(expression) codeBlock()
 
 -- VARS
 string 	--> niz
 char 	--> simvol
-int 	--> cql
-float 	--> plav
-double 	--> dvoen
-long 	--> dulag
+int 	--> cqlo
+double 	--> drobno
 
 -- OPERATORS
 = 		--> stava
 > 		--> pogolqm  
->=    	--> pogolqm=
 < 		--> pomalak
-<=  	--> pomalak=
 == 		--> ravno
-!= 		--> razlichno     ako (a razlichno b){ a stava b;}
+!= 		--> razlichno
