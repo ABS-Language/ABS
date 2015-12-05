@@ -38,7 +38,17 @@ public class Interpretefier {
 
 							break;
 						}
+						
+						case Consts.TYPES.STRING : {//TODO : parser does not support add on string
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							result.setStringValue(op1.getStringValue() + op2.getStringValue());
+
+							break;
+						}
 					}
+					break;
 				}
 				
 				case Consts.OPERATORS.DIFF : {
@@ -46,6 +56,27 @@ public class Interpretefier {
 				}
 				
 				case Consts.OPERATORS.DIV : {
+					result = hash.get(currentRow.getResult());
+					
+					switch(result.getType()) {
+						case Consts.TYPES.INTEGER : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							result.setIntValue(op1.getIntValue() / op2.getIntValue());
+							
+							break;
+						}
+						
+						case Consts.TYPES.DOUBLE : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							result.setDoubleValue(op1.getDoubleValue() / op2.getDoubleValue());
+
+							break;
+						}
+					}
 					break;
 				}
 				
@@ -100,6 +131,7 @@ public class Interpretefier {
 						
 						case Consts.TYPES.STRING : {
 							op1.setStringValue(result.getStringValue());
+							System.out.println(op1.getStringValue());
 							break;
 						}
 						
@@ -113,10 +145,53 @@ public class Interpretefier {
 				}
 				
 				case Consts.OPERATORS.MUL : {
+					result = hash.get(currentRow.getResult());
+					
+					switch(result.getType()) {
+						case Consts.TYPES.INTEGER : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							result.setIntValue(op1.getIntValue() * op2.getIntValue());
+							
+							break;
+						}
+						
+						case Consts.TYPES.DOUBLE : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							result.setDoubleValue(op1.getDoubleValue() * op2.getDoubleValue());
+
+							break;
+						}
+					}
+					
 					break;
 				}
 				
 				case Consts.OPERATORS.SUB : {
+					result = hash.get(currentRow.getResult());
+					
+					switch(result.getType()) {
+						case Consts.TYPES.INTEGER : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							result.setIntValue(op1.getIntValue() - op2.getIntValue());
+							
+							break;
+						}
+						
+						case Consts.TYPES.DOUBLE : {
+							op1 = hash.get((Position)currentRow.getOp1());
+							op2 = hash.get((Position)currentRow.getOp2());
+							
+							result.setDoubleValue(op1.getDoubleValue() - op2.getDoubleValue());
+
+							break;
+						}
+					}
 					break;
 				}
 			}

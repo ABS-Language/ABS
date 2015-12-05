@@ -287,7 +287,7 @@ public class Parser {
 					Op2.getType() == Consts.TYPES.DOUBLE){
 					Symbol result = new Symbol("&" + nextVar++, 
 													Consts.LEXICALS.IDENTIFIER, 
-													Consts.TYPES.INTEGER);
+													Consts.TYPES.DOUBLE);
 					
 					tetrada.add(new Row(opCode, 
 							Op1.getPosition(), 
@@ -356,7 +356,7 @@ public class Parser {
 		
 		Symbol result = new Symbol("&" + nextVar++,
 				Consts.LEXICALS.IDENTIFIER,
-				Consts.TYPES.INTEGER);
+				Consts.TYPES.DOUBLE);
 		
 		tetrada.add(new Row(opCode,
 				Op1.getPosition(),
@@ -391,7 +391,7 @@ public class Parser {
 						Op2.getType() == Consts.TYPES.DOUBLE){
 						Symbol result = new Symbol("&" + nextVar++,
 								Consts.LEXICALS.IDENTIFIER,
-								Consts.TYPES.INTEGER);
+								Consts.TYPES.DOUBLE);
 						
 						tetrada.add(new Row(opCode,
 								Op1.getPosition(),
@@ -459,7 +459,7 @@ public class Parser {
 			}
 			case Consts.LEXICALS.CONSTANT : {
 				if(isInt(this.currentSymbol)) {
-					this.currentSymbol.setType(Consts.TYPES.INTEGER);
+					this.currentSymbol.setType(Consts.TYPES.DOUBLE);
 				}
 				else if(isDouble(this.currentSymbol)) {
 					this.currentSymbol.setType(Consts.TYPES.DOUBLE);
