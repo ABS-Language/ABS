@@ -4,30 +4,24 @@ import java.awt.GridLayout;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
 import javax.swing.JButton;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.KeyStroke;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 
 public class IDE extends JFrame{
-	private final int FRAME_WIDTH = 900;
-	private final int FRAME_HEIGHT = 600;
+	private final int FRAME_WIDTH = 1200;
+	private final int FRAME_HEIGHT = 700;
 	
 	private final JTextArea console = new JTextArea(5, 30);
 	private final JTextArea codeWindow = new JTextArea(5, 30);
@@ -105,15 +99,25 @@ public class IDE extends JFrame{
 				});
 			}
 		}
+
+		console.setBackground(Color.BLACK);
+		console.setForeground(Color.WHITE);
+		console.setEditable(false);
 		
-		contentPane.add(console, BorderLayout.EAST);
-		{
-			console.setEditable(false);
-			console.setBackground(Color.BLACK);
-			console.setForeground(Color.WHITE);
-		}
+		JScrollPane consolePane = new JScrollPane(
+				console,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+				,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		
-		contentPane.add(codeWindow, BorderLayout.WEST);		
+
+		contentPane.add(consolePane, BorderLayout.EAST);	
+		
+		JScrollPane codePane = new JScrollPane(
+				codeWindow,
+				JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED
+				,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+		
+		contentPane.add(codePane, BorderLayout.CENTER);	
 		
 		
 		
