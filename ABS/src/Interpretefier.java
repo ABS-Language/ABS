@@ -25,11 +25,8 @@ public class Interpretefier {
 							op1 = hash.get((Position)currentRow.getOp1());
 							op2 = hash.get((Position)currentRow.getOp2());
 							
-							int tempResult = (int)(op1.getIntValue() + op2.getDoubleValue());
-							System.out.println(tempResult);
-							result.setIntValue(tempResult);
-
-							System.out.println(result.getIntValue());
+							result.setIntValue(op1.getIntValue() + op2.getIntValue());
+							
 							break;
 						}
 						
@@ -37,11 +34,8 @@ public class Interpretefier {
 							op1 = hash.get((Position)currentRow.getOp1());
 							op2 = hash.get((Position)currentRow.getOp2());
 							
-							double tempResult = (double)(op1.getDoubleValue() + op2.getDoubleValue());
-							System.out.println(tempResult);
-							
-							result.setDoubleValue((double)(op1.getIntValue() + op2.getIntValue()));
-							System.out.println(result.getDoubleValue());
+							result.setDoubleValue(op1.getDoubleValue() + op2.getDoubleValue());
+
 							break;
 						}
 					}
@@ -93,12 +87,14 @@ public class Interpretefier {
 					
 					switch(op1.getType()){
 						case Consts.TYPES.INTEGER :{
-							op1.setIntValue((int)result.getIntValue());
+							op1.setIntValue(result.getIntValue());
+							System.out.println(op1.getIntValue());
 							break;
 						}
 						
 						case Consts.TYPES.DOUBLE : {
-							op1.setDoubleValue((double)result.getDoubleValue());
+							op1.setDoubleValue(result.getDoubleValue());
+							System.out.println(op1.getDoubleValue());
 							break;
 						}
 						
