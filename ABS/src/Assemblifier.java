@@ -189,16 +189,20 @@ public class Assemblifier {
 				}
 				
 				case Consts.OPERATORS.MOD : {
-					aRow = new AsemblyRow("MOV", "EAX", (Position)row.getOp1());
-							
+					aRow = new AsemblyRow("MOV", "DX", "0");
+					
 					if(row.getBranch()) {
 						aRow.setLabel("LABEL" + i + ":");
 					}
-
+					
 					asm.add(aRow);
 					
-					asm.add(new AsemblyRow("MOD", "EAX", row.getOp2()));
-					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "EAX"));
+					asm.add(new AsemblyRow("MOV", "EAX", (Position)row.getOp1()));
+					asm.add(new AsemblyRow("MOV", "EBX", (Position)row.getOp2()));				
+
+					asm.add(new AsemblyRow("DIV", "EAX", "EBX"));
+					
+					asm.add(new AsemblyRow("MOV", (Position)row.getResult(), "DX"));
 					
 					break;
 				}
