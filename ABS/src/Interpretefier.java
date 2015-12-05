@@ -727,7 +727,7 @@ public class Interpretefier {
 					op1 = hash.get((Position)currentRow.getOp1());
 					op2 = hash.get((Position)currentRow.getOp2());
 							
-					result.setDoubleValue(op1.getDoubleValue() % op2.getDoubleValue());
+					result.setDoubleValue(op1.getIntValue() % op2.getIntValue());
 					
 					break;
 				}
