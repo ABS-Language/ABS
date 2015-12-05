@@ -39,7 +39,7 @@ public class Interpretefier {
 							break;
 						}
 						
-						case Consts.TYPES.STRING : {//TODO : parser does not support add on string
+						case Consts.TYPES.STRING : {
 							op1 = hash.get((Position)currentRow.getOp1());
 							op2 = hash.get((Position)currentRow.getOp2());
 							
@@ -48,10 +48,12 @@ public class Interpretefier {
 							break;
 						}
 					}
+					
 					break;
 				}
 				
 				case Consts.OPERATORS.DIFF : { //TODO : Same as EQU
+					
 					break;
 				}
 				
@@ -77,19 +79,19 @@ public class Interpretefier {
 							break;
 						}
 					}
+					
 					break;
 				}
 				
-				case Consts.OPERATORS.EQU : { //TODO parser doesnt support ravno!
+				case Consts.OPERATORS.EQU : {
 					result = hash.get(currentRow.getResult());
+					op1 = hash.get((Position)currentRow.getOp1());
+					op2 = hash.get((Position)currentRow.getOp2());
+					
+					int temp = 0;
 					
 					switch(result.getType()) {
 						case Consts.TYPES.INTEGER : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
-							
-							int temp = 0;
-							
 							if(op1.getIntValue() == op2.getIntValue()){
 								temp = 1;
 							}
@@ -101,11 +103,6 @@ public class Interpretefier {
 						}
 						
 						case Consts.TYPES.DOUBLE : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
-							
-							int temp = 0;
-							
 							if(op1.getDoubleValue() == op2.getDoubleValue()){
 								temp = 1;
 							}
@@ -117,11 +114,6 @@ public class Interpretefier {
 						}
 						
 						case Consts.TYPES.STRING : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
-							
-							int temp = 0;
-							
 							if(op1.getStringValue().equals(op2.getStringValue())){
 								temp = 1;
 							}
@@ -133,11 +125,6 @@ public class Interpretefier {
 						}
 						
 						case Consts.TYPES.CHAR : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
-							
-							int temp = 0;
-							
 							if(op1.getCharValue() == op2.getCharValue()){
 								temp = 1;
 							}
@@ -148,6 +135,8 @@ public class Interpretefier {
 							break;
 						}
 					}
+					
+					break;
 				}
 				
 				case Consts.OPERATORS.GREATER : { //TODO : think of string
@@ -186,6 +175,8 @@ public class Interpretefier {
 							break;
 						}
 					}
+					
+					break;
 				}
 				
 				case Consts.OPERATORS.JG : {
@@ -207,39 +198,47 @@ public class Interpretefier {
 				case Consts.OPERATORS.LESS : {//TODO : think of string
 					result = hash.get(currentRow.getResult());
 					
-					switch(result.getType()) {
-						case Consts.TYPES.INTEGER : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
-							
-							int temp = 0;
-							
-							if(op1.getIntValue() < op2.getIntValue()){
-								temp = 1;
-							}
-							
-							result.setIntValue(temp);
-							System.out.println(temp);
-							
-							break;
-						}
-						
+					op1 = hash.get((Position)currentRow.getOp1());
+					op2 = hash.get((Position)currentRow.getOp2());
+					
+					int temp = 0;
+					
+					switch(op1.getType()) {
 						case Consts.TYPES.DOUBLE : {
-							op1 = hash.get((Position)currentRow.getOp1());
-							op2 = hash.get((Position)currentRow.getOp2());
+							int type = op2.getType();
 							
-							int temp = 0;
+							if(type == Consts.TYPES.DOUBLE) {
+								if(op1.getDoubleValue() < op2.getDoubleValue()){
+									temp = 1;
+								}
+							}
+							else if(type == Consts.TYPES.CHAR) {
+								if(op1.getIntValue() < op2.getCharValue()){
+									temp = 1;
+								}						
+							}
+							else if(type == Consts.TYPES.STRING) {
+								String str = op2.getStringValue();
+								
+								int ascii = 0;
 							
-							if(op1.getDoubleValue() < op2.getDoubleValue()){
-								temp = 1;
+								for(int i = 0; i < str.length(); i++) {
+									ascii += str.charAt(i);
+								}
+								
+								if(op1.getIntValue() < ascii){
+									temp = 1;
+								}
 							}
 							
-							result.setIntValue(temp);
-							System.out.println(temp);
-							
 							break;
-						}
-					}
+						} //case double
+					} //switch op1.getType()
+
+					result.setIntValue(temp);
+					System.out.println(temp);
+					
+					break;
 				}
 				
 				case Consts.OPERATORS.MOD : {
@@ -271,6 +270,7 @@ public class Interpretefier {
 						
 						case Consts.TYPES.CHAR : {
 							op1.setCharValue(result.getCharValue());
+							System.out.println(op1.getCharValue());
 							break;
 						}
 					}
@@ -326,11 +326,14 @@ public class Interpretefier {
 							break;
 						}
 					}
+					
 					break;
 				}
-			}
-			
-		}
-		System.out.println("End");
-	}
-}
+				default : {
+					System.out.println("UNSUPPORTED OPERATOR");
+					break;
+				}
+			} //switch
+		} //while
+	} //start
+} //class
